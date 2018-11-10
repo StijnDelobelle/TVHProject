@@ -11,9 +11,12 @@ public class Machine {
         this.location = location;
     }
 
-    public int getId() {
-        return id;
-    }
-    public MachineType getMachineType(){return machineType;}
-    public Location getLocation(){return location;}
+    public int getId() {return id;}
+    public void settId(int id) {this.id = id;}
+
+    public MachineType getMachineType() {return machineType;}
+    public void setMachineType(MachineType machineType) {this.machineType = machineType;}
+
+    public Location getLocation() {return location;}
+    public void setLocation(Location location) {this.location = location;}
 }

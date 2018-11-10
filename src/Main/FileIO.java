@@ -6,9 +6,9 @@ import java.io.*;
 
 import static Heuristiek.Problem.*;
 
-public class ReadInput {
+public class FileIO {
 
-    public ReadInput(String filename) throws Exception{
+    public void readInput(String filename){
         Scanner s = null;
 
         try {
@@ -23,13 +23,11 @@ public class ReadInput {
             {
                 String[] splited = actualRead.replaceAll("(^\\s+|\\s+$)", "").split("\\s+");
                 TRUCK_CAPACITY = Integer.parseInt(splited[1]);
-                actualRead = s.nextLine();
             }
             if(actualRead.contains("TRUCK_WORKING_TIME"))
             {
                 String[] splited = actualRead.replaceAll("(^\\s+|\\s+$)", "").split("\\s+");
                 TIME_CAPACITY = Integer.parseInt(splited[1]);
-                actualRead = s.nextLine();
             }
             else if(actualRead.contains("LOCATIONS"))
             {
@@ -57,7 +55,9 @@ public class ReadInput {
                 while(!actualRead.equals(""))
                 {
                     String[] splited = actualRead.replaceAll("(^\\s+|\\s+$)", "").split("\\s+");
-                    depots.add(locations.get(Integer.parseInt(splited[1])));
+                    Location location = locations.get(Integer.parseInt(splited[1]));
+                    location.setDepot(true);
+                    depots.add(location);
 
                     if(s.hasNextLine())
                         actualRead = s.nextLine();
@@ -76,7 +76,7 @@ public class ReadInput {
                     Location startLocation = locations.get(Integer.parseInt(splited[1]));
                     Location endLocation = locations.get(Integer.parseInt(splited[2]));
 
-                    trucks.add(new Truck(id, startLocation, endLocation, startLocation));
+                    allTrucks.add(new Truck(id, startLocation, endLocation, startLocation));
 
                     if(s.hasNextLine())
                     {
@@ -162,8 +162,11 @@ public class ReadInput {
             }
             else if(actualRead.contains("TIME_MATRIX"))
             {
-                int i = 0;
+                String[] split = actualRead.replaceAll("(^\\s+|\\s+$)", "").split("\\s+");
+                int length = Integer.parseInt(split[1]);
+                timeMatrix = new int[length][length];
                 actualRead = s.nextLine();
+                int i = 0;
                 while(!actualRead.equals(""))
                 {
                     String[] splited = actualRead.replaceAll("(^\\s+|\\s+$)", "").split("\\s+");
@@ -184,8 +187,11 @@ public class ReadInput {
             }
             else if(actualRead.contains("DISTANCE_MATRIX"))
             {
-                int i = 0;
+                String[] split = actualRead.replaceAll("(^\\s+|\\s+$)", "").split("\\s+");
+                int length = Integer.parseInt(split[1]);
+                distanceMatrix = new int[length][length];
                 actualRead = s.nextLine();
+                int i = 0;
                 while(!actualRead.equals(""))
                 {
                     String[] splited = actualRead.replaceAll("(^\\s+|\\s+$)", "").split("\\s+");
@@ -204,7 +210,6 @@ public class ReadInput {
                         actualRead = "";
                 }
             }
-
         }
         s.close();
     }

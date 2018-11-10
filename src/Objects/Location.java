@@ -15,7 +15,18 @@ public class Location {
         this.depot = false;
     }
 
-    public int getId(){return id;}
+    public int getId() {return id;}
+    public void settId(int id) {this.id = id;}
 
+    public double getLat() {return lat;}
+    public void setLat(double lat) {this.lat = lat;}
+
+    public double getLon() {return lon;}
+    public void setLon(double lon) {this.lon = lon;}
+
+    public String getName() {return name;}
+    public void setName(String name) {this.name = name;}
+
+    public boolean isDepot() {return depot;}
     public void setDepot(boolean depot) { this.depot = depot;}
 }

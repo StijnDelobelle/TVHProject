@@ -1,7 +1,5 @@
 package Objects;
 
-import java.util.Objects;
-
 public class MachineType {
     private int id;
     private int volume;
@@ -16,7 +14,14 @@ public class MachineType {
     }
 
     public int getId() {return id;}
+    public void settId(int id) {this.id = id;}
+
     public int getVolume() {return  volume;}
+    public void setVolume(int volume) {this.volume = volume;}
+
     public int getServiceTime() {return serviceTime;}
+    public void setServiceTime(int serviceTime) {this.serviceTime = serviceTime;}
+
     public String getName() {return name;}
+    public void setName(String name) {this.name = name;}
 }

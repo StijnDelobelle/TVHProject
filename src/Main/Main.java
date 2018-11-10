@@ -9,13 +9,15 @@ public class Main {
      java -jar tvh-1.0-student.jar --problem=tvh_problem_3.txt --solution=tvh_solution_3.txt --gui
      */
 
-
     public static String INPUT_FILE = "tvh_problem_3.txt";
     public static String OUTPUT_FILE = "tvh_solution_3.txt";
 
-    public static void main(String[] args)throws Exception{
-        ReadInput input = new ReadInput(INPUT_FILE);
-        Problem p = new Problem();
-        p.solve();
+    public static void main(String[] args) throws Exception{
+
+        FileIO file = new FileIO();
+        file.readInput(INPUT_FILE);
+
+        Problem problem = new Problem();
+        problem.solve();
     }
 }

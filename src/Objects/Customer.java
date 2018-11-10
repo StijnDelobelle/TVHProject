@@ -1,21 +1,31 @@
 package Objects;
 
-public class Customer{
-
-    // Requirements of the customer (number to be delivered)
-    public Location location;
-    public Machine machine;
-    public boolean IsRouted;
-    public boolean IsDepot; //True if it Depot Node
-    public Type type;
-
-    public enum Type {
-        DROP, COLLECT
-    }
+public class Customer {
+    private Location location;
+    private Machine machine;
+    private boolean visited;
+    private Type type;
 
     public Customer(Machine machine, Location location, Type type){
         this.machine = machine;
         this.location = location;
         this.type = type;
+        this.visited = false;
+    }
+
+    public Location getLocation() {return location;}
+    public void setLocation(Location location) {this.location = location;}
+
+    public Machine getMachine() {return machine;}
+    public void setMachine(Machine machine) {this.machine = machine;}
+
+    public boolean isVisited() {return visited;}
+    public void setVisited(boolean visited) {this.visited = visited;}
+
+    public Type getType() {return type;}
+    public void setType(Type type) {this.type = type;}
+
+    public enum Type {
+        DROP, COLLECT
     }
 }
