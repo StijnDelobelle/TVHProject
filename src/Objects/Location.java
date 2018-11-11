@@ -1,6 +1,8 @@
 package Objects;
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
     private int id;
     private double lat;
     private double lon;

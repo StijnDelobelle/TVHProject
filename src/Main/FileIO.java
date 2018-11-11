@@ -76,7 +76,7 @@ public class FileIO {
                     Location startLocation = locations.get(Integer.parseInt(splited[1]));
                     Location endLocation = locations.get(Integer.parseInt(splited[2]));
 
-                    allTrucks.add(new Truck(id, startLocation, endLocation, startLocation));
+                    trucks.add(new Truck(id, startLocation, endLocation));
 
                     if(s.hasNextLine())
                     {

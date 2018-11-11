@@ -7,8 +7,6 @@ public class Problem {
 
     /** Globale variabelen **/
 
-    public static Route bestRoute = null;
-
     public static int[][] timeMatrix;
     public static int[][] distanceMatrix;
 
@@ -17,31 +15,23 @@ public class Problem {
 
     public static ArrayList<Location> locations = new ArrayList<>();
     public static ArrayList<Location> depots = new ArrayList<>();
-    public static ArrayList<Truck> allTrucks = new ArrayList<>();
+    public static ArrayList<Truck> trucks = new ArrayList<>();
     public static ArrayList<MachineType> machineTypes = new ArrayList<>();
     public static ArrayList<Machine> machines = new ArrayList<>();
     public static ArrayList<Customer> customers = new ArrayList<>();
 
     public void solve() throws Exception{
 
+        Solution solution = new Solution();
+
         /** GreedySolution **/
-        Solution solution = new Solution(allTrucks);
-        int minCost = Integer.MAX_VALUE;
-        for(int i = 0;i<1;i++)
-        {
-            Route route = solution.GreedySolution(customers,distanceMatrix,timeMatrix,i);
-
-            if(route.getTotalCost() < minCost) {
-                minCost = route.getTotalCost();
-                bestRoute = route;
-            }
-        }
-
-        solution.SolutionPrint("Greedy",bestRoute);
-        solution.WriteFile(bestRoute);
+        solution.GreedySolution(customers, trucks, machines);
+        solution.SolutionPrint("Greedy");
 
         /** TabuSearch Heuristic Neighborhood Search **/
-        // solution.TabuSearch(10,distanceMatrix,timeMatrix,bestRoute);
-        // solution.SolutionPrint("Solution after TabuSearch Heuristic Neighborhood Search", bestRoute);
+        //solution.TabuSearch(10,distanceMatrix,timeMatrix,bestRoute);
+        //solution.SolutionPrint("TabuSearch");
+
+        solution.WriteFile();
     }
 }

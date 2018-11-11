@@ -1,10 +1,10 @@
 package Objects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import static Heuristiek.Problem.*;
 
-public class Truck
-{
+public class Truck  implements Serializable {
     private int id;
     private int currentLoad;
     private int currentDistance;
@@ -14,14 +14,14 @@ public class Truck
     private Location currentLocation;
     private ArrayList<Customer> route = new ArrayList<>();
 
-    public Truck(int id, Location startLocation, Location eindLocation, Location currentLocation) {
+    public Truck(int id, Location startLocation, Location eindLocation) {
         this.id = id;
         this.currentLoad = 0;
         this.currentDistance = 0;
         this.currentWorkTime = 0;
         this.startLocation = startLocation;
         this.endLocation = eindLocation;
-        this.currentLocation = currentLocation;
+        this.currentLocation = startLocation;
         this.route.clear();
     }
 
@@ -53,7 +53,7 @@ public class Truck
     public void lessLoad(int load) {this.currentLoad -= load;}
 
     /** Add customer to truck route **/
-    public void AddNode(Customer Customer, int time , int distance) {
+    public void addPointToRoute(Customer Customer, int time , int distance) {
         route.add(Customer);
         this.currentLoad +=  Customer.getMachine().getMachineType().getVolume();
         this.currentLocation = Customer.getLocation();
@@ -61,11 +61,11 @@ public class Truck
         this.currentDistance += distance;
     }
 
-    public boolean CheckIfFits(int dem) {
-        return ((currentLoad + dem <= TRUCK_CAPACITY));
+    public boolean CheckIfLoadFits(int dem) {
+        return ((getCurrentLoad() + dem <= TRUCK_CAPACITY));
     }
 
     public boolean CheckIfTimeFits(int dem) {
-        return ((currentWorkTime + dem <= TIME_CAPACITY));
+        return ((getCurrentWorkTime() + dem <= TIME_CAPACITY));
     }
 }

@@ -1,6 +1,8 @@
 package Objects;
 
-public class MachineType {
+import java.io.Serializable;
+
+public class MachineType  implements Serializable {
     private int id;
     private int volume;
     private int serviceTime;

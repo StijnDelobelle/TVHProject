@@ -1,6 +1,8 @@
 package Objects;
 
-public class Customer {
+import java.io.Serializable;
+
+public class Customer implements Serializable {
     private Location location;
     private Machine machine;
     private boolean visited;
