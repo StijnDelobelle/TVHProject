@@ -53,9 +53,9 @@ public class Truck  implements Serializable {
     public void lessLoad(int load) {this.currentLoad -= load;}
 
     /** Add customer to truck route **/
-    public void addPointToRoute(Customer Customer, int time , int distance) {
+    public void addPointToRoute(Customer Customer, int time , int distance, int load) {
         route.add(Customer);
-        this.currentLoad +=  Customer.getMachine().getMachineType().getVolume();
+        this.currentLoad += load;
         this.currentLocation = Customer.getLocation();
         this.currentWorkTime += time;
         this.currentDistance += distance;

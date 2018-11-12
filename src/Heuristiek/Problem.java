@@ -25,8 +25,8 @@ public class Problem {
         Solution solution = new Solution();
 
         /** GreedySolution **/
-        solution.GreedySolution(customers, trucks, machines);
-        solution.SolutionPrint("Greedy");
+        solution.InitialSolution(customers, trucks, machines);
+        solution.SolutionPrint("Initial Solution");
 
         /** TabuSearch Heuristic Neighborhood Search **/
         //solution.TabuSearch(10,distanceMatrix,timeMatrix,bestRoute);

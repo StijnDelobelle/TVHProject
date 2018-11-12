@@ -130,10 +130,10 @@ public class FileIO {
 				{
 					String[] splited = actualRead.replaceAll("(^\\s+|\\s+$)", "").split("\\s+");
 
-					Machine machine = machines.get(Integer.parseInt(splited[1]));
+					MachineType machineType = machineTypes.get(Integer.parseInt(splited[1]));
 					Location location = locations.get(Integer.parseInt(splited[2]));
 
-					customers.add(new Customer(machine, location, Customer.Type.DROP));
+					customers.add(new Customer(null, machineType, location, Customer.Type.DROP));
 
 					if(s.hasNextLine())
 						actualRead = s.nextLine();
@@ -143,16 +143,15 @@ public class FileIO {
 			}
             else if(actualRead.contains("COLLECTS"))
             {
-
                 actualRead = s.nextLine();
                 while(!actualRead.equals(""))
                 {
                     String[] splited = actualRead.replaceAll("(^\\s+|\\s+$)", "").split("\\s+");
 
                     Machine machine = machines.get(Integer.parseInt(splited[1]));
-                    Location location = machines.get(Integer.parseInt(splited[1])).getLocation();
+                    MachineType machineType = machine.getMachineType();
 
-                    customers.add(new Customer(machine, location, Customer.Type.COLLECT));
+                    customers.add(new Customer(machine, machineType, null, Customer.Type.COLLECT));
 
                     if(s.hasNextLine())
                         actualRead = s.nextLine();

@@ -6,116 +6,154 @@ import Main.*;
 import java.io.*;
 import java.util.*;
 
-import static Heuristiek.Problem.*;
+import static Heuristiek.Problem.distanceMatrix;
+import static Heuristiek.Problem.locations;
+import static Heuristiek.Problem.timeMatrix;
 
 public class Solution  {
     private Route bestRoute;
-    private int Cost;
     private int BestSolutionCost;
-    private ArrayList<Truck> greedyTrucks;
-    private ArrayList<Machine> greedyMachines;
-    private ArrayList<Customer> greedyCustomers;
+    private ArrayList<Truck> initialTrucks;
+    private ArrayList<Machine> initialMachines;
+    private ArrayList<Customer> initialCustomers;
+    public ArrayList<Ride> rides = new ArrayList<>();
+    Location currentStop = null;
+    Customer currenCustomer = null;
+
+    boolean dropCanDone = false;
+    boolean collectCanDone = false;
 
     private ArrayList<Truck> VehiclesForBestSolution;
     private ArrayList<Integer> PastSolutions;
 
+    public void InitialSolution(ArrayList<Customer> argCustomers, ArrayList<Truck> argTrucks,  ArrayList<Machine> argMachines) {
 
-    public void GreedySolution(ArrayList<Customer> argCustomers, ArrayList<Truck> argTrucks,  ArrayList<Machine> argMachines) {
+        /** MACHINE_TYPES: [id volume serviceTime name]  **/
+        /** MACHINES:      [id machineTypeId locationId] **/
+        /** DROPS:         [id machineTypeId locationId] **/
+        /** COLLECTS:      [id machineId]                **/
 
-        /** Nieuwe route uittesten **/
+        int totalCost = 0;
 
-        Cost = 0;
-        int candidateCost;
-        int truckIndex = 0;
+        initialCustomers = (ArrayList<Customer>) deepClone(argCustomers);
+        initialTrucks = (ArrayList<Truck>) deepClone(argTrucks);
+        initialMachines = (ArrayList<Machine>) deepClone(argMachines);
 
-        greedyCustomers = (ArrayList<Customer>) deepClone(argCustomers);
-        greedyTrucks = (ArrayList<Truck>) deepClone(argTrucks);
-        greedyMachines = (ArrayList<Machine>) deepClone(argMachines);
+        currentStop = initialTrucks.get(0).getStartLocation();
 
-        // TODO: Zorg dat de truck start vanaf het dichtste punt!
-
-
-        // Doorgaan tot alle requests afgehandeld zijn
-        while (VisitedAllCustomers(greedyCustomers))
+        // Ritten van alle kortste afstanden tussen collects/drops berekenen en toevoegen in rides
+        while(AlleCustomersVisited())
         {
-            Customer candidate = null;
-            int minCost = Integer.MAX_VALUE;
+            /** Variabelen worden reset bij elke test **/
+            Machine candidateMachine = null;
+            Customer candidateCustomer = null;
+            int minDistance = Integer.MAX_VALUE;
+            Customer.Type type = null;
 
-            for (Customer customer : greedyCustomers) {
-                if (!customer.isVisited())
+            // Alle requests doorlopen
+            for (Customer customer : initialCustomers)
+            {
+                if(!customer.isVisited())
                 {
-                    // Past de mogelijke volgende stop in de truck?
-                    if (greedyTrucks.get(truckIndex).CheckIfLoadFits(customer.getMachine().getMachineType().getVolume()))
-                    {
-                        // Past de tijd nog van deze plaats naar volgende en terug nog in de max tijd?
-                        int tijdHeen = timeMatrix[greedyTrucks.get(truckIndex).getCurrentLocation().getId()][customer.getLocation().getId()];
-                        int tijdTerug = timeMatrix[customer.getLocation().getId()][greedyTrucks.get(truckIndex).getEndLocation().getId()];
-                        int tijdSerivce = customer.getMachine().getMachineType().getServiceTime();
+                    /****** DROPS ******/
+                    if (customer.getType() == Customer.Type.DROP) {
+                        // Alle machines zoeken van hetzelfde type dat gevraagd is
+                        ArrayList<Machine> identicalMachines = new ArrayList<>();
 
-                        if(greedyTrucks.get(truckIndex).CheckIfTimeFits(tijdSerivce + tijdHeen + tijdSerivce + tijdTerug))
-                        {
-                            // Bereken de afstand van de kandidaat
-                            candidateCost = distanceMatrix[greedyTrucks.get(truckIndex).getCurrentLocation().getId()][customer.getLocation().getId()];
-                            if (minCost > candidateCost) {
-                                minCost = candidateCost;
-                                candidate = customer;
+                        for(Machine machine : initialMachines) {
+                            if(machine.getMachineType().getId() == customer.getMachineType().getId()){
+                                identicalMachines.add(machine);
                             }
                         }
+
+                        // TODO Bereken de afstand bij de weg naar huis kan dit nog? Time + distance!!
+
+                        // Kortste afstand van alle identieke machines naar de drop locatie berekenen
+                        for(Machine machine : identicalMachines)
+                        {
+
+                                // Afstand huidige locatie naar locatie machine + afstand van machine naar effectieve dropplaats
+                                int distance = distanceMatrix[currentStop.getId()][machine.getLocation().getId()] + distanceMatrix[machine.getLocation().getId()][customer.getLocation().getId()];
+                                if( minDistance > distance) {
+                                    minDistance = distance;
+                                    candidateMachine = machine;
+                                    candidateCustomer = customer;
+                                    type = Customer.Type.DROP;
+
+                                }
+
+                        }
+                    }
+
+                    /****** COLLECTS ******/
+                    if (customer.getType() == Customer.Type.COLLECT)
+                    {
+
+                            int distance = distanceMatrix[currentStop.getId()][customer.getMachine().getLocation().getId()];
+                            if (minDistance > distance) {
+                                minDistance = distance;
+                                candidateMachine = customer.getMachine();
+                                candidateCustomer = customer;
+                                type = Customer.Type.COLLECT;
+
+                            }
+
                     }
                 }
             }
 
-            if (candidate == null)
+            if (candidateCustomer.getType() == Customer.Type.DROP) {
+                Customer temporaryStop = new Customer(candidateMachine, candidateMachine.getMachineType(), candidateMachine.getLocation(), Customer.Type.TEMPORARY);
+                rides.add(new Ride(currentStop, candidateMachine.getLocation(), currenCustomer, temporaryStop));
+                candidateCustomer.setMachine(candidateMachine);
+                candidateCustomer.setMachineType(candidateMachine.getMachineType());
+                rides.add(new Ride(candidateMachine.getLocation(), candidateCustomer.getLocation(), temporaryStop, candidateCustomer));
+                currentStop = candidateCustomer.getLocation();
+
+            } else if (candidateCustomer.getType() == Customer.Type.COLLECT) {
+                candidateCustomer.setLocation(candidateMachine.getLocation());
+                rides.add(new Ride(currentStop, candidateMachine.getLocation(), currenCustomer, candidateCustomer));
+                currentStop = candidateMachine.getLocation();
+            }
+
+
+            candidateCustomer.setVisited(true);
+        }
+
+
+        // Begin bij truck 1
+        int truckIndex = 0;
+
+        for(Ride ride : rides)
+        {
+            boolean addedToTruck = false;
+            while (!addedToTruck)
             {
-                // Geen enkele customer past
-                if (truckIndex + 1 < greedyTrucks.size() ) //We hebben nog trucks ter beschikking
+                int load = ride.getToCustomer().getMachineType().getVolume();
+
+                if (initialTrucks.get(truckIndex).CheckIfLoadFits(load)) // TODO: Werk tijd meerekenen! & Bij een drop -> load verwijderen
                 {
-                    // Maximum capaciteit voor deze truck is bereikt (geen kandidaten) -> Dus terugkeren naar depots.
-                    if (!depots.contains(greedyTrucks.get(truckIndex).getCurrentLocation()))
-                    {
-                        Customer depot = new Customer(greedyMachines.get(0), greedyTrucks.get(truckIndex).getStartLocation(), Customer.Type.COLLECT);
-
-                        int rideTime = timeMatrix[greedyTrucks.get(truckIndex).getCurrentLocation().getId()][greedyTrucks.get(truckIndex).getEndLocation().getId()];
-                        int rideDistance = distanceMatrix[greedyTrucks.get(truckIndex).getCurrentLocation().getId()][greedyTrucks.get(truckIndex).getEndLocation().getId()];
-
-                        greedyTrucks.get(truckIndex).addPointToRoute(depot, rideTime, rideDistance);
-                        Cost += rideDistance;
-                    }
-                    // Next truck
-                    truckIndex++;
+                    int time = timeMatrix[ride.getFromLocation().getId()][ride.getToLocation().getId()];
+                    int distance = distanceMatrix[ride.getFromLocation().getId()][ride.getToLocation().getId()];
+                    initialTrucks.get(truckIndex).addPointToRoute(ride.getToCustomer(), time, distance, load);
+                    totalCost += distance;
+                    addedToTruck = true;
                 }
                 else
                 {
-                    System.out.println("\nNiet genoeg trucks beschikbaar!");
-                    System.exit(0);
+                    // Truck vol, naar huis sturen
+                    truckIndex++;
                 }
-            }
-            else
-            {
-                //Als een nieuwe kandidaat gevonden is, add point to route
-                int rideTime = timeMatrix[greedyTrucks.get(truckIndex).getCurrentLocation().getId()][candidate.getLocation().getId()];
-                int serviceTime = candidate.getMachine().getMachineType().getServiceTime();
-                int distance = distanceMatrix[greedyTrucks.get(truckIndex).getCurrentLocation().getId()][candidate.getLocation().getId()];
-
-                greedyTrucks.get(truckIndex).addPointToRoute(candidate,rideTime + serviceTime, distance);
-                candidate.setVisited(true);
-                Cost += minCost;
             }
         }
 
-        int rideDistance = distanceMatrix[greedyTrucks.get(truckIndex).getCurrentLocation().getId()][greedyTrucks.get(truckIndex).getStartLocation().getId()];
-        Customer depot = new Customer(greedyMachines.get(0), greedyTrucks.get(truckIndex).getStartLocation(), Customer.Type.COLLECT);
-        greedyTrucks.get(truckIndex).addPointToRoute(depot,0, 0);
-        Cost += rideDistance;
-
-        bestRoute = new Route(greedyTrucks, Cost);
+        bestRoute = new Route(initialTrucks, totalCost);
     }
 
-    /** Kijken als alle klanten bezocht zijn **/
-    public boolean VisitedAllCustomers(ArrayList<Customer> Costumers) {
-        for(Customer costumer : Costumers)
+    public boolean AlleCustomersVisited() {
+        for(Customer customer : initialCustomers)
         {
-            if (!costumer.isVisited())
+            if (!customer.isVisited())
                 return true;
         }
         return false;
@@ -257,7 +295,7 @@ public class Solution  {
 
                             //|| greedyRoute.v[VehIndexTo].CheckIfTimeFits(timeToCustomer)
 
-                            if ((VehIndexFrom == VehIndexTo) ||  (greedyRoute.getTrucks().get(VehIndexTo).CheckIfLoadFits(MovingNodeDemand) && greedyTrucks.get(VehIndexTo).CheckIfTimeFits(timeMatrix[greedyTrucks.get(VehIndexTo).getCurrentLocation().getId()][locationFrom] + timeMatrix[locationFrom][greedyTrucks.get(VehIndexTo).getStartLocation().getId()])))
+                            if ((VehIndexFrom == VehIndexTo) ||  (greedyRoute.getTrucks().get(VehIndexTo).CheckIfLoadFits(MovingNodeDemand) && initialTrucks.get(VehIndexTo).CheckIfTimeFits(timeMatrix[initialTrucks.get(VehIndexTo).getCurrentLocation().getId()][locationFrom] + timeMatrix[locationFrom][initialTrucks.get(VehIndexTo).getStartLocation().getId()])))
                             {
                                 if (((VehIndexFrom == VehIndexTo) && ((j == i) || (j == i - 1))) == false)  // Not a move that Changes solution cost
                                 {
@@ -418,3 +456,72 @@ public class Solution  {
 
     //</editor-fold>
 }
+
+
+        /*
+        while (AllCollectsDone(initialCustomers))
+        {
+            Customer candidate = null;
+            int minCost = Integer.MAX_VALUE;
+
+            for (Customer customer : initialCustomers) {
+                if (!customer.isVisited())
+                {
+                    // Past de mogelijke volgende stop in de truck?
+                    if (initialTrucks.get(truckIndex).CheckIfLoadFits(customer.getMachine().getMachineType().getVolume()))
+                    {
+                        // Past de tijd nog van deze plaats naar volgende en terug nog in de max tijd?
+                        int tijdHeen = timeMatrix[initialTrucks.get(truckIndex).getCurrentLocation().getId()][customer.getLocation().getId()];
+                        int tijdTerug = timeMatrix[customer.getLocation().getId()][initialTrucks.get(truckIndex).getEndLocation().getId()];
+                        int tijdSerivce = customer.getMachine().getMachineType().getServiceTime();
+
+                        if(initialTrucks.get(truckIndex).CheckIfTimeFits(tijdSerivce + tijdHeen + tijdSerivce + tijdTerug))
+                        {
+                            // Bereken de afstand van de kandidaat
+                            candidateCost = distanceMatrix[initialTrucks.get(truckIndex).getCurrentLocation().getId()][customer.getLocation().getId()];
+                            if (minCost > candidateCost) {
+                                minCost = candidateCost;
+                                candidate = customer;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (candidate == null)
+            {
+                // Geen enkele customer past
+                if (truckIndex + 1 < initialTrucks.size() ) //We hebben nog trucks ter beschikking
+                {
+                    // Maximum capaciteit voor deze truck is bereikt (geen kandidaten) -> Dus terugkeren naar depots.
+                    if (!depots.contains(initialTrucks.get(truckIndex).getCurrentLocation()))
+                    {
+                        Customer depot = new Customer(initialMachines.get(0), initialMachines.get(0).getMachineType(), initialTrucks.get(truckIndex).getEndLocation(), null);
+
+                        int rideTime = timeMatrix[initialTrucks.get(truckIndex).getCurrentLocation().getId()][initialTrucks.get(truckIndex).getEndLocation().getId()];
+                        int rideDistance = distanceMatrix[initialTrucks.get(truckIndex).getCurrentLocation().getId()][initialTrucks.get(truckIndex).getEndLocation().getId()];
+
+                        initialTrucks.get(truckIndex).addPointToRoute(depot, rideTime, rideDistance);
+                        Cost += rideDistance;
+                    }
+                    // Next truck
+                    truckIndex++;
+                }
+                else
+                {
+                    System.out.println("\nNiet genoeg trucks beschikbaar!");
+                    System.exit(0);
+                }
+            }
+            else
+            {
+                //Als een nieuwe kandidaat gevonden is, add point to route
+                int rideTime = timeMatrix[initialTrucks.get(truckIndex).getCurrentLocation().getId()][candidate.getLocation().getId()];
+                int serviceTime = candidate.getMachine().getMachineType().getServiceTime();
+                int distance = distanceMatrix[initialTrucks.get(truckIndex).getCurrentLocation().getId()][candidate.getLocation().getId()];
+
+                initialTrucks.get(truckIndex).addPointToRoute(candidate,rideTime + serviceTime, distance);
+                candidate.setVisited(true);
+                Cost += minCost;
+            }
+        }*/
