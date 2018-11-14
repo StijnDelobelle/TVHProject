@@ -9,7 +9,7 @@ public class Customer implements Serializable {
     private boolean visited;
     private Type type;
 
-    public Customer(Machine machine, MachineType machineType, Location location, Type type){
+    public Customer(Machine machine, MachineType machineType, Location location, Type type) {
         this.machine = machine;
         this.machineType = machineType;
         this.location = location;
@@ -33,6 +33,6 @@ public class Customer implements Serializable {
     public void setType(Type type) {this.type = type;}
 
     public enum Type {
-        DROP, COLLECT, TEMPORARY
+        DROP, COLLECT, TEMPORARY, START, END
     }
 }

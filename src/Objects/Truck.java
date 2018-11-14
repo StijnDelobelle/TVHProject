@@ -13,6 +13,7 @@ public class Truck  implements Serializable {
     private Location endLocation;
     private Location currentLocation;
     private ArrayList<Customer> route = new ArrayList<>();
+    private ArrayList<Machine> loadedMachines = new ArrayList<>();
 
     public Truck(int id, Location startLocation, Location eindLocation) {
         this.id = id;
@@ -23,6 +24,7 @@ public class Truck  implements Serializable {
         this.endLocation = eindLocation;
         this.currentLocation = startLocation;
         this.route.clear();
+        this.loadedMachines.clear();
     }
 
     public int getId() {return id;}
@@ -49,16 +51,24 @@ public class Truck  implements Serializable {
     public ArrayList<Customer> getRoute() {return route;}
     public void setRoute(ArrayList<Customer> route) {this.route = route;}
 
+    public ArrayList<Machine> getLoadedMachines() {return loadedMachines;}
+    public void setLoadedMachines(ArrayList<Machine> loadedMachines) {this.loadedMachines = loadedMachines;}
+
     public void addLoad(int load) {this.currentLoad += load;}
     public void lessLoad(int load) {this.currentLoad -= load;}
 
     /** Add customer to truck route **/
-    public void addPointToRoute(Customer Customer, int time , int distance, int load) {
-        route.add(Customer);
+    public void addPointToRoute(Customer customer, int time , int distance, int load, Machine machine) {
+        route.add(customer);
         this.currentLoad += load;
-        this.currentLocation = Customer.getLocation();
+        this.currentLocation = customer.getLocation();
         this.currentWorkTime += time;
         this.currentDistance += distance;
+
+        if(customer.getType() == Customer.Type.COLLECT || customer.getType() == Customer.Type.TEMPORARY )
+                this.loadedMachines.add(machine);
+        else if(customer.getType() == Customer.Type.DROP )
+                this.loadedMachines.remove(machine);
     }
 
     public boolean CheckIfLoadFits(int dem) {

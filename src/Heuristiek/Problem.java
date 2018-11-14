@@ -24,14 +24,12 @@ public class Problem {
 
         Solution solution = new Solution();
 
-        /** GreedySolution **/
+        /** InitialSolution **/
         solution.InitialSolution(customers, trucks, machines);
-        solution.SolutionPrint("Initial Solution");
+        solution.WriteFile();
 
         /** TabuSearch Heuristic Neighborhood Search **/
-        //solution.TabuSearch(10,distanceMatrix,timeMatrix,bestRoute);
-        //solution.SolutionPrint("TabuSearch");
-
-        solution.WriteFile();
+        //solution.TabuSearch(10);
+        //solution.WriteFile();
     }
 }
