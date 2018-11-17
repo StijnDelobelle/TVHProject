@@ -13,11 +13,7 @@ public class Main {
     public static String OUTPUT_FILE = "tvh_solution_3.txt";
 
     public static void main(String[] args) throws Exception{
-
-        FileIO file = new FileIO();
-        file.readInput(INPUT_FILE);
-
-        Problem problem = new Problem();
-        problem.solve();
+        FileIO.readInput(INPUT_FILE);
+        Problem.solve();
     }
 }

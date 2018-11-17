@@ -18,14 +18,14 @@ public class Problem {
     public static ArrayList<Truck> trucks = new ArrayList<>();
     public static ArrayList<MachineType> machineTypes = new ArrayList<>();
     public static ArrayList<Machine> machines = new ArrayList<>();
-    public static ArrayList<Customer> customers = new ArrayList<>();
+    public static ArrayList<Request> requests = new ArrayList<>();
 
-    public void solve() throws Exception{
+    public static void solve() throws Exception{
 
         Solution solution = new Solution();
 
         /** InitialSolution **/
-        solution.InitialSolution(customers, trucks, machines);
+        solution.InitialSolution(requests, trucks);
         solution.WriteFile();
 
         /** TabuSearch Heuristic Neighborhood Search **/

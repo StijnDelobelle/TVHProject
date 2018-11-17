@@ -1,23 +1,22 @@
 package Objects;
 
-public class Ride {
-    private boolean rided;
+import java.io.Serializable;
+
+public class Ride implements Serializable {
     private Location fromLocation;
     private Location toLocation;
-    private Location pickupLocation; //Bij drops tussenstop maken
+    private Location pickupLocation; //Type DROP
     private Machine machine;
+    private Request.Type type;
 
-    public Ride(Location fromLocation, Location toLocation, Location pickupLocation, Machine machine)
+    public Ride(Location fromLocation, Location toLocation, Location pickupLocation, Machine machine, Request.Type type)
     {
-        this.rided = false;
         this.fromLocation = fromLocation;
         this.toLocation = toLocation;
         this.pickupLocation = pickupLocation;
         this.machine = machine;
+        this.type = type;
     }
-
-    public boolean getRided() {return rided;}
-    public void setRided(boolean rided) {this.rided = rided;}
 
     public Location getFromLocation() {return fromLocation;}
     public void setFromLocation(Location fromLocation) {this.fromLocation = fromLocation;}
@@ -30,5 +29,8 @@ public class Ride {
 
     public Machine getMachine() {return machine;}
     public void setMachine(Machine machine) {this.machine = machine;}
+
+    public Request.Type getType() {return type;}
+    public void setType(Request.Type type) {this.type = type;}
 
 }

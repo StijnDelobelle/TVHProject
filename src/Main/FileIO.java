@@ -8,7 +8,7 @@ import static Heuristiek.Problem.*;
 
 public class FileIO {
 
-    public void readInput(String filename){
+    public static void readInput(String filename){
         Scanner s = null;
 
         try {
@@ -133,7 +133,7 @@ public class FileIO {
 					MachineType machineType = machineTypes.get(Integer.parseInt(splited[1]));
 					Location location = locations.get(Integer.parseInt(splited[2]));
 
-					customers.add(new Customer(null, machineType, location, Customer.Type.DROP));
+					requests.add(new Request(null, machineType, location, Request.Type.DROP));
 
 					if(s.hasNextLine())
 						actualRead = s.nextLine();
@@ -151,7 +151,7 @@ public class FileIO {
                     Machine machine = machines.get(Integer.parseInt(splited[1]));
                     MachineType machineType = machine.getMachineType();
 
-                    customers.add(new Customer(machine, machineType, null, Customer.Type.COLLECT));
+                    requests.add(new Request(machine, machineType, null, Request.Type.COLLECT));
 
                     if(s.hasNextLine())
                         actualRead = s.nextLine();
