@@ -5,8 +5,8 @@ import Heuristiek.*;
 public class Main {
     /**
      * Valideren:
-     java -jar tvh-1.0-student.jar --problem=<file_name.txt> --solution=<file_name.txt> --gui (optional, for launching the gui)
      java -jar tvh-1.0-student.jar --problem=tvh_problem_3.txt --solution=tvh_solution_3.txt --gui
+     java -jar tvh-1.0-student.jar --problem=tvh_problem_4.txt --solution=tvh_solution_4.txt --gui
      */
 
     public static String INPUT_FILE;

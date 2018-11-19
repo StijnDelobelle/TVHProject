@@ -74,6 +74,7 @@ public class Solution  {
 
                     ride = new Ride(null, request.getLocation(), pickupLocation, pickupMachine, Request.Type.DROP);
 
+                    // Lock de machine!
                     machines.get(pickupMachine.getId()).setLocked(true);
                 }
 
@@ -163,8 +164,6 @@ public class Solution  {
         /** Van pickup locatie naar eindlocatie **/
         Ride pickup_end = new Ride(currentRide.getPickupLocation(), currentRide.getToLocation(), null, currentRide.getMachine(), Request.Type.DROP);
         initialTrucks.get(candidateTruck.getId()).addPointToRoute(pickup_end);
-
-        //machines.get(currentRide.getMachine().getId()).setLocked(true);
     }
 
     public void SearchClosestTruckCollect(Ride currentRide){
@@ -202,8 +201,6 @@ public class Solution  {
 
         Ride start_end = new Ride(startLocation, currentRide.getToLocation(), null, currentRide.getMachine(), Request.Type.COLLECT);
         initialTrucks.get(candidateTruck.getId()).addPointToRoute(start_end);
-
-        //machines.get(currentRide.getMachine().getId()).setLocked(true);
     }
 
     public void SendTrucksToHome(){
