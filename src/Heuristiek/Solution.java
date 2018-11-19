@@ -3,8 +3,10 @@ package Heuristiek;
 import Objects.*;
 import Main.*;
 
+import java.awt.*;
 import java.io.*;
 import java.util.*;
+import java.util.List;
 
 import static Heuristiek.Problem.distanceMatrix;
 import static Heuristiek.Problem.machines;
@@ -23,50 +25,68 @@ public class Solution  {
         /** DROPS:         [id machineTypeId locationId] **/
         /** COLLECTS:      [id machineId]                **/
 
-        int af1 =  distanceMatrix[0][8];
-        int af2 =  distanceMatrix[0][12];
-        int afstand1 = distanceMatrix[8][0] +distanceMatrix[0][12] +distanceMatrix[12][0];
-        int afstand2 = distanceMatrix[0][8] +distanceMatrix[0][12] +distanceMatrix[12][0];
-        int afstand3 = distanceMatrix[0][8] + distanceMatrix[8][0] +distanceMatrix[12][0];
-        int afstand4 = distanceMatrix[0][8] + distanceMatrix[8][0] +distanceMatrix[0][12];
-
         initialRequests = (ArrayList<Request>) deepClone(argRequests);
         initialTrucks = (ArrayList<Truck>) deepClone(argTrucks);
 
         Random random = new Random(0);
         Collections.shuffle(initialRequests, random);
 
-        for (Request request : initialRequests)
+        HashMap<Integer, Request> requests = new HashMap<>();
+        for(Request request : initialRequests){
+            requests.put(request.getId(), request);
+        }
+
+        // Alle collect requests die nodig zijn, key => machineID
+        HashMap<Integer, Request> collects = new HashMap<>();
+        for(Request request : requests.values()) {
+            if (request.getType() == Request.Type.COLLECT)
+                collects.put(request.getMachine().getId(), request);
+        }
+
+        for (Request request : requests.values())
         {
-            Ride ride = null;
+            // Is de request al gedaan doordat een drop request al de machine heeft meegepakt onderweg?
+            if(!request.isDone()) {
 
-            /****** DROPS ******/
-            if (request.getType() == Request.Type.DROP) {
+                Ride ride = null;
 
-                // Alle locaties zoeken waar dat type machine staat
-                ArrayList<Location> potentialPickupLocations = new ArrayList<>();
-                for(Machine machine : machines) {
-                    if(machine.getMachineType().getId() == request.getMachineType().getId() && !machine.isLocked()){
-                        potentialPickupLocations.add(machine.getLocation());
+                /****** DROPS ******/
+                if (request.getType() == Request.Type.DROP) {
+
+                    // Alle locaties zoeken waar dat type machine staat
+                    ArrayList<Location> potentialPickupLocations = new ArrayList<>();
+                    for (Machine machine : machines) {
+                        if (machine.getMachineType().getId() == request.getMachineType().getId() && !machine.isLocked()) {
+                            potentialPickupLocations.add(machine.getLocation());
+                        }
                     }
+
+                    // Kortste afstand tussen pickuplocatie en droplocatie zoeken
+                    Location pickupLocation = SearchClosestPickupLocation(potentialPickupLocations, request.getLocation());
+                    Machine pickupMachine = machines.stream()
+                            .filter(s -> s.getLocation().getId() == pickupLocation.getId() && s.getMachineType().getId() == request.getMachineType().getId() && s.isLocked() == false)
+                            .findFirst().get();
+
+                    // Indien een collect al gebeurt is voor een drop, verwijder deze uit de collects die nog gedaan moeten worden!
+                    if (collects.containsKey(pickupMachine.getId())) {
+                        requests.get(collects.get(pickupMachine.getId()).getId()).setDone(true);
+                    }
+
+                    ride = new Ride(null, request.getLocation(), pickupLocation, pickupMachine, Request.Type.DROP);
+
+                    machines.get(pickupMachine.getId()).setLocked(true);
                 }
 
-                // Kortste afstand tussen pickuplocatie en droplocatie zoeken
-                Location pickupLocation = SearchClosestPickupLocation(potentialPickupLocations, request.getLocation());
-                Machine pickupMachine = machines.stream()
-                        .filter(s -> s.getLocation().getId() == pickupLocation.getId() && s.getMachineType().getId() == request.getMachineType().getId())
-                        .findFirst().get();
+                /****** COLLECTS ******/
+                if (request.getType() == Request.Type.COLLECT) {
+                    ride = new Ride(null, request.getMachine().getLocation(), null, request.getMachine(), Request.Type.COLLECT);
 
-                ride = new Ride(null, request.getLocation(), pickupLocation, pickupMachine, Request.Type.DROP);
+                    machines.get(request.getMachine().getId()).setLocked(true);
+                }
+
+                AddToTruck(ride);
+                requests.get(request.getId()).setDone(true);
             }
-
-            /****** COLLECTS ******/
-            if (request.getType() == Request.Type.COLLECT)
-            {
-                ride = new Ride(null, request.getMachine().getLocation(), null, request.getMachine(), Request.Type.COLLECT);
-            }
-
-            AddToTruck(ride);
         }
 
         /** Alle truck terug naar depot sturen **/
@@ -144,7 +164,7 @@ public class Solution  {
         Ride pickup_end = new Ride(currentRide.getPickupLocation(), currentRide.getToLocation(), null, currentRide.getMachine(), Request.Type.DROP);
         initialTrucks.get(candidateTruck.getId()).addPointToRoute(pickup_end);
 
-        machines.get(currentRide.getMachine().getId()).setLocked(true);
+        //machines.get(currentRide.getMachine().getId()).setLocked(true);
     }
 
     public void SearchClosestTruckCollect(Ride currentRide){
@@ -183,7 +203,7 @@ public class Solution  {
         Ride start_end = new Ride(startLocation, currentRide.getToLocation(), null, currentRide.getMachine(), Request.Type.COLLECT);
         initialTrucks.get(candidateTruck.getId()).addPointToRoute(start_end);
 
-        machines.get(currentRide.getMachine().getId()).setLocked(true);
+        //machines.get(currentRide.getMachine().getId()).setLocked(true);
     }
 
     public void SendTrucksToHome(){

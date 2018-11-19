@@ -17,6 +17,8 @@ public class FileIO {
             e.printStackTrace();
         }
 
+        int requestId = 0;
+
         while (s.hasNextLine()) {
             String actualRead = s.nextLine();
             if(actualRead.contains("TRUCK_CAPACITY"))
@@ -133,7 +135,7 @@ public class FileIO {
 					MachineType machineType = machineTypes.get(Integer.parseInt(splited[1]));
 					Location location = locations.get(Integer.parseInt(splited[2]));
 
-					requests.add(new Request(null, machineType, location, Request.Type.DROP));
+					requests.add(new Request(requestId++,null, machineType, location, Request.Type.DROP));
 
 					if(s.hasNextLine())
 						actualRead = s.nextLine();
@@ -151,7 +153,7 @@ public class FileIO {
                     Machine machine = machines.get(Integer.parseInt(splited[1]));
                     MachineType machineType = machine.getMachineType();
 
-                    requests.add(new Request(machine, machineType, null, Request.Type.COLLECT));
+                    requests.add(new Request(requestId++, machine, machineType, null, Request.Type.COLLECT));
 
                     if(s.hasNextLine())
                         actualRead = s.nextLine();

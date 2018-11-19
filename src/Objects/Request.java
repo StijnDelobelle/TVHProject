@@ -3,17 +3,24 @@ package Objects;
 import java.io.Serializable;
 
 public class Request implements Serializable {
+    private int id;
     private Machine machine;
     private MachineType machineType;
     private Location location;
     private Type type;
+    private boolean isDone;
 
-    public Request(Machine machine, MachineType machineType, Location location, Type type) {
+    public Request(int id, Machine machine, MachineType machineType, Location location, Type type) {
+        this.id = id;
         this.machine = machine;
         this.machineType = machineType;
         this.location = location;
         this.type = type;
+        this.isDone = false;
     }
+
+    public int getId() {return id;}
+    public void setId(int id) {this.id = id;}
 
     public Machine getMachine() {return machine;}
     public void setMachine(Machine machine) {this.machine = machine;}
@@ -26,6 +33,9 @@ public class Request implements Serializable {
 
     public Type getType() {return type;}
     public void setType(Type type) {this.type = type;}
+
+    public boolean isDone() {return isDone;}
+    public void setDone(boolean isDone) {this.isDone = isDone;}
 
     public enum Type {
         DROP, COLLECT, TEMPORARYCOLLECT, END
