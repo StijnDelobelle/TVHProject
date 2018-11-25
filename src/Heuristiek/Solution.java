@@ -456,7 +456,7 @@ public class Solution   {
 
         /* meta settings ----------------------------------- */
 
-        int MAX_IDLE = 100;
+        int MAX_IDLE = 100000;
         int L = 1000;
 
         /* create initial solution ------------------------- */
