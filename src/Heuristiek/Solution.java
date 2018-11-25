@@ -476,7 +476,7 @@ public class Solution   {
             // move
             int requestId = random.nextInt(requests.size() - 1);
             Request req = requests.get(requestId);
-            int toTruckId = random.nextInt(trucks.size()- 1);
+            int toTruckId = random.nextInt(39);
 
             Route returnRoute = DoMove(bestRoute, req, toTruckId);
 
