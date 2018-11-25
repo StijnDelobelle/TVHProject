@@ -388,19 +388,6 @@ public class Solution   {
         return time;
     }
 
-    //De afstand berekenen van alle trucks
-    public int measureTotalDistance(Route r)
-    {
-        int distance = 0;
-        for(Truck truck : r.getTrucks())
-        {
-            distance = distance + measureDistanceTruck(truck);
-        }
-
-        r.setTotalDistance(distance);
-        return distance;
-    }
-
     //De laatste stop toevoegen aan alle trucks
     public void SendTrucksToHome(){
 
@@ -450,13 +437,26 @@ public class Solution   {
         }
     }
 
+    //De afstand berekenen van alle trucks
+    public int measureTotalDistance(Route r)
+    {
+        int distance = 0;
+        for(Truck truck : r.getTrucks())
+        {
+            distance = distance + measureDistanceTruck(truck);
+        }
+
+        r.setTotalDistance(distance);
+        return distance;
+    }
+
     public Route meta()
     {
         //Solution solution = null;
 
         /* meta settings ----------------------------------- */
 
-        int MAX_IDLE = 100000;
+        int MAX_IDLE = 100;
         int L = 1000;
 
         /* create initial solution ------------------------- */
@@ -640,7 +640,7 @@ public class Solution   {
                 //TODO veranderen dat dit gelijk welke positie kan zijn
                 truckToAddRequest.getStops().get(truckToAddRequest.getStops().size()-1).addDrop(request.getMachine(),false);
 
-                truckToAddRequest.getLoadedMachines().add(request.getMachine());
+                //truckToAddRequest.getLoadedMachines().add(request.getMachine());
 
                 //load toevoegen aan truck
                 truckToAddRequest.addLoad(request.getMachine().getMachineType().getVolume());

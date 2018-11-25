@@ -18,6 +18,7 @@ public class Truck  implements Serializable {
     private int serviceTime;
     private int tijdLaden;
 
+    //Enkel gebruikt voor initiele oplossing!!
     private ArrayList<Machine> loadedMachines = new ArrayList<>();
 
     public Truck(int id, Location startLocation, Location eindLocation) {
