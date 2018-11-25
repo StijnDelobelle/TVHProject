@@ -3,20 +3,30 @@ package Heuristiek;
 import Objects.*;
 import Main.*;
 
-import java.awt.*;
 import java.io.*;
 import java.util.*;
-import java.util.List;
 
-import static Heuristiek.Problem.distanceMatrix;
-import static Heuristiek.Problem.machines;
-import static Heuristiek.Problem.timeMatrix;
+import static Heuristiek.Problem.*;
 
-public class Solution  {
 
-    private Route bestRoute;
+public class Solution   {
+
+    private Route route;
     private ArrayList<Truck> initialTrucks;
     private ArrayList<Request> initialRequests;
+    private HashMap<Integer, Request> requests;
+    private static final Random random = new Random(0);
+
+
+    public void zetStartStops(ArrayList<Truck> initialTrucks)
+    {
+        for(Truck truck: initialTrucks)
+        {
+            Stop stopStart = new Stop(truck.getStartLocation(),null,Request.Type.START);
+
+            truck.addStopToRoute(stopStart);
+        }
+    }
 
     public void InitialSolution(ArrayList<Request> argRequests, ArrayList<Truck> argTrucks) {
 
@@ -28,10 +38,12 @@ public class Solution  {
         initialRequests = (ArrayList<Request>) deepClone(argRequests);
         initialTrucks = (ArrayList<Truck>) deepClone(argTrucks);
 
+        zetStartStops(initialTrucks);
+
         Random random = new Random(0);
         Collections.shuffle(initialRequests, random);
 
-        HashMap<Integer, Request> requests = new HashMap<>();
+        requests = new HashMap<>();
         for(Request request : initialRequests){
             requests.put(request.getId(), request);
         }
@@ -48,7 +60,7 @@ public class Solution  {
             // Is de request al gedaan doordat een drop request al de machine heeft meegepakt onderweg?
             if(!request.isDone()) {
 
-                Ride ride = null;
+                Rit rit = null;
 
                 /****** DROPS ******/
                 if (request.getType() == Request.Type.DROP) {
@@ -72,7 +84,7 @@ public class Solution  {
                         requests.get(collects.get(pickupMachine.getId()).getId()).setDone(true);
                     }
 
-                    ride = new Ride(null, request.getLocation(), pickupLocation, pickupMachine, Request.Type.DROP);
+                    rit = new Rit(pickupLocation,request.getLocation(),pickupMachine,Request.Type.DROP);
 
                     // Lock de machine!
                     machines.get(pickupMachine.getId()).setLocked(true);
@@ -80,12 +92,12 @@ public class Solution  {
 
                 /****** COLLECTS ******/
                 if (request.getType() == Request.Type.COLLECT) {
-                    ride = new Ride(null, request.getMachine().getLocation(), null, request.getMachine(), Request.Type.COLLECT);
-
+                    rit = new Rit(request.getMachine().getLocation(), null, request.getMachine(), Request.Type.COLLECT);
                     machines.get(request.getMachine().getId()).setLocked(true);
                 }
 
-                AddToTruck(ride);
+                //AddToTruck(ride);
+                Add(rit,request);
                 requests.get(request.getId()).setDone(true);
             }
         }
@@ -93,8 +105,9 @@ public class Solution  {
         /** Alle truck terug naar depot sturen **/
         SendTrucksToHome();
 
+
         /** Initiele Oplossing **/
-        bestRoute = new Route(initialTrucks);
+        route = new Route(initialTrucks);
     }
 
     // Kortste afstand tussen pickuplocatie en droplocatie zoeken
@@ -112,25 +125,15 @@ public class Solution  {
         return pickupLocation;
     }
 
-    public void AddToTruck(Ride ride) {
-        if(ride.getType() == Request.Type.DROP)
-        {
-            SearchClosestTruckDrop(ride);
-        }
-        else if(ride.getType() == Request.Type.COLLECT)
-        {
-            SearchClosestTruckCollect(ride);
-        }
-    }
+    public void Add(Rit rit,Request request) {
 
-    public void SearchClosestTruckDrop(Ride currentRide){
-        Location pickupLocation = currentRide.getPickupLocation();
-        int load = currentRide.getMachine().getMachineType().getVolume();
-        int serviceTime = currentRide.getMachine().getMachineType().getServiceTime();
+        int serviceTime = rit.getMachine().getMachineType().getServiceTime();
 
-        Location startLocation = null;
         int minDistance = Integer.MAX_VALUE;
         Truck candidateTruck = null;
+        Stop s1 = null;
+        Stop s2 = null;
+
 
         /** Per truck & tussen elke tussenlocatie **/
         for(Truck truck : initialTrucks)
@@ -143,144 +146,637 @@ public class Solution  {
             //}
 
             //for(Ride ride : rides){
-                /** Van de eindlocatie van de vorige rit naar de pickuplocatie **/
-                int distance = distanceMatrix[truck.getCurrentLocation().getId()][pickupLocation.getId()] + distanceMatrix[pickupLocation.getId()][currentRide.getToLocation().getId()];
-                if(minDistance > distance)
-                {
-                    /** Controleren of die er nog bij kan **/
-                    int rideTime = timeMatrix[truck.getCurrentLocation().getId()][pickupLocation.getId()] + timeMatrix[pickupLocation.getId()][currentRide.getToLocation().getId()];
-                    if(truck.CheckIfLoadFits(load) && truck.CheckIfTimeFits(rideTime, serviceTime, currentRide.getToLocation()) ) {
-                        minDistance = distance;
-                        startLocation = truck.getCurrentLocation();
-                        candidateTruck = truck;
-                    }
-                }
-            //}
-        }
+            /** Van de eindlocatie van de vorige rit naar de pickuplocatie **/
+            //int distance = distanceMatrix[truck.getCurrentLocation().getId()][pickupLocation.getId()] + distanceMatrix[pickupLocation.getId()][currentRide.getToLocation().getId()];
 
-        /** Van start locatie naar pickup locatie **/
-        Ride start_pickup = new Ride(startLocation, currentRide.getPickupLocation(), null, currentRide.getMachine(), Request.Type.TEMPORARYCOLLECT);
-        initialTrucks.get(candidateTruck.getId()).addPointToRoute(start_pickup);
-        /** Van pickup locatie naar eindlocatie **/
-        Ride pickup_end = new Ride(currentRide.getPickupLocation(), currentRide.getToLocation(), null, currentRide.getMachine(), Request.Type.DROP);
-        initialTrucks.get(candidateTruck.getId()).addPointToRoute(pickup_end);
-    }
+            //Een testruck aanmaken waar we de handeling eerst op uitproberen => de beste handeling uiteindelijk toevoegen aan de effectieve truck!
+            Truck testTruck = (Truck) deepClone(truck);
 
-    public void SearchClosestTruckCollect(Ride currentRide){
-        Truck candidateTruck = null;
-        Location startLocation = null;
-        int minDistance = Integer.MAX_VALUE;
-        int load = currentRide.getMachine().getMachineType().getVolume();
-        int serviceTime = currentRide.getMachine().getMachineType().getServiceTime();
+            Stop stop1 = null;
+            Stop stop2 = null;
 
-        /** Per truck **/
-        for(Truck truck : initialTrucks)
-        {
-            //ArrayList<Ride> rides = (ArrayList<Ride>) deepClone(truck.getRoute());
+            boolean collect = false;
+            boolean drop = false;
 
-            /** Truck heeft nog geen ritten gedaan => Startlocatie van de truck nemen **/
-            //if(rides.size() == 0){
-            //    rides.add(new Ride(null, truck.getStartLocation(), null, null, null));
-            //}
-
-            //for(Ride ride : rides){
-                /** Van de eindlocatie van de vorige rit naar de collectlocatie **/
-                int distance = distanceMatrix[truck.getCurrentLocation().getId()][currentRide.getToLocation().getId()];
-                if(minDistance > distance)
-                {
-                    /** Controleren of die er nog bij kan **/
-                    int rideTime = timeMatrix[truck.getCurrentLocation().getId()][currentRide.getToLocation().getId()];
-                    if(truck.CheckIfLoadFits(load) && truck.CheckIfTimeFits(rideTime, serviceTime, currentRide.getToLocation()) ) {
-                        minDistance = distance;
-                        startLocation = truck.getCurrentLocation();
-                        candidateTruck = truck;
-                    }
-                }
-            //}
-        }
-
-        Ride start_end = new Ride(startLocation, currentRide.getToLocation(), null, currentRide.getMachine(), Request.Type.COLLECT);
-        initialTrucks.get(candidateTruck.getId()).addPointToRoute(start_end);
-    }
-
-    public void SendTrucksToHome(){
-        for(Truck truck : initialTrucks)
-        {
-            if(truck.getCurrentLocation().getId() != truck.getEndLocation().getId())
+            // Een drop request
+            //Bij een drop hoort eerst de machine ophalen collect en dan de machine effectief droppen
+            if(rit.getType() == Request.Type.DROP)
             {
-                truck.addPointToRoute(new Ride(truck.getCurrentLocation(), truck.getEndLocation(), null, null, Request.Type.END));
+                //Alle stops overlopen die reeds in de truck zitten indien er reeds één bestaat op die locatie
+
+                //TODO mechanisme dat checkt dat drop zeker na de collect komt zit er nu nog niet in!!
+                for(Stop stop : testTruck.getStops()) {
+                    //de collect(deel 1 van de drop) gewoon toevoegen aan de stop, bestaat de locatie van de collect nog niet in de truck blijft de collect boolean false
+                    if (stop.getLocation().getId() == rit.getFromLocation().getId()) {
+                            stop.addCollect(rit.getMachine());
+                            collect = true;
+                    }
+
+
+                    //de drop(deel 1 van de drop) toevoegen aan de stop, bestaat de locatie van de drop nog niet in de truck blijft de drop boolean false
+                    if (stop.getLocation().getId() == rit.getToLocation().getId()) {
+                            stop.addDrop(rit.getMachine(), false);
+                            drop = true;
+                    }
+                }
+
+                //Wanneer er dus nog geen stop bestaat van de locatie van de collect(deel 1 van de drop) wordt er een nieuwe gemaakt en de collect toegevoegd
+                if(collect == false)
+                {
+                    stop1 = new Stop(rit.getFromLocation(),rit.getMachine(),Request.Type.TEMPORARYCOLLECT);
+                }
+
+                //Wanneer er dus nog geen stop bestaat van de locatie van de drop(deel 2 van de drop) wordt er een nieuwe gemaakt en de drop toegevoegd
+                if(drop == false)
+                {
+                    stop2 = new Stop(rit.getToLocation(),rit.getMachine(),Request.Type.DROP);
+                }
+            }
+
+            //Een collect bestaat uit de machine collecten op de locatie en deze droppen op de eindlocatie van de truck (voorlopig)
+            else if(rit.getType() == Request.Type.COLLECT)
+            {
+                //kijken als er al een stop bestaat van met de locatie van de collect
+                for(Stop stop : testTruck.getStops()) {
+                    if (stop.getLocation().getId() == rit.getFromLocation().getId()) {
+                        stop.addCollect(rit.getMachine());
+                        collect = true;
+                    }
+                }
+
+                if(collect == false)
+                {
+                    stop1 = new Stop(rit.getFromLocation(),rit.getMachine(),Request.Type.COLLECT);
+                }
+
+                //De drop op de eindlocatie van de truck zetten (niet echt goed)
+                if(drop == false)
+                {
+                    //TODO truck.getCurrentLocation() parameter veranderen !!
+                    stop2 = new Stop(truck.getEndLocation(),rit.getMachine(),Request.Type.DROP);
+                    stop2.depo = true;
+                }
+            }
+
+            //De stops effectief toevoegen aan de truck (als ze er niet inzatten dan is de stop null)
+            if(stop1 != null)
+            {
+                testTruck.addStopToRoute(stop1);
+            }
+
+            //Zelfde als hierboven
+            if(stop2 != null)
+            {
+                testTruck.addStopToRoute(stop2);
+            }
+
+            //De tijd bereken van de truck
+            int distance = measureDistanceTruck(testTruck);
+
+            if(minDistance > distance)
+            {
+                /** Controleren of die er nog bij kan **/
+                //int rideTime = timeMatrix[truck.getCurrentLocation().getId()][pickupLocation.getId()] + timeMatrix[pickupLocation.getId()][currentRide.getToLocation().getId()];
+                int time = measureTimeTruck(testTruck);
+                if(checkLoadTruck(testTruck) && truck.CheckIfTimeFitsStop(time, serviceTime) ) {
+                    minDistance = distance;
+                    //startLocation = truck.getCurrentLocation();
+                    candidateTruck = truck;
+
+                    //Als collect niet true is s1 null zetten omdat anders nog de vorige stop 1(van de vorige iteratie) erin zit
+                    if(collect != true)
+                    {
+                        s1 = stop1;
+                    }
+                    else
+                    {
+                        s1=null;
+                    }
+
+                    //Als drop niet true is s2 null zetten
+                    if(drop != true)
+                    {
+                        s2 = stop2;
+                    }
+                    else
+                    {
+                       s2=null;
+                    }
+
+                }
+            }
+            //}
+        }
+
+
+        //nu hebben we de id van de truck waar we de request het best aan toevoegen deze effectief toevoegen aan initialtrucks gelijkaardig als hierboven
+        if(s1 != null)
+        {
+            initialTrucks.get(candidateTruck.getId()).addStopToRoute(s1);
+        }
+        else
+        {
+            for(Stop stop : initialTrucks.get(candidateTruck.getId()).getStops())
+            {
+                if(stop.getLocation().getId() == rit.getFromLocation().getId())
+                {
+                    stop.addCollect(rit.getMachine());
+                    initialTrucks.get(candidateTruck.getId()).AddLoadedMachines(rit.getMachine());
+                    initialTrucks.get(candidateTruck.getId()).addLoad(rit.getMachine().getMachineType().getVolume());
+                    initialTrucks.get(candidateTruck.getId()).addTijdLaden(rit.getMachine().getMachineType().getServiceTime());
+
+                    break;
+                }
+            }
+        }
+
+        if(s2 != null)
+        {
+            initialTrucks.get(candidateTruck.getId()).addStopToRoute(s2);
+        }
+        else
+        {
+            //Bij collect geen to destination, dus deze functie wordt enkel gelopen bij drop
+           if(rit.getType() != Request.Type.COLLECT)
+           {
+               for(Stop stop : initialTrucks.get(candidateTruck.getId()).getStops())
+               {
+                   if(stop.getLocation().getId() == rit.getToLocation().getId())
+                   {
+                       if(rit.getFromLocation().getId() != rit.getToLocation().getId())
+                       {
+                           stop.addDrop(rit.getMachine(),false);
+                       }
+                       else
+                       {
+                           //Hier weten we dat er een drop en collect op dezelfde plek zijn dus speciaal geval op true (in en uitladen na elkaar van machine)
+                           stop.addDrop(rit.getMachine(),true);
+                       }
+
+                       initialTrucks.get(candidateTruck.getId()).getLoadedMachines().remove(rit.getMachine());
+
+                       //Load adden & servicetime to truck!
+                       initialTrucks.get(candidateTruck.getId()).addLoad(rit.getMachine().getMachineType().getVolume());
+                       initialTrucks.get(candidateTruck.getId()).addTijdLaden(rit.getMachine().getMachineType().getServiceTime());
+                   }
+               }
+           }
+        }
+
+        request.setInTruckId(candidateTruck.getId());
+
+        int distance = measureDistanceTruck(initialTrucks.get(candidateTruck.getId()));
+        int time = measureTimeTruck(initialTrucks.get(candidateTruck.getId()));
+
+        initialTrucks.get(candidateTruck.getId()).setCurrentDistance(distance);
+        initialTrucks.get(candidateTruck.getId()).setCurrentWorkTime(time);
+    }
+
+    //De totale load berekenen van de truck geeft terug als hij over zijn max load gaat
+    public boolean checkLoadTruck(Truck t)
+    {
+        int load = 0;
+        if(t.getStops().size() >= 1)
+        {
+            for(int index = 0; index< (t.getStops().size()-1); index++)
+            {
+                for(Machine m : t.getStops().get(index).getcollect())
+                {
+                    load = load + m.getMachineType().getVolume();
+                }
+
+                if (t.getStops().get(index).getLocation().getId() != t.getEndLocation().getId()) {
+                    for (Machine m : t.getStops().get(index).getdrop()) {
+                        load = load - m.getMachineType().getVolume();
+                    }
+                }
+
+                if(load > 100)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+    //De afstand berekenen per truck
+    public int measureDistanceTruck(Truck t)
+    {
+        int distance = 0;
+
+            if(t.getStops().size() >= 2)
+            {
+                for(int index = 0; index< (t.getStops().size()-1); index++)
+                {
+                    distance = distance + distanceMatrix[t.getStops().get(index+1).getLocation().getId()][t.getStops().get(index).getLocation().getId()];
+                }
+            }
+        return distance;
+    }
+
+    //De tijd berekenen per truck
+    public int measureTimeTruck(Truck t)
+    {
+        int time = 0;
+        for(int index = 0; index< t.getStops().size()-1; index++)
+        {
+            time = time + timeMatrix[t.getStops().get(index+1).getLocation().getId()][t.getStops().get(index).getLocation().getId()];
+        }
+
+        return time;
+    }
+
+    //De laatste stop toevoegen aan alle trucks
+    public void SendTrucksToHome(){
+
+        for(Truck truck : initialTrucks) {
+
+            if (truck.getStops().size() != 0) {
+
+                ArrayList<Integer> teVerwijderenStops = new ArrayList<Integer>();
+                //TODO slechte manier hier verwijder ik alle tussenstoppen die tussen begin en einde staan in de totaal aantal stops
+                //de eerste skippen want deze mag niet weg (daarom start index op 1)
+                for(int index = 1; index < truck.getStops().size();index++)
+                {
+                    if (truck.getStops().get(index).getLocation().getId() == truck.getEndLocation().getId())
+                    {
+                        //De index van de te verwijderen stops opslaan
+                        teVerwijderenStops.add(index);
+                    }
+                }
+
+                int teller = 0;
+
+                //De stops effectief verwijderen
+                for(int index : teVerwijderenStops)
+                {
+                    truck.DeleteStop(index-teller);
+                    teller++;
+                }
+
+                if (truck.getStops().get(truck.getStops().size() - 1).getLocation().getId() != truck.getEndLocation().getId()) {
+                    //Location location, Machine collectOrDrop, Request.Type type
+
+                    Stop stop = new Stop(truck.getEndLocation(), null, Request.Type.END);
+                    truck.addStopToRoute(stop);
+
+                    for(Machine m : truck.getLoadedMachines())
+                    {
+                        truck.getStops().get(truck.getStops().size()-1).addDrop(m,false);
+                    }
+
+                    int distance = measureDistanceTruck(truck);
+                    int time = measureTimeTruck(truck);
+
+                    truck.setCurrentDistance(distance);
+                    truck.setCurrentWorkTime(time);
+                }
             }
         }
     }
 
-    public void WriteFile() throws IOException {
+    //De afstand berekenen van alle trucks
+    public int measureTotalDistance(Route r)
+    {
+        int distance = 0;
+        for(Truck truck : r.getTrucks())
+        {
+            distance = distance + measureDistanceTruck(truck);
+        }
+
+        r.setTotalDistance(distance);
+        return distance;
+    }
+
+    public Route meta()
+    {
+        //Solution solution = null;
+
+        /* meta settings ----------------------------------- */
+
+        int MAX_IDLE = 100000;
+        int L = 1000;
+
+        /* create initial solution ------------------------- */
+
+        Route bestRoute = new Route(route);
+        measureTotalDistance(bestRoute);
+
+        /* [meta] init ------------------------------------- */
+        int idle = 0;
+        int count = 0;
+        double bound = bestRoute.getTotalDistance();
+
+        /* loop -------------------------------------------- */
+        while (true) {
+
+            double oldDist = bestRoute.getTotalDistance();
+            // move
+            int requestId = random.nextInt(requests.size() - 1);
+            Request req = requests.get(requestId);
+            int toTruckId = random.nextInt(trucks.size()- 1);
+
+            Route returnRoute = DoMove(bestRoute, req, toTruckId);
+
+            if(returnRoute != null)
+            {
+                double newDist = measureTotalDistance(returnRoute);
+
+                // [meta] accept?
+                if (newDist < oldDist || newDist < bound) {
+                    idle = 0;
+                    if(newDist<bestRoute.getTotalDistance()){
+                        bestRoute = new Route(returnRoute);
+
+                        //De truck waar de request aan toegekent is updaten
+                        req.setInTruckId(toTruckId);
+                    }
+                }else{
+                    idle++;
+                    //DoMove(route, req, toTruckId);
+                    measureTotalDistance(bestRoute);
+                }
+
+                // [meta] update
+                count++;
+                if(count==L){
+                    count = 0;
+                    bound = bestRoute.getTotalDistance();
+                }
+
+                // stop?
+                if (idle >= MAX_IDLE) {
+                    break;
+                }
+            }
+            else{
+                idle++;
+                //DoMove(route, req, toTruckId);
+                measureTotalDistance(bestRoute);
+            }
+
+            // [meta] update
+            count++;
+            if(count==L){
+                count = 0;
+                bound = bestRoute.getTotalDistance();
+            }
+
+            // stop?
+            if (idle >= MAX_IDLE) {
+                break;
+            }
+        }
+
+        /* finished ---------------------------------------- */
+
+        return bestRoute;
+    }
+
+    private Route DoMove(Route r, Request request, int toTruckId) {
+
+        Route rou = (Route) deepClone(r);
+
+        Truck truckToDeleteRequest = rou.getTrucks().get(request.getInTruckId());
+        Truck truckToAddRequest = rou.getTrucks().get(toTruckId);
+
+        if(request.getType() == Request.Type.COLLECT)
+        {
+            Location locatieCollectMachine = null;
+            Location locatieDropMachine = null;
+
+            /* verwijderen uit huidige truck*/
+            boolean found = false;
+            int indexRemoveLocatie =0;
+            int indexfor = 0;
+            boolean delete = false;
+            for(Stop stop : truckToDeleteRequest.getStops())
+            {
+                for(Machine machine : stop.getcollect())
+                {
+                    if(machine.getId() == request.getMachine().getId())
+                    {
+                        locatieCollectMachine = stop.getLocation();
+                        stop.removeCollect(machine);
+
+                        if(stop.getcollect().size() == 0 && stop.getdrop().size() == 0)
+                        {
+                            delete = true;
+                            indexRemoveLocatie = indexfor;
+                        }
+                        //found = true;
+                        break;
+                    }
+                }
+
+                for(Machine machine : stop.getdrop())
+                {
+                    if(machine.getId() == request.getMachine().getId())
+                    {
+                        locatieDropMachine = stop.getLocation();
+                        stop.removeDrop(machine);
+                        //found = true;
+                        break;
+                    }
+                }
+//                if(found == true)
+//                {
+//                    break;
+//                }
+                indexfor++;
+            }
+
+            if(delete)
+            {
+                truckToDeleteRequest.removeStop(indexRemoveLocatie);
+            }
+
+            //truckToDeleteRequest.getLoadedMachines().remove(request.getMachine());
+
+            truckToDeleteRequest.lessLoad(request.getMachine().getMachineType().getVolume());
+            //2* omdat laden & lossen eruit gehaald wordt
+            truckToDeleteRequest.lessTijdLaden((2*request.getMachine().getMachineType().getServiceTime()));
+
+
+            int distance = measureDistanceTruck(truckToDeleteRequest);
+            int time = measureTimeTruck(truckToDeleteRequest);
+
+            truckToDeleteRequest.setCurrentDistance(distance);
+            truckToDeleteRequest.setCurrentWorkTime(time);
+
+
+            /* Toevoegen aan nieuwe truck*/
+
+            boolean collect = false;
+            Stop stop1 = null;
+
+            //kijken als er al een stop bestaat van met de locatie van de collect
+            if(locatieCollectMachine != null) {
+                for (Stop stop : truckToAddRequest.getStops()) {
+                    if (stop.getLocation().getId() == locatieCollectMachine.getId()) {
+                        stop.addCollect(request.getMachine());
+                        collect = true;
+                    }
+                }
+
+                if (collect == false) {
+
+                    if(toTruckId == 6 && truckToAddRequest.getStops().size()==4)
+                    {
+                        String i = "fsd";
+
+                    }
+                    stop1 = new Stop(locatieCollectMachine, request.getMachine(), Request.Type.COLLECT);
+                    int index = truckToAddRequest.getStops().size()-1;
+                    truckToAddRequest.addStopToRoute(index,stop1);
+                }
+
+                truckToAddRequest.getStops().get(truckToAddRequest.getStops().size()-1).addDrop(request.getMachine(),false);
+
+                truckToAddRequest.getLoadedMachines().add(request.getMachine());
+
+                truckToAddRequest.addLoad(request.getMachine().getMachineType().getVolume());
+                //2* omdat laden & lossen eruit gehaald wordt
+                truckToAddRequest.addTijdLaden((2*request.getMachine().getMachineType().getServiceTime()));
+
+
+                distance = measureDistanceTruck(truckToAddRequest);
+                time = measureTimeTruck(truckToAddRequest);
+
+                truckToAddRequest.setCurrentDistance(distance);
+                truckToAddRequest.setCurrentWorkTime(time);
+
+                if(checkLoadTruck(truckToAddRequest) && truckToAddRequest.CheckIfTimeFitsStop() ) {
+                    if(request.getType() == Request.Type.COLLECT)
+                    {
+                        //Oude truck verwijderen & nieuwe toevoegen
+                        //rou.getTrucks().remove(request.getInTruckId());
+                        //rou.getTrucks().add(request.getInTruckId(),truckToDeleteRequest);
+
+                        //zelfde voor tweede truck
+
+                        //rou.getTrucks().remove(toTruckId);
+                        //rou.getTrucks().add(toTruckId,truckToAddRequest);
+
+                        return rou;
+
+                    }
+                }
+            }
+        }
+        else if(request.getType() == Request.Type.DROP)
+        {
+
+        }
+
+        return null;
+    }
+
+    //output file schrijven
+    public void WriteFileNieuw(Route best) throws IOException {
         System.out.println("");
 
         // Berekenen hoeveel newTrucks er effectief in dienst zijn
         int numberOfUsedTrucks = 0;
-        for (Truck truck : bestRoute.getTrucks()) {
-            if(truck.getRoute().size() > 1){
+        for (Truck truck : best.getTrucks()) {
+            if(truck.getStops().size() > 1){
                 numberOfUsedTrucks++;
             }
         }
 
+        int totalDistance = measureTotalDistance(best);
+
+
         BufferedWriter writer = new BufferedWriter(new FileWriter(Main.OUTPUT_FILE));
         writer.write("PROBLEM: " + Main.INPUT_FILE + "\n");
-        writer.write("DISTANCE: " + bestRoute.getTotalDistance() + "\n");
+        writer.write("DISTANCE: " + totalDistance + "\n");
         writer.write("TRUCKS: " + numberOfUsedTrucks + "\n");
 
-        for (Truck truck : bestRoute.getTrucks()) {
+        for (Truck truck : best.getTrucks()) {
             // Enkel trucks die rijden uitprinten
-            if(truck.getRoute().size() > 1)
+            if(truck.getStops().size() > 1)
             {
-                writer.write(truck.getId() + " " + truck.getCurrentDistance() + " " + truck.getCurrentWorkTime());
-                System.out.print(truck.getId() + " " + truck.getCurrentDistance() + " " + truck.getCurrentWorkTime());
+                if(truck.getId() == 6)
+                {
+                    String i = "";
+                }
+                int distance = measureDistanceTruck(truck);
+                int time = measureTimeTruck(truck) + truck.getTijdLaden();
+
+                writer.write(truck.getId() + " " + distance + " " + time);
+                System.out.print(truck.getId() + " " + distance + " " + time);
 
                 // First location print (startlocation)
                 int currentLocationID = truck.getStartLocation().getId();
                 writer.write(" " + truck.getStartLocation().getId());
                 System.out.print(" " + truck.getStartLocation().getId());
 
+                int index = 0;
                 // Route
-                for (Ride ride : truck.getRoute()) {
-                    if(ride.getType() != Request.Type.END)
-                    {
-                        if(currentLocationID != ride.getToLocation().getId())
+                for (Stop stop : truck.getStops()) {
+                    //niet de laatste stop
+//                    if(index != (truck.getStops().size()-1))
+//                    {
+                        if(currentLocationID != stop.getLocation().getId())
                         {
-                            currentLocationID = ride.getToLocation().getId();
-                            writer.write(" " + ride.getToLocation().getId() + ":" + ride.getMachine().getId());
-                            System.out.print(" " + ride.getToLocation().getId() + ":" + ride.getMachine().getId());
+                            currentLocationID = stop.getLocation().getId();
+                            String wr = "";
+                            for(Machine m : stop.getcollect())
+                            {
+                                wr = wr + ":" + m.getId();
+                            }
+                            for(Machine m : stop.getdrop())
+                            {
+                                wr = wr + ":" + m.getId();
+                            }
+                            writer.write(" " + stop.getLocation().getId() + wr);
+                            System.out.print(" " + stop.getLocation().getId() + wr);
                         }
                         else
                         {
-                            writer.write(":" + ride.getMachine().getId());
-                            System.out.print(":" + ride.getMachine().getId());
-                        }
-                    }
-                    else
-                    {
-                        writer.write(" " + ride.getToLocation().getId());
-                        System.out.print(" " + ride.getToLocation().getId());
-
-                        if(truck.getLoadedMachines().size() > 0)
-                        {
-                            for(Machine machine : truck.getLoadedMachines())
+                            String wr = "";
+                            for(Machine m : stop.getcollect())
                             {
-                                // Indien de truck terug naar depot rijd veranderd er niets aan de lading
-                                if(machine != null){
-                                    writer.write(":" + machine.getId());
-                                    System.out.print(":" + machine.getId());
-                                }
+                                wr = wr + ":" + m.getId();
                             }
+                            for(Machine m : stop.getdrop())
+                            {
+                                wr = wr + ":" + m.getId();
+                            }
+
+                            writer.write(wr);
+                            System.out.print(wr);
                         }
-                    }
+                   // }
+                    //laatste stop
+//                    else
+//                    {
+//                        writer.write(" " + stop.getLocation().getId());
+//                        System.out.print(" " + stop.getLocation().getId());
+//
+//                        if(truck.getLoadedMachines().size() > 0)
+//                        {
+//                            for(Machine machine : truck.getLoadedMachines())
+//                            {
+//                                // Indien de truck terug naar depot rijd veranderd er niets aan de lading
+//                                if(machine != null){
+//                                    writer.write(":" + machine.getId());
+//                                    System.out.print(":" + machine.getId());
+//                                }
+//                            }
+//                        }
+//                    }
+                    index++;
                 }
                 writer.write("\n");
                 System.out.print("\n");
             }
         }
         writer.close();
-        System.out.println("\nTotale afstand: " + bestRoute.getTotalDistance()+"\n");
+
+        System.out.println("\nTotale afstand: " + totalDistance +"\n");
     }
 
     public Object deepClone(Object orig) {

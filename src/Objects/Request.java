@@ -9,6 +9,7 @@ public class Request implements Serializable {
     private Location location;
     private Type type;
     private boolean isDone;
+    private int inTruckId;
 
     public Request(int id, Machine machine, MachineType machineType, Location location, Type type) {
         this.id = id;
@@ -21,6 +22,16 @@ public class Request implements Serializable {
 
     public int getId() {return id;}
     public void setId(int id) {this.id = id;}
+
+    public void setInTruckId(int id)
+    {
+        this.inTruckId = id;
+    }
+
+    public int getInTruckId()
+    {
+        return inTruckId;
+    }
 
     public Machine getMachine() {return machine;}
     public void setMachine(Machine machine) {this.machine = machine;}
@@ -38,6 +49,6 @@ public class Request implements Serializable {
     public void setDone(boolean isDone) {this.isDone = isDone;}
 
     public enum Type {
-        DROP, COLLECT, TEMPORARYCOLLECT, END
+        DROP, COLLECT, TEMPORARYCOLLECT, END,NOTHING,START
     }
 }

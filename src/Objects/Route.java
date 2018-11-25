@@ -13,20 +13,22 @@ public class Route implements Serializable {
         this.trucks = trucks;
     }
 
+    public Route(Route r) {
+        this.trucks = r.trucks;
+        this.totalDistance = r.totalDistance;
+    }
+
     public ArrayList<Truck> getTrucks() {return trucks;}
     public void setTrucks(ArrayList<Truck> trucks) {this.trucks = trucks;}
 
-    public int getTotalDistance() {
-        totalDistance = 0;
-        for(Truck truck : trucks)
-        {
-            for(Ride ride : truck.getRoute()){
-                if(ride.getPickupLocation() == null)
-                    totalDistance += distanceMatrix[ride.getFromLocation().getId()][ride.getToLocation().getId()];
-                else
-                    totalDistance += distanceMatrix[ride.getFromLocation().getId()][ride.getPickupLocation().getId()] + distanceMatrix[ride.getPickupLocation().getId()][ride.getToLocation().getId()];
-            }
-        }
+
+    public int getTotalDistance()
+    {
         return totalDistance;
+    }
+
+    public void setTotalDistance(int distance)
+    {
+        totalDistance = distance;
     }
 }

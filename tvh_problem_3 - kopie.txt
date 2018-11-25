@@ -38,7 +38,7 @@ DEPOTS: 4 [id locationId]
   2   2
   3   3
 
-TRUCKS: 18 [id startLocationId endLocationId]
+TRUCKS: 40 [id startLocationId endLocationId]
   0   0   0
   1   0   0
   2   0   0
@@ -56,7 +56,29 @@ TRUCKS: 18 [id startLocationId endLocationId]
  14   1   1
  15   1   1
  16   1   1
- 17   1   1 
+ 17   1   1
+ 18   1   1
+ 19   1   1
+ 20   2   2
+ 21   2   2
+ 22   2   2
+ 23   2   2
+ 24   2   2
+ 25   2   2
+ 26   2   2
+ 27   2   2
+ 28   2   2
+ 29   2   2
+ 30   3   3
+ 31   3   3
+ 32   3   3
+ 33   3   3
+ 34   3   3
+ 35   3   3
+ 36   3   3
+ 37   3   3
+ 38   3   3
+ 39   3   3
 
 MACHINE_TYPES: 19 [id volume serviceTime name]
   0  50  10 600AJ

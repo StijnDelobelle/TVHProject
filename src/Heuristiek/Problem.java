@@ -26,7 +26,8 @@ public class Problem {
 
         /** InitialSolution **/
         solution.InitialSolution(requests, trucks);
-        solution.WriteFile();
+        Route best = solution.meta();
+        solution.WriteFileNieuw(best);
 
         /** TabuSearch Heuristic Neighborhood Search **/
         //solution.TabuSearch(10);
