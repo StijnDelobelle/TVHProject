@@ -775,12 +775,12 @@ public class Solution   {
             //Hier de stop verwijderen zie hierboven
             if(deleteCollect)
             {
-                if(truckToDeleteRequest.getStops().size()-1 != indexRemoveLocatieCollect)
+                if(truckToDeleteRequest.getStops().size()-1 != indexRemoveLocatieCollect && indexRemoveLocatieCollect != 0)
                     truckToDeleteRequest.removeStop(indexRemoveLocatieCollect);
             }
             if(deleteDrop && indexRemoveLocatieCollect != indexRemoveLocatieDrop)
             {
-                if(truckToDeleteRequest.getStops().size()-1 != indexRemoveLocatieDrop)
+                if(truckToDeleteRequest.getStops().size()-1 != indexRemoveLocatieDrop && indexRemoveLocatieDrop != 0)
                     truckToDeleteRequest.removeStop(indexRemoveLocatieDrop);
             }
             //truckToDeleteRequest.getLoadedMachines().remove(request.getMachine());
