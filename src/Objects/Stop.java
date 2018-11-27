@@ -70,7 +70,7 @@ public class Stop implements Serializable {
     }
 
     //speciaalGeval is true als een truck dezelfde machine moet collecten en dropen op dezelfde plaats!
-    public void addDrop(Machine m,boolean speciaalGeval)
+    public void addDrop(Machine m, boolean speciaalGeval)
     {
         boolean zitReedsInCollect = false;
         for(Machine ma : collect)

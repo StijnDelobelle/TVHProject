@@ -88,6 +88,7 @@ public class Solution   {
 
                     // Lock de machine!
                     machines.get(pickupMachine.getId()).setLocked(true);
+                    request.setMachine(pickupMachine);
                 }
 
                 /****** COLLECTS ******/
@@ -333,8 +334,7 @@ public class Solution   {
     }
 
     //De totale load berekenen van de truck geeft terug als hij over zijn max load gaat
-    public boolean checkLoadTruck(Truck t)
-    {
+    public boolean checkLoadTruck(Truck t) {
         int load = 0;
         if(t.getStops().size() >= 1)
         {
@@ -362,8 +362,7 @@ public class Solution   {
 
 
     //De afstand berekenen per truck
-    public int measureDistanceTruck(Truck t)
-    {
+    public int measureDistanceTruck(Truck t) {
         int distance = 0;
 
             if(t.getStops().size() >= 2)
@@ -377,8 +376,7 @@ public class Solution   {
     }
 
     //De tijd berekenen per truck
-    public int measureTimeTruck(Truck t)
-    {
+    public int measureTimeTruck(Truck t) {
         int time = 0;
         for(int index = 0; index< t.getStops().size()-1; index++)
         {
@@ -438,8 +436,7 @@ public class Solution   {
     }
 
     //De afstand berekenen van alle trucks
-    public int measureTotalDistance(Route r)
-    {
+    public int measureTotalDistance(Route r) {
         int distance = 0;
         for(Truck truck : r.getTrucks())
         {
@@ -450,13 +447,47 @@ public class Solution   {
         return distance;
     }
 
-    public Route meta()
-    {
+    public void MakeFeasible() {
+
+        Route bestRoute = new Route(route);
+        measureTotalDistance(bestRoute);
+
+        while (true) {
+
+            // Hier kiezen we welke request we gaan behandelen
+            int requestId = random.nextInt(requests.size() - 1);
+            Request req = requests.get(requestId);
+            //   Truck truckToDeleteRequest = rou.getTrucks().get(request.getInTruckId());
+
+            //Hier bereken je naar welke truck we de move doen
+            // TODO hardcoded 39
+            int toTruckId = random.nextInt(39);
+
+            //De move uitvoeren
+            Route returnRoute = DoMove(bestRoute, req, toTruckId);
+
+            // Wanneer returnRoute niet gelijk is aan null, dit wil zeggen dat de move toegelaten is dus de tijd en load van de truck is niet overschreden
+            if(returnRoute != null)
+            {
+                bestRoute = new Route(returnRoute);
+                req.setInTruckId(toTruckId);
+            }
+
+            // stop?
+            // TODO hardcoded 40
+            if (initialTrucks.size() == 40) {
+                break;
+            }
+        }
+
+    }
+
+    public Route meta() {
         //Solution solution = null;
 
         /* meta settings ----------------------------------- */
 
-        int MAX_IDLE = 100000;
+        int MAX_IDLE = 100; //100000
         int L = 1000;
 
         /* create initial solution ------------------------- */
@@ -497,6 +528,15 @@ public class Solution   {
 
                         //De truck waar de request aan toegekent is updaten
                         req.setInTruckId(toTruckId);
+
+                        for(Stop stop : bestRoute.getTrucks().get(toTruckId).getStops()) {
+                            for(Machine machine : stop.getdrop()){
+                                if(machine.getId() == req.getMachine().getId()) {
+                                    req.getMachine().setLocation(stop.getLocation());
+                                    break;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -548,7 +588,7 @@ public class Solution   {
             int indexfor = 0;
             boolean delete = false;
 
-            //TODO beter alle for lussen vervangen door hashmappen (zal sneller werken maar niet dringend beter de rest eerst)
+            // TODO beter alle for lussen vervangen door hashmappen (zal sneller werken maar niet dringend beter de rest eerst)
             for(Stop stop : truckToDeleteRequest.getStops())
             {
                 //Deel 1 van de collect
@@ -604,7 +644,6 @@ public class Solution   {
             truckToDeleteRequest.lessLoad(request.getMachine().getMachineType().getVolume());
             //2* omdat laden & lossen eruit gehaald wordt
             truckToDeleteRequest.lessTijdLaden((2*request.getMachine().getMachineType().getServiceTime()));
-
 
             int distance = measureDistanceTruck(truckToDeleteRequest);
             int time = measureTimeTruck(truckToDeleteRequest);
@@ -664,7 +703,163 @@ public class Solution   {
         //todo een move maken voor een drop!!
         else if(request.getType() == Request.Type.DROP)
         {
+            Location locatieCollectMachine = null;
+            Location locatieDropMachine = null;
 
+            //////////////////////////////////
+            // verwijderen uit huidige truck
+            //////////////////////////////////
+
+            boolean found = false;
+
+            int indexfor = 0;
+            boolean deleteCollect = false;
+            boolean deleteDrop = false;
+            int indexRemoveLocatieCollect = 0;
+            int indexRemoveLocatieDrop = 0;
+
+            // TODO beter alle for lussen vervangen door hashmappen (zal sneller werken maar niet dringend beter de rest eerst)
+            for(Stop stop : truckToDeleteRequest.getStops())
+            {
+                //Deel 1 van de drop
+                for(Machine machine : stop.getcollect())
+                {
+                    if(machine.getId() == request.getMachine().getId())
+                    {
+                        //De locatie opslaan waar de machine staat
+                        locatieCollectMachine = stop.getLocation();
+                        //Collect gaan verwijderen in oude truck
+                        stop.removeCollect(machine);
+
+                        // stop deleten //
+                        //Als in de oude truck na het verwijderen van de collect de stop
+                        // niet meer gebruikt wordt deze verwijderen gewoon index opslaan (straks verwijderen anders conflicten)
+                        if(stop.getcollect().size() == 0 && stop.getdrop().size() == 0)
+                        {
+                            deleteCollect = true;
+                            indexRemoveLocatieCollect = indexfor;
+                        }
+                        //found = true;
+                        break;
+                    }
+                }
+
+                //Deel 2 van de drop
+                for(Machine machine : stop.getdrop())
+                {
+                    if(machine.getId() == request.getMachine().getId())
+                    {
+                        locatieDropMachine = stop.getLocation();
+                        stop.removeDrop(machine);
+
+                        // stop deleten //
+                        //Als in de oude truck na het verwijderen van de collect de stop
+                        // niet meer gebruikt wordt deze verwijderen gewoon index opslaan (straks verwijderen anders conflicten)
+                        if(stop.getcollect().size() == 0 && stop.getdrop().size() == 0)
+                        {
+                            deleteDrop = true;
+                            indexRemoveLocatieDrop = indexfor;
+                        }
+                        //found = true;
+                        break;
+                    }
+                }
+//                if(found == true)
+//                {
+//                    break;
+//                }
+                indexfor++;
+            }
+
+            // stop deleten //
+            //Hier de stop verwijderen zie hierboven
+            if(deleteCollect)
+            {
+                if(truckToDeleteRequest.getStops().size()-1 != indexRemoveLocatieCollect)
+                    truckToDeleteRequest.removeStop(indexRemoveLocatieCollect);
+            }
+            if(deleteDrop && indexRemoveLocatieCollect != indexRemoveLocatieDrop)
+            {
+                if(truckToDeleteRequest.getStops().size()-1 != indexRemoveLocatieDrop)
+                    truckToDeleteRequest.removeStop(indexRemoveLocatieDrop);
+            }
+            //truckToDeleteRequest.getLoadedMachines().remove(request.getMachine());
+
+            truckToDeleteRequest.lessLoad(request.getMachine().getMachineType().getVolume());
+            //2* omdat laden & lossen eruit gehaald wordt
+            truckToDeleteRequest.lessTijdLaden((2*request.getMachine().getMachineType().getServiceTime()));
+
+
+            int distance = measureDistanceTruck(truckToDeleteRequest);
+            int time = measureTimeTruck(truckToDeleteRequest);
+
+            truckToDeleteRequest.setCurrentDistance(distance);
+            truckToDeleteRequest.setCurrentWorkTime(time);
+
+            ///////////////////////////////
+            // Toevoegen aan nieuwe truck//
+            ///////////////////////////////
+
+            boolean huidigeStopBestaatNogNietCollect = false;
+            boolean huidigeStopBestaatNogNietDrop = false;
+            Stop stop1 = null;
+            Stop stop2 = null;
+
+            //kijken als er al een stop bestaat van met de locatie van de collect
+            if(locatieCollectMachine != null && locatieDropMachine != null) {
+                // TODO ADDCOLLECT moet gebeuren vanwaar de machine komt!
+                for (Stop stop : truckToAddRequest.getStops()) {
+                    if (stop.getLocation().getId() == locatieCollectMachine.getId()) {
+                        stop.addCollect(request.getMachine());
+                        huidigeStopBestaatNogNietCollect = true;
+                        break;
+                    }
+                }
+                if (huidigeStopBestaatNogNietCollect == false) {
+                    stop1 = new Stop(locatieCollectMachine, request.getMachine(), Request.Type.TEMPORARYCOLLECT);
+                    //Nieuwe stop steken net voor de laatste huidige stop
+                    int index = truckToAddRequest.getStops().size()-1;
+                    truckToAddRequest.addStopToRoute(index,stop1);
+                }
+                for (Stop stop : truckToAddRequest.getStops()) {
+                    if (stop.getLocation().getId() == locatieDropMachine.getId()) {
+                        stop.addDrop(request.getMachine(), false);
+                        huidigeStopBestaatNogNietDrop = true;
+                        break;
+                    }
+                }
+                if (huidigeStopBestaatNogNietDrop == false) {
+
+                    stop2 = new Stop(locatieDropMachine, request.getMachine(), Request.Type.DROP);
+                    //Nieuwe stop steken net voor de laatste huidige stop
+                    int index = truckToAddRequest.getStops().size()-1;
+                    truckToAddRequest.addStopToRoute(index,stop2);
+                }
+
+                //De drop toevoegen aan de trucks op de laatste stop (dus altijd op een depo)
+                //TODO veranderen dat dit gelijk welke positie kan zijn
+                //truckToAddRequest.getStops().get(truckToAddRequest.getStops().size()-1).addDrop(request.getMachine(),false);
+
+                //truckToAddRequest.getLoadedMachines().add(request.getMachine());
+
+                //load toevoegen aan truck
+                truckToAddRequest.addLoad(request.getMachine().getMachineType().getVolume());
+                //2* omdat laden & lossen eruit gehaald wordt
+                truckToAddRequest.addTijdLaden((2*request.getMachine().getMachineType().getServiceTime()));
+
+
+                distance = measureDistanceTruck(truckToAddRequest);
+                time = measureTimeTruck(truckToAddRequest);
+
+                truckToAddRequest.setCurrentDistance(distance);
+                truckToAddRequest.setCurrentWorkTime(time);
+
+                if(checkLoadTruck(truckToAddRequest) && truckToAddRequest.CheckIfTimeFitsStop() ) {
+                    //Als het past binnen de load en tijd van de truck geef instantie terug
+                    //anders returned hij nul
+                    return rou;
+                }
+            }
         }
 
         //nul retunen => wil zeggen past niet in de truck
