@@ -26,7 +26,7 @@ public class Problem {
 
         /** InitialSolution **/
         solution.InitialSolution(requests, trucks);
-        //solution.MakeFeasible();
+        solution.MakeFeasible();
 
         Route best = solution.meta();
         solution.WriteFileNieuw(best);

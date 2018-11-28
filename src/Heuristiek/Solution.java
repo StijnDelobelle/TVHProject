@@ -414,7 +414,7 @@ public class Solution   {
                     teller++;
                 }
 
-                if (truck.getStops().get(truck.getStops().size() - 1).getLocation().getId() != truck.getEndLocation().getId()) {
+            //    if (truck.getStops().get(truck.getStops().size() - 1).getLocation().getId() != truck.getEndLocation().getId()) {
                     //Location location, Machine collectOrDrop, Request.Type type
 
                     Stop stop = new Stop(truck.getEndLocation(), null, Request.Type.END);
@@ -430,7 +430,7 @@ public class Solution   {
 
                     truck.setCurrentDistance(distance);
                     truck.setCurrentWorkTime(time);
-                }
+               // }
             }
         }
     }
@@ -452,18 +452,46 @@ public class Solution   {
         Route bestRoute = new Route(route);
         measureTotalDistance(bestRoute);
 
+        HashMap<Integer, List<Request>> requestsByTruck = new HashMap<>();
+        for(Request request : requests.values()){
+            if(requestsByTruck.containsKey(request.getInTruckId())){
+                List<Request> temp = requestsByTruck.get(request.getInTruckId());
+                temp.add(request);
+                //requestsByTruck.get(request.getInTruckId()).
+            }
+            else {
+                List<Request> temp = new ArrayList<>();
+                temp.add(request);
+                requestsByTruck.put(request.getInTruckId(), temp);
+            }
+        }
+
         while (true) {
 
             // Hier kiezen we welke request we gaan behandelen
+            int randomRequest = random.nextInt(requestsByTruck.get(bestRoute.getTrucks().size()-1).size()-1);
+            Request req = requestsByTruck.get(bestRoute.getTrucks().size()-1).get(randomRequest);
+
+            /*
             int requestId = -1;
             Request req = null;
+            int requestIdCheckIfCorrect = 0;
             while(requestId == -1) {
-                int requestIdCheckIfCorrect = random.nextInt(requests.size() - 1);
-                if(requests.get(requestIdCheckIfCorrect).getInTruckId() > 39) {
+                //int requestIdCheckIfCorrect = random.nextInt(requests.size() - 1);
+                if (bestRoute.getTrucks().size() > 40) {
+                    if (requests.get(requestIdCheckIfCorrect).getInTruckId() > 39) {
+                        requestId = requestIdCheckIfCorrect;
+                        req = requests.get(requestId);
+                    }
+                }
+                else {
                     requestId = requestIdCheckIfCorrect;
                     req = requests.get(requestId);
                 }
-            }
+                requestIdCheckIfCorrect++;
+                if(requestIdCheckIfCorrect == requests.size())
+                    requestIdCheckIfCorrect = 0;
+            }*/
 
             //   Truck truckToDeleteRequest = rou.getTrucks().get(request.getInTruckId());
 
@@ -478,24 +506,39 @@ public class Solution   {
             if(returnRoute != null)
             {
                 bestRoute = new Route(returnRoute);
+
+                // UPDATE HASHMAP 1
+                requestsByTruck.get(req.getInTruckId()).remove(req);
+                // UPDATE HASHMAP 2
                 req.setInTruckId(toTruckId);
+                // UPDATE HASHMAP 3
+                if(requestsByTruck.containsKey(req.getInTruckId())){
+                    List<Request> temp = requestsByTruck.get(req.getInTruckId());
+                    temp.add(req);
+                    //requestsByTruck.get(request.getInTruckId()).
+                }
+                else {
+                    List<Request> temp = new ArrayList<>();
+                    temp.add(req);
+                    requestsByTruck.put(req.getInTruckId(), temp);
+                }
 
                 Truck truckNoStops = null;
-                for(Truck truck : returnRoute.getTrucks()){
+                boolean AllStopsEmpty = true;
+                for(Truck truck : returnRoute.getTrucks()) {
                     // TODO sommige stops worden er nog niet uitgehaald
                     /*if(truck.getStops().size() == 0) {
                         truckNoStops = truck;
                     }*/
-                    boolean AllStopsEmpty = false;
-                    for(Stop stop : truck.getStops()){
-                        if(stop.getcollect().size() == 0 && stop.getdrop().size() == 0){
+                    for(Stop stop : truck.getStops()) {
+                        if(stop.getcollect().size() == 0 && stop.getdrop().size() == 0)
                             truckNoStops = truck;
-                            break;
-                        }
+                        else
+                            AllStopsEmpty = false;
                     }
                 }
 
-                if(truckNoStops != null){
+                if(truckNoStops != null && AllStopsEmpty){
                     bestRoute.getTrucks().remove(truckNoStops);
                 }
             }
@@ -732,7 +775,7 @@ public class Solution   {
             }
         }
         else if(request.getType() == Request.Type.DROP)
-        {/*
+        {
             Location locatieCollectMachine = null;
             Location locatieDropMachine = null;
 
@@ -896,7 +939,7 @@ public class Solution   {
                     //anders returned hij nul
                     return rou;
                 }
-            }*/
+            }
         }
 
         //nul retunen => wil zeggen past niet in de truck
@@ -936,7 +979,7 @@ public class Solution   {
 
         for (Truck truck : best.getTrucks()) {
             // Enkel trucks die rijden uitprinten
-            if(truck.getStops().size() > 1)
+            if(truck.getStops().size() > 2)
             {
                 int distance = measureDistanceTruck(truck);
                 int time = measureTimeTruck(truck) + truck.getTijdLaden();
