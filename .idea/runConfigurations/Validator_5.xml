@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Validator 5" type="JarApplication" factoryName="JAR Application">
+    <option name="JAR_PATH" value="$PROJECT_DIR$/tvh-1.0-student.jar" />
+    <option name="PROGRAM_PARAMETERS" value="--problem=tvh_problem_5.txt --solution=tvh_solution_5.txt --gui" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2">
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Problem 5" run_configuration_type="Application" />
+    </method>
+  </configuration>
+</component>

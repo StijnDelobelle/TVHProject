@@ -238,7 +238,7 @@ public class Solution   {
             {
                 /** Controleren of die er nog bij kan **/
                 //int rideTime = timeMatrix[truck.getCurrentLocation().getId()][pickupLocation.getId()] + timeMatrix[pickupLocation.getId()][currentRide.getToLocation().getId()];
-                int time = measureTimeTruck(testTruck);
+                int time = measureTimeTruck(testTruck) + testTruck.getTijdLaden();
                 if(checkLoadTruck(testTruck) && truck.CheckIfTimeFitsStop(time, serviceTime) ) {
                     minDistance = distance;
                     //startLocation = truck.getCurrentLocation();
@@ -327,7 +327,7 @@ public class Solution   {
         request.setInTruckId(candidateTruck.getId());
 
         int distance = measureDistanceTruck(initialTrucks.get(candidateTruck.getId()));
-        int time = measureTimeTruck(initialTrucks.get(candidateTruck.getId()));
+        int time = measureTimeTruck(initialTrucks.get(candidateTruck.getId())) + initialTrucks.get(candidateTruck.getId()).getTijdLaden();
 
         initialTrucks.get(candidateTruck.getId()).setCurrentDistance(distance);
         initialTrucks.get(candidateTruck.getId()).setCurrentWorkTime(time);
@@ -426,7 +426,7 @@ public class Solution   {
                     }
 
                     int distance = measureDistanceTruck(truck);
-                    int time = measureTimeTruck(truck);
+                    int time = measureTimeTruck(truck) + truck.getTijdLaden();
 
                     truck.setCurrentDistance(distance);
                     truck.setCurrentWorkTime(time);
@@ -455,8 +455,16 @@ public class Solution   {
         while (true) {
 
             // Hier kiezen we welke request we gaan behandelen
-            int requestId = random.nextInt(requests.size() - 1);
-            Request req = requests.get(requestId);
+            int requestId = -1;
+            Request req = null;
+            while(requestId == -1) {
+                int requestIdCheckIfCorrect = random.nextInt(requests.size() - 1);
+                if(requests.get(requestIdCheckIfCorrect).getInTruckId() > 39) {
+                    requestId = requestIdCheckIfCorrect;
+                    req = requests.get(requestId);
+                }
+            }
+
             //   Truck truckToDeleteRequest = rou.getTrucks().get(request.getInTruckId());
 
             //Hier bereken je naar welke truck we de move doen
@@ -471,11 +479,31 @@ public class Solution   {
             {
                 bestRoute = new Route(returnRoute);
                 req.setInTruckId(toTruckId);
+
+                Truck truckNoStops = null;
+                for(Truck truck : returnRoute.getTrucks()){
+                    // TODO sommige stops worden er nog niet uitgehaald
+                    /*if(truck.getStops().size() == 0) {
+                        truckNoStops = truck;
+                    }*/
+                    boolean AllStopsEmpty = false;
+                    for(Stop stop : truck.getStops()){
+                        if(stop.getcollect().size() == 0 && stop.getdrop().size() == 0){
+                            truckNoStops = truck;
+                            break;
+                        }
+                    }
+                }
+
+                if(truckNoStops != null){
+                    bestRoute.getTrucks().remove(truckNoStops);
+                }
             }
+
 
             // stop?
             // TODO hardcoded 40
-            if (initialTrucks.size() == 40) {
+            if (bestRoute.getTrucks().size() == 40) {
                 break;
             }
         }
@@ -529,14 +557,14 @@ public class Solution   {
                         //De truck waar de request aan toegekent is updaten
                         req.setInTruckId(toTruckId);
 
-                        for(Stop stop : bestRoute.getTrucks().get(toTruckId).getStops()) {
+                       /* for(Stop stop : bestRoute.getTrucks().get(toTruckId).getStops()) {
                             for(Machine machine : stop.getdrop()){
                                 if(machine.getId() == req.getMachine().getId()) {
                                     req.getMachine().setLocation(stop.getLocation());
                                     break;
                                 }
                             }
-                        }
+                        }*/
                     }
                 }
             }
@@ -589,6 +617,8 @@ public class Solution   {
             boolean delete = false;
 
             // TODO beter alle for lussen vervangen door hashmappen (zal sneller werken maar niet dringend beter de rest eerst)
+            boolean foundMachine_1 = false;
+            boolean foundMachine_2 = false;
             for(Stop stop : truckToDeleteRequest.getStops())
             {
                 //Deel 1 van de collect
@@ -609,6 +639,7 @@ public class Solution   {
                             delete = true;
                             indexRemoveLocatie = indexfor;
                         }
+                        foundMachine_1 = true;
                         //found = true;
                         break;
                     }
@@ -622,6 +653,7 @@ public class Solution   {
                         locatieDropMachine = stop.getLocation();
                         stop.removeDrop(machine);
                         //found = true;
+                        foundMachine_2 = true;
                         break;
                     }
                 }
@@ -646,7 +678,7 @@ public class Solution   {
             truckToDeleteRequest.lessTijdLaden((2*request.getMachine().getMachineType().getServiceTime()));
 
             int distance = measureDistanceTruck(truckToDeleteRequest);
-            int time = measureTimeTruck(truckToDeleteRequest);
+            int time = measureTimeTruck(truckToDeleteRequest) + truckToDeleteRequest.getTijdLaden();
 
             truckToDeleteRequest.setCurrentDistance(distance);
             truckToDeleteRequest.setCurrentWorkTime(time);
@@ -668,7 +700,6 @@ public class Solution   {
                 }
 
                 if (huidigeStopBestaatNogNiet == false) {
-
                     stop1 = new Stop(locatieCollectMachine, request.getMachine(), Request.Type.COLLECT);
                     //Nieuwe stop steken net voor de laatste huidige stop
                     int index = truckToAddRequest.getStops().size()-1;
@@ -688,7 +719,7 @@ public class Solution   {
 
 
                 distance = measureDistanceTruck(truckToAddRequest);
-                time = measureTimeTruck(truckToAddRequest);
+                time = measureTimeTruck(truckToAddRequest) + truckToAddRequest.getTijdLaden();
 
                 truckToAddRequest.setCurrentDistance(distance);
                 truckToAddRequest.setCurrentWorkTime(time);
@@ -700,9 +731,8 @@ public class Solution   {
                 }
             }
         }
-        //todo een move maken voor een drop!!
         else if(request.getType() == Request.Type.DROP)
-        {
+        {/*
             Location locatieCollectMachine = null;
             Location locatieDropMachine = null;
 
@@ -717,6 +747,9 @@ public class Solution   {
             boolean deleteDrop = false;
             int indexRemoveLocatieCollect = 0;
             int indexRemoveLocatieDrop = 0;
+
+            boolean foundMachine_1 = false;
+            boolean foundMachine_2 = false;
 
             // TODO beter alle for lussen vervangen door hashmappen (zal sneller werken maar niet dringend beter de rest eerst)
             for(Stop stop : truckToDeleteRequest.getStops())
@@ -740,6 +773,7 @@ public class Solution   {
                             indexRemoveLocatieCollect = indexfor;
                         }
                         //found = true;
+                        foundMachine_1 = true;
                         break;
                     }
                 }
@@ -761,6 +795,7 @@ public class Solution   {
                             indexRemoveLocatieDrop = indexfor;
                         }
                         //found = true;
+                        foundMachine_2 = true;
                         break;
                     }
                 }
@@ -771,6 +806,8 @@ public class Solution   {
                 indexfor++;
             }
 
+
+
             // stop deleten //
             //Hier de stop verwijderen zie hierboven
             if(deleteCollect)
@@ -778,11 +815,12 @@ public class Solution   {
                 if(truckToDeleteRequest.getStops().size()-1 != indexRemoveLocatieCollect && indexRemoveLocatieCollect != 0)
                     truckToDeleteRequest.removeStop(indexRemoveLocatieCollect);
             }
-            if(deleteDrop && indexRemoveLocatieCollect != indexRemoveLocatieDrop)
-            {
-                if(truckToDeleteRequest.getStops().size()-1 != indexRemoveLocatieDrop && indexRemoveLocatieDrop != 0)
-                    truckToDeleteRequest.removeStop(indexRemoveLocatieDrop);
-            }
+            // Normaal moet dit er ook in!
+            //if(deleteDrop && indexRemoveLocatieCollect != indexRemoveLocatieDrop)
+            //{
+            //   if(truckToDeleteRequest.getStops().size()-1 != indexRemoveLocatieDrop && indexRemoveLocatieDrop != 0)
+            //       truckToDeleteRequest.removeStop(indexRemoveLocatieDrop);
+            //}
             //truckToDeleteRequest.getLoadedMachines().remove(request.getMachine());
 
             truckToDeleteRequest.lessLoad(request.getMachine().getMachineType().getVolume());
@@ -791,7 +829,7 @@ public class Solution   {
 
 
             int distance = measureDistanceTruck(truckToDeleteRequest);
-            int time = measureTimeTruck(truckToDeleteRequest);
+            int time = measureTimeTruck(truckToDeleteRequest) + truckToDeleteRequest.getTijdLaden();
 
             truckToDeleteRequest.setCurrentDistance(distance);
             truckToDeleteRequest.setCurrentWorkTime(time);
@@ -822,14 +860,13 @@ public class Solution   {
                     truckToAddRequest.addStopToRoute(index,stop1);
                 }
                 for (Stop stop : truckToAddRequest.getStops()) {
-                    if (stop.getLocation().getId() == locatieDropMachine.getId()) {
+                    if (stop.getLocation().getId() == locatieDropMachine.getId() && VolgordeChecken(truckToAddRequest.getStops(), request.getMachine())) {
                         stop.addDrop(request.getMachine(), false);
                         huidigeStopBestaatNogNietDrop = true;
                         break;
                     }
                 }
                 if (huidigeStopBestaatNogNietDrop == false) {
-
                     stop2 = new Stop(locatieDropMachine, request.getMachine(), Request.Type.DROP);
                     //Nieuwe stop steken net voor de laatste huidige stop
                     int index = truckToAddRequest.getStops().size()-1;
@@ -849,7 +886,7 @@ public class Solution   {
 
 
                 distance = measureDistanceTruck(truckToAddRequest);
-                time = measureTimeTruck(truckToAddRequest);
+                time = measureTimeTruck(truckToAddRequest) + truckToAddRequest.getTijdLaden();
 
                 truckToAddRequest.setCurrentDistance(distance);
                 truckToAddRequest.setCurrentWorkTime(time);
@@ -859,11 +896,22 @@ public class Solution   {
                     //anders returned hij nul
                     return rou;
                 }
-            }
+            }*/
         }
 
         //nul retunen => wil zeggen past niet in de truck
         return null;
+    }
+
+    // Kijken dat het toestel eerst opgehaald wordt en daarna pas gedropt wordt!
+    public boolean VolgordeChecken(List<Stop> stops, Machine dropmachine) {
+        for(Stop stop : stops) {
+            for(Machine machine : stop.getcollect()){
+                if(machine.getId() == dropmachine.getId())
+                    return false;
+            }
+        }
+        return true;
     }
 
     //output file schrijven
