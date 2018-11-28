@@ -272,7 +272,8 @@ public class Solution   {
 
         // Geen trucks beschikbaar => dummy truck toevoegen
         if(candidateTruck == null){
-            Location start_endLocation = locations.get(0);
+            int randomLocation = random.nextInt(4);
+            Location start_endLocation = locations.get(randomLocation);
             initialTrucks.add(new Truck(initialTrucks.size(), start_endLocation, start_endLocation));
             candidateTruck = initialTrucks.get(initialTrucks.size()-1);
             Stop stopStart = new Stop(candidateTruck.getStartLocation(),null,Request.Type.START);
@@ -360,7 +361,7 @@ public class Solution   {
                     }
                 }
 
-                if(load > 100)
+                if(load > TRUCK_CAPACITY)
                 {
                     return false;
                 }
@@ -482,31 +483,13 @@ public class Solution   {
         }
 
         while (true) {
+            if (requestsNotFeasible.size() == 0) {
+                break;
+            }
 
             // Hier kiezen we welke request we gaan behandelen
             int randomRequest = random.nextInt(requestsNotFeasible.size());
             Request req = requestsNotFeasible.get(randomRequest);
-
-            /*
-            int requestId = -1;
-            Request req = null;
-            int requestIdCheckIfCorrect = 0;
-            while(requestId == -1) {
-                //int requestIdCheckIfCorrect = random.nextInt(requests.size() - 1);
-                if (bestRoute.getTrucks().size() > 40) {
-                    if (requests.get(requestIdCheckIfCorrect).getInTruckId() > 39) {
-                        requestId = requestIdCheckIfCorrect;
-                        req = requests.get(requestId);
-                    }
-                }
-                else {
-                    requestId = requestIdCheckIfCorrect;
-                    req = requests.get(requestId);
-                }
-                requestIdCheckIfCorrect++;
-                if(requestIdCheckIfCorrect == requests.size())
-                    requestIdCheckIfCorrect = 0;
-            }*/
 
             //   Truck truckToDeleteRequest = rou.getTrucks().get(request.getInTruckId());
 
@@ -524,6 +507,10 @@ public class Solution   {
 
                 requestsNotFeasible.remove(randomRequest);
                 req.setInTruckId(toTruckId);
+
+                if(checkIfTruckIsEmpty(bestRoute.getTrucks().get(toTruckId).getStops())){
+                    bestRoute.getTrucks().remove(bestRoute.getTrucks().get(toTruckId));
+                }
             }
 
             // stop?
@@ -842,13 +829,13 @@ public class Solution   {
 
             // stop deleten //
             //Hier de stop verwijderen zie hierboven
-            if(deleteDrop && indexRemoveLocatieCollect != indexRemoveLocatieDrop)
+            if(deleteDrop)
             {
                 if(truckToDeleteRequest.getStops().size()-1 != indexRemoveLocatieDrop && indexRemoveLocatieDrop != 0)
                     truckToDeleteRequest.removeStop(indexRemoveLocatieDrop);
             }
 
-            if(deleteCollect)
+            if(deleteCollect && indexRemoveLocatieCollect != indexRemoveLocatieDrop)
             {
                 if(truckToDeleteRequest.getStops().size()-1 != indexRemoveLocatieCollect && indexRemoveLocatieCollect != 0)
                     truckToDeleteRequest.removeStop(indexRemoveLocatieCollect);
