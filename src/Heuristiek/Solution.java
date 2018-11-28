@@ -16,6 +16,7 @@ public class Solution   {
     private ArrayList<Request> initialRequests;
     private HashMap<Integer, Request> requests;
     private static final Random random = new Random(0);
+    private Route BesteMetaSolution = null;
 
 
     public void zetStartStops(ArrayList<Truck> initialTrucks)
@@ -448,7 +449,6 @@ public class Solution   {
     }
 
     public void MakeFeasible() {
-
         Route bestRoute = new Route(route);
         measureTotalDistance(bestRoute);
 
@@ -469,8 +469,9 @@ public class Solution   {
         while (true) {
 
             // Hier kiezen we welke request we gaan behandelen
-            int randomRequest = random.nextInt(requestsByTruck.get(bestRoute.getTrucks().size()-1).size()-1);
-            Request req = requestsByTruck.get(bestRoute.getTrucks().size()-1).get(randomRequest);
+            int randomRequest = random.nextInt(requestsByTruck.get(bestRoute.getTrucks().size()-7).size());
+
+            Request req = requestsByTruck.get(bestRoute.getTrucks().size()-7).get(randomRequest);
 
             /*
             int requestId = -1;
@@ -524,22 +525,19 @@ public class Solution   {
                 }
 
                 Truck truckNoStops = null;
-                boolean AllStopsEmpty = true;
-                for(Truck truck : returnRoute.getTrucks()) {
+                for(Truck truck : bestRoute.getTrucks()) {
                     // TODO sommige stops worden er nog niet uitgehaald
                     /*if(truck.getStops().size() == 0) {
                         truckNoStops = truck;
                     }*/
-                    for(Stop stop : truck.getStops()) {
-                        if(stop.getcollect().size() == 0 && stop.getdrop().size() == 0)
-                            truckNoStops = truck;
-                        else
-                            AllStopsEmpty = false;
+                    if(checkIfTruckIsEmpty(truck.getStops())){
+                        truckNoStops = truck;
                     }
                 }
 
-                if(truckNoStops != null && AllStopsEmpty){
+                if(truckNoStops != null){
                     bestRoute.getTrucks().remove(truckNoStops);
+                    requestsByTruck.remove(truckNoStops.getId());
                 }
             }
 
@@ -553,7 +551,15 @@ public class Solution   {
 
     }
 
-    public Route meta() {
+    public boolean checkIfTruckIsEmpty(List<Stop> stops){
+        for(Stop stop : stops) {
+            if(stop.getcollect().size() != 0 || stop.getdrop().size() != 0)
+                return false;
+        }
+        return true;
+    }
+
+    public void meta() {
         //Solution solution = null;
 
         /* meta settings ----------------------------------- */
@@ -599,6 +605,7 @@ public class Solution   {
 
                         //De truck waar de request aan toegekent is updaten
                         req.setInTruckId(toTruckId);
+                        System.out.println("Totale afstand: " + newDist);
 
                        /* for(Stop stop : bestRoute.getTrucks().get(toTruckId).getStops()) {
                             for(Machine machine : stop.getdrop()){
@@ -632,7 +639,7 @@ public class Solution   {
 
         /* finished ---------------------------------------- */
 
-        return bestRoute;
+        BesteMetaSolution = bestRoute;
     }
 
     private Route DoMove(Route r, Request request, int toTruckId) {
@@ -850,20 +857,20 @@ public class Solution   {
             }
 
 
-
             // stop deleten //
             //Hier de stop verwijderen zie hierboven
+            if(deleteDrop && indexRemoveLocatieCollect != indexRemoveLocatieDrop)
+            {
+                if(truckToDeleteRequest.getStops().size()-1 != indexRemoveLocatieDrop && indexRemoveLocatieDrop != 0)
+                    truckToDeleteRequest.removeStop(indexRemoveLocatieDrop);
+            }
+
             if(deleteCollect)
             {
                 if(truckToDeleteRequest.getStops().size()-1 != indexRemoveLocatieCollect && indexRemoveLocatieCollect != 0)
                     truckToDeleteRequest.removeStop(indexRemoveLocatieCollect);
             }
-            // Normaal moet dit er ook in!
-            //if(deleteDrop && indexRemoveLocatieCollect != indexRemoveLocatieDrop)
-            //{
-            //   if(truckToDeleteRequest.getStops().size()-1 != indexRemoveLocatieDrop && indexRemoveLocatieDrop != 0)
-            //       truckToDeleteRequest.removeStop(indexRemoveLocatieDrop);
-            //}
+
             //truckToDeleteRequest.getLoadedMachines().remove(request.getMachine());
 
             truckToDeleteRequest.lessLoad(request.getMachine().getMachineType().getVolume());
@@ -958,18 +965,18 @@ public class Solution   {
     }
 
     //output file schrijven
-    public void WriteFileNieuw(Route best) throws IOException {
+    public void WriteFileNieuw() throws IOException {
         System.out.println("");
 
         // Berekenen hoeveel newTrucks er effectief in dienst zijn
         int numberOfUsedTrucks = 0;
-        for (Truck truck : best.getTrucks()) {
+        for (Truck truck : BesteMetaSolution.getTrucks()) {
             if(truck.getStops().size() > 1){
                 numberOfUsedTrucks++;
             }
         }
 
-        int totalDistance = measureTotalDistance(best);
+        int totalDistance = measureTotalDistance(BesteMetaSolution);
 
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(Main.OUTPUT_FILE));
@@ -977,7 +984,7 @@ public class Solution   {
         writer.write("DISTANCE: " + totalDistance + "\n");
         writer.write("TRUCKS: " + numberOfUsedTrucks + "\n");
 
-        for (Truck truck : best.getTrucks()) {
+        for (Truck truck : BesteMetaSolution.getTrucks()) {
             // Enkel trucks die rijden uitprinten
             if(truck.getStops().size() > 2)
             {

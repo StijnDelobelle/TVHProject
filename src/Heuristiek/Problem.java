@@ -1,6 +1,8 @@
 package Heuristiek;
 
 import Objects.*;
+
+import java.sql.Timestamp;
 import java.util.*;
 
 public class Problem {
@@ -26,10 +28,17 @@ public class Problem {
 
         /** InitialSolution **/
         solution.InitialSolution(requests, trucks);
-        solution.MakeFeasible();
 
-        Route best = solution.meta();
-        solution.WriteFileNieuw(best);
+        Timestamp time1 = new Timestamp(System.currentTimeMillis());
+        System.out.println("Starting with optimalisation => " + time1);
+        solution.meta();
+
+        Timestamp time2 = new Timestamp(System.currentTimeMillis());
+        System.out.println("Starting with making feasible => " + time2);
+        solution.MakeFeasible();
+        solution.meta();
+
+        solution.WriteFileNieuw();
 
         /** TabuSearch Heuristic Neighborhood Search **/
         //solution.TabuSearch(10);
