@@ -1,5 +1,5 @@
 INFO: Times are given in minutes, distances in kilometers
-TRUCK_CAPACITY: 100
+TRUCK_CAPACITY: 110
 TRUCK_WORKING_TIME: 600
 
 LOCATIONS: 304 [id lat lon name]

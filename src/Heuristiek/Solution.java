@@ -822,7 +822,6 @@ public class Solution   {
                 indexfor++;
             }
 
-
             // stop deleten //
             //Hier de stop verwijderen zie hierboven
             if(deleteDrop)
@@ -836,6 +835,7 @@ public class Solution   {
                 if(truckToDeleteRequest.getStops().size()-1 != indexRemoveLocatieCollect && indexRemoveLocatieCollect != 0)
                     truckToDeleteRequest.removeStop(indexRemoveLocatieCollect);
             }
+
 
             //truckToDeleteRequest.getLoadedMachines().remove(request.getMachine());
 
