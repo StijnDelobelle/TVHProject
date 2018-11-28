@@ -314,7 +314,7 @@ DEPOTS: 4 [id locationId]
   2   2
   3   3
 
-TRUCKS: 46 [id startLocationId endLocationId]
+TRUCKS: 40 [id startLocationId endLocationId]
   0   0   0
   1   0   0
   2   0   0
@@ -355,12 +355,6 @@ TRUCKS: 46 [id startLocationId endLocationId]
  37   3   3
  38   3   3
  39   3   3
- 40   0   0
- 41   0   0
- 42   0   0
- 43   0   0
- 44   0   0
- 45   0   0 
 
 MACHINE_TYPES: 83 [id volume serviceTime name]
   0   8   1 1930ES

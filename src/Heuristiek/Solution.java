@@ -270,6 +270,14 @@ public class Solution   {
             //}
         }
 
+        // Geen trucks beschikbaar => dummy truck toevoegen
+        if(candidateTruck == null){
+            Location start_endLocation = locations.get(0);
+            initialTrucks.add(new Truck(initialTrucks.size(), start_endLocation, start_endLocation));
+            candidateTruck = initialTrucks.get(initialTrucks.size()-1);
+            Stop stopStart = new Stop(candidateTruck.getStartLocation(),null,Request.Type.START);
+            candidateTruck.addStopToRoute(stopStart);
+        }
 
         //nu hebben we de id van de truck waar we de request het best aan toevoegen deze effectief toevoegen aan initialtrucks gelijkaardig als hierboven
         if(s1 != null)
@@ -452,7 +460,7 @@ public class Solution   {
         Route bestRoute = new Route(route);
         measureTotalDistance(bestRoute);
 
-        HashMap<Integer, List<Request>> requestsByTruck = new HashMap<>();
+      /*  HashMap<Integer, List<Request>> requestsByTruck = new HashMap<>();
         for(Request request : requests.values()){
             if(requestsByTruck.containsKey(request.getInTruckId())){
                 List<Request> temp = requestsByTruck.get(request.getInTruckId());
@@ -464,14 +472,20 @@ public class Solution   {
                 temp.add(request);
                 requestsByTruck.put(request.getInTruckId(), temp);
             }
+        }*/
+
+        List<Request> requestsNotFeasible = new ArrayList<>();
+        for(Request request : requests.values()){
+            if(request.getInTruckId() > 39){
+                requestsNotFeasible.add(request);
+            }
         }
 
         while (true) {
 
             // Hier kiezen we welke request we gaan behandelen
-            int randomRequest = random.nextInt(requestsByTruck.get(bestRoute.getTrucks().size()-7).size());
-
-            Request req = requestsByTruck.get(bestRoute.getTrucks().size()-7).get(randomRequest);
+            int randomRequest = random.nextInt(requestsNotFeasible.size());
+            Request req = requestsNotFeasible.get(randomRequest);
 
             /*
             int requestId = -1;
@@ -508,47 +522,16 @@ public class Solution   {
             {
                 bestRoute = new Route(returnRoute);
 
-                // UPDATE HASHMAP 1
-                requestsByTruck.get(req.getInTruckId()).remove(req);
-                // UPDATE HASHMAP 2
+                requestsNotFeasible.remove(randomRequest);
                 req.setInTruckId(toTruckId);
-                // UPDATE HASHMAP 3
-                if(requestsByTruck.containsKey(req.getInTruckId())){
-                    List<Request> temp = requestsByTruck.get(req.getInTruckId());
-                    temp.add(req);
-                    //requestsByTruck.get(request.getInTruckId()).
-                }
-                else {
-                    List<Request> temp = new ArrayList<>();
-                    temp.add(req);
-                    requestsByTruck.put(req.getInTruckId(), temp);
-                }
-
-                Truck truckNoStops = null;
-                for(Truck truck : bestRoute.getTrucks()) {
-                    // TODO sommige stops worden er nog niet uitgehaald
-                    /*if(truck.getStops().size() == 0) {
-                        truckNoStops = truck;
-                    }*/
-                    if(checkIfTruckIsEmpty(truck.getStops())){
-                        truckNoStops = truck;
-                    }
-                }
-
-                if(truckNoStops != null){
-                    bestRoute.getTrucks().remove(truckNoStops);
-                    requestsByTruck.remove(truckNoStops.getId());
-                }
             }
-
 
             // stop?
             // TODO hardcoded 40
-            if (bestRoute.getTrucks().size() == 40) {
+            if (requestsNotFeasible.size() == 0) {
                 break;
             }
         }
-
     }
 
     public boolean checkIfTruckIsEmpty(List<Stop> stops){
