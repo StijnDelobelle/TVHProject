@@ -477,7 +477,7 @@ public class Solution   {
 
         List<Request> requestsNotFeasible = new ArrayList<>();
         for(Request request : requests.values()){
-            if(request.getInTruckId() > 39){
+            if(request.getInTruckId() > trucks.size()-1){
                 requestsNotFeasible.add(request);
             }
         }
@@ -495,7 +495,7 @@ public class Solution   {
 
             //Hier bereken je naar welke truck we de move doen
             // TODO hardcoded 39
-            int toTruckId = random.nextInt(39);
+            int toTruckId = random.nextInt(trucks.size());
 
             //De move uitvoeren
             Route returnRoute = DoMove(bestRoute, req, toTruckId);
@@ -507,10 +507,6 @@ public class Solution   {
 
                 requestsNotFeasible.remove(randomRequest);
                 req.setInTruckId(toTruckId);
-
-                if(checkIfTruckIsEmpty(bestRoute.getTrucks().get(toTruckId).getStops())){
-                    bestRoute.getTrucks().remove(bestRoute.getTrucks().get(toTruckId));
-                }
             }
 
             // stop?
@@ -518,6 +514,10 @@ public class Solution   {
             if (requestsNotFeasible.size() == 0) {
                 break;
             }
+        }
+
+        while (bestRoute.getTrucks().size() > trucks.size()){
+            bestRoute.getTrucks().remove(bestRoute.getTrucks().size()-1);
         }
     }
 
