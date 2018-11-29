@@ -10,11 +10,15 @@ public class Main {
      */
 
     public static String INPUT_FILE;
-    public static String OUTPUT_FILE;
+    public static String SOLUTION_FILE;
+
+    public static final int MAX_IDLE = 1000;
+    public static final int RANDOM_SEED = 0;
+    public static final int TIME_LIMIT = 1800 ; // In minuten 30 min => 1800
 
     public static void main(String[] args) throws Exception{
         INPUT_FILE = args[0];
-        OUTPUT_FILE = args[1];
+        SOLUTION_FILE = args[1];
 
         FileIO.readInput(INPUT_FILE);
         Problem.solve();

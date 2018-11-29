@@ -7,6 +7,8 @@ import java.io.*;
 import java.util.*;
 
 import static Heuristiek.Problem.*;
+import static Main.Main.MAX_IDLE;
+import static Main.Main.RANDOM_SEED;
 
 
 public class Solution   {
@@ -14,9 +16,8 @@ public class Solution   {
     private Route route;
     private ArrayList<Truck> initialTrucks;
     private ArrayList<Request> initialRequests;
-    private HashMap<Integer, Request> requests;
-    private static final Random random = new Random(0);
-
+    //private HashMap<Integer, Request> requests;
+    private static final Random random = new Random(RANDOM_SEED);
 
     public void zetStartStops(ArrayList<Truck> initialTrucks)
     {
@@ -40,22 +41,22 @@ public class Solution   {
 
         zetStartStops(initialTrucks);
 
-        Random random = new Random(0);
-        Collections.shuffle(initialRequests, random);
+      //  Random random = new Random(0);
+      //  Collections.shuffle(initialRequests, random);
 
-        requests = new HashMap<>();
+      /*  requests = new HashMap<>();
         for(Request request : initialRequests){
             requests.put(request.getId(), request);
-        }
+        }*/
 
         // Alle collect requests die nodig zijn, key => machineID
         HashMap<Integer, Request> collects = new HashMap<>();
-        for(Request request : requests.values()) {
+        for(Request request : initialRequests) {
             if (request.getType() == Request.Type.COLLECT)
                 collects.put(request.getMachine().getId(), request);
         }
 
-        for (Request request : requests.values())
+        for (Request request : initialRequests)
         {
             // Is de request al gedaan doordat een drop request al de machine heeft meegepakt onderweg?
             if(!request.isDone()) {
@@ -81,7 +82,7 @@ public class Solution   {
 
                     // Indien een collect al gebeurt is voor een drop, verwijder deze uit de collects die nog gedaan moeten worden!
                     if (collects.containsKey(pickupMachine.getId())) {
-                        requests.get(collects.get(pickupMachine.getId()).getId()).setDone(true);
+                        initialRequests.get(collects.get(pickupMachine.getId()).getId()).setDone(true);
                     }
 
                     rit = new Rit(pickupLocation,request.getLocation(),pickupMachine,Request.Type.DROP);
@@ -99,7 +100,7 @@ public class Solution   {
 
                 //AddToTruck(ride);
                 Add(rit,request);
-                requests.get(request.getId()).setDone(true);
+                initialRequests.get(request.getId()).setDone(true);
             }
         }
 
@@ -317,6 +318,8 @@ public class Solution   {
 
             initialTrucks.get(candidateTruck.getId()).setCurrentDistance(distance);
             initialTrucks.get(candidateTruck.getId()).setCurrentWorkTime(time);
+
+            //initialTrucks.get(candidateTruck.getId()).setCurrentLocation(rit.getToLocation());
         }
 
         // Geen trucks beschikbaar => dummy truck toevoegen
@@ -334,7 +337,7 @@ public class Solution   {
     //De totale load berekenen van de truck geeft terug als hij over zijn max load gaat
     public boolean checkLoadTruck(Truck t) {
         int load = 0;
-        if(t.getStops().size() >= 1)
+        if(t.getStops().size() > 1)
         {
             for(int index = 0; index< (t.getStops().size()-1); index++)
             {
@@ -348,7 +351,6 @@ public class Solution   {
                         load = load - m.getMachineType().getVolume();
                     }
                 }
-
                 if(load > TRUCK_CAPACITY)
                 {
                     return false;
@@ -446,6 +448,28 @@ public class Solution   {
     }
 
     public void MakeFeasible() {
+        //DEBUG LOAD
+      /*System.out.println("LOADS BEFORE LAST STOP");
+        for(Truck truck : route.getTrucks()){
+            int load = 0;
+            if(truck.getStops().size() >= 1)
+            {
+                for(int index = 0; index< (truck.getStops().size()-1); index++) {
+                    for (Machine m : truck.getStops().get(index).getcollect()) {
+                        load = load + m.getMachineType().getVolume();
+                    }
+
+                    if (truck.getStops().get(index).getLocation().getId() != truck.getEndLocation().getId()) {
+                        for (Machine m : truck.getStops().get(index).getdrop()) {
+                            load = load - m.getMachineType().getVolume();
+                        }
+                    }
+                }
+
+                System.out.println("Truck [" + truck.getId() + "] load => " + load);
+            }
+        }*/
+
         Route bestRoute = new Route(route);
         measureTotalDistance(bestRoute);
 
@@ -464,7 +488,7 @@ public class Solution   {
         }*/
 
         List<Request> requestsNotFeasible = new ArrayList<>();
-        for(Request request : requests.values()){
+        for(Request request : initialRequests){
             if(request.getInTruckId() > trucks.size()-1){
                 requestsNotFeasible.add(request);
             }
@@ -485,7 +509,6 @@ public class Solution   {
             //   Truck truckToDeleteRequest = rou.getTrucks().get(request.getInTruckId());
 
             //Hier bereken je naar welke truck we de move doen
-            // TODO hardcoded 39
             int toTruckId = random.nextInt(trucks.size());
 
             //De move uitvoeren
@@ -504,7 +527,6 @@ public class Solution   {
             }
 
             // stop?
-            // TODO hardcoded 40
             if (requestsNotFeasible.size() == 0) {
                 break;
             }
@@ -517,20 +539,12 @@ public class Solution   {
         route = bestRoute;
     }
 
-    public boolean checkIfTruckIsEmpty(List<Stop> stops){
-        for(Stop stop : stops) {
-            if(stop.getcollect().size() != 0 || stop.getdrop().size() != 0)
-                return false;
-        }
-        return true;
-    }
-
     public void meta() {
         //Solution solution = null;
 
         /* meta settings ----------------------------------- */
 
-        int MAX_IDLE = 1000; //100000
+        //int MAX_IDLE = 1000;
         int L = 1000;
 
         /* create initial solution ------------------------- */
@@ -548,10 +562,9 @@ public class Solution   {
 
             double oldDist = bestRoute.getTotalDistance();
             // hier kiezen we welke request we gaan behandelen
-            int requestId = random.nextInt(requests.size() - 1);
-            Request req = requests.get(requestId);
+            int requestId = random.nextInt(initialRequests.size() - 1);
+            Request req = initialRequests.get(requestId);
 
-            //TODO hier moves maken naar een truck die geen dummy truck is dus bv bij problem 4 binnen de 40!!!
             //Hier bereken je naar welke truck we de move doen
             int toTruckId = random.nextInt(trucks.size()-1);
 
@@ -724,6 +737,15 @@ public class Solution   {
 
                 //De drop toevoegen aan de trucks op de laatste stop (dus altijd op een depo)
                 //TODO veranderen dat dit gelijk welke positie kan zijn
+               /* int indexDepo = -1;
+                for(int index = 1; index < truckToAddRequest.getStops().size() - 2; index++){
+                    if(truckToAddRequest.getStops().get(index).depo == true){
+                        indexDepo = index;
+                    }
+                }
+                if(indexDepo != -1)
+                    truckToAddRequest.getStops().get(indexDepo).addDrop(request.getMachine(),false);
+                else*/
                 truckToAddRequest.getStops().get(truckToAddRequest.getStops().size()-1).addDrop(request.getMachine(),false);
 
                 //truckToAddRequest.getLoadedMachines().add(request.getMachine());
@@ -830,7 +852,7 @@ public class Solution   {
                     truckToDeleteRequest.removeStop(indexRemoveLocatieDrop);
             }
 
-            if(deleteCollect && indexRemoveLocatieCollect != indexRemoveLocatieDrop)
+            if(deleteCollect)
             {
                 if(truckToDeleteRequest.getStops().size()-1 != indexRemoveLocatieCollect && indexRemoveLocatieCollect != 0)
                     truckToDeleteRequest.removeStop(indexRemoveLocatieCollect);
@@ -945,7 +967,7 @@ public class Solution   {
         int totalDistance = measureTotalDistance(route);
 
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter(Main.OUTPUT_FILE));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(Main.SOLUTION_FILE));
         writer.write("PROBLEM: " + Main.INPUT_FILE + "\n");
         writer.write("DISTANCE: " + totalDistance + "\n");
         writer.write("TRUCKS: " + numberOfUsedTrucks + "\n");
