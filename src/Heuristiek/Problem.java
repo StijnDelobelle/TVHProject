@@ -29,8 +29,8 @@ public class Problem {
         /** InitialSolution **/
         solution.InitialSolution(requests, trucks);
 
-        Timestamp time1 = new Timestamp(System.currentTimeMillis());
-        System.out.println("Starting with optimalisation => " + time1);
+        //Timestamp time1 = new Timestamp(System.currentTimeMillis());
+        //System.out.println("Starting with optimalisation => " + time1);
         solution.meta();
 
         //Timestamp time2 = new Timestamp(System.currentTimeMillis());

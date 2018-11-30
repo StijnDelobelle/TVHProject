@@ -336,16 +336,17 @@ public class Solution   {
 
     //De totale load berekenen van de truck geeft terug als hij over zijn max load gaat
     public boolean checkLoadTruck(Truck t) {
-        int currentStopIndex = 0;
+        int ridID = 0;
         int load = 0;
         if(t.getStops().size() > 1)
         {
-            for(int ridID = 1; ridID <= t.getAantal_ritten(); ridID++) {
+           // for(int ridID = 1; ridID <= t.getAantal_ritten(); ridID++) {
 
-                for(int index = currentStopIndex ; index <= t.getStops().size()-1; index++)
+                for(int index = 0 ; index <= t.getStops().size()-1; index++)
                 {
-                    if(t.getStops().get(index).getRitID() != ridID){
-                        break;
+                    if(t.getStops().get(index).getRitID() != ridID) {
+                       // load = 0;
+                        ridID++;
                     }
 
                     for(Machine m : t.getStops().get(index).getcollect())
@@ -362,10 +363,10 @@ public class Solution   {
                     {
                         return false;
                     }
-                    currentStopIndex++;
+                    //currentStopIndex++;
                 }
-                load = 0;
-            }
+
+
         }
         return true;
     }
@@ -629,7 +630,7 @@ public class Solution   {
 
         route = bestRoute;
 
-        checkLoadTruck(route.getTrucks().get(0));
+        boolean temp = checkLoadTruck(route.getTrucks().get(0));
     }
 
     private Route DoMove(Route r, Request request, int toTruckId) {
@@ -771,7 +772,6 @@ public class Solution   {
                             truckToAddRequest.addStopToRoute(lastStop+2, endStop);
 
                             newRideStarted = true;
-                            rou.getTrucks().get(truckToAddRequest.getId()).setAantal_ritten(ritID);
                         }
                         else {
                             // Nog in dezelfde rit steken
@@ -843,6 +843,9 @@ public class Solution   {
                     if(checkLoadTruck(truckToAddRequest) && truckToAddRequest.CheckIfTimeFitsStop() ) {
                         //Als het past binnen de load en tijd van de truck geef instantie terug
                         //anders returned hij nul
+                        if(rou.getTrucks().get(truckToAddRequest.getId()).getAantal_ritten() < ritID)
+                            rou.getTrucks().get(truckToAddRequest.getId()).setAantal_ritten(ritID);
+
                         return rou;
                     }
                 }
@@ -982,7 +985,6 @@ public class Solution   {
                             truckToAddRequest.addStopToRoute(lastStop+2, endStop);
 
                             newRideStarted = true;
-                            rou.getTrucks().get(truckToAddRequest.getId()).setAantal_ritten(ritID);
                         }
                         else {
                             // Nog in dezelfde rit steken
@@ -1055,6 +1057,9 @@ public class Solution   {
                     if(checkLoadTruck(truckToAddRequest) && truckToAddRequest.CheckIfTimeFitsStop() ) {
                         //Als het past binnen de load en tijd van de truck geef instantie terug
                         //anders returned hij nul
+                        if(rou.getTrucks().get(truckToAddRequest.getId()).getAantal_ritten() < ritID)
+                            rou.getTrucks().get(truckToAddRequest.getId()).setAantal_ritten(ritID);
+
                         return rou;
                     }
                 }
