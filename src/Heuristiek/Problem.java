@@ -24,19 +24,15 @@ public class Problem {
 
     public static void solve() throws Exception{
 
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+
         Solution solution = new Solution();
 
-        /** InitialSolution **/
         solution.InitialSolution(requests, trucks);
 
-        Timestamp time1 = new Timestamp(System.currentTimeMillis());
-        System.out.println("Starting with optimalisation => " + time1);
-        solution.meta();
-
-        Timestamp time2 = new Timestamp(System.currentTimeMillis());
-        System.out.println("Starting with making feasible => " + time2);
         solution.MakeFeasible();
-        //solution.meta();
+
+        solution.meta();
 
         solution.WriteFileNieuw();
     }

@@ -172,7 +172,7 @@ public class Truck  implements Serializable {
     }
 
     public boolean CheckIfTimeFitsStop() {
-        return ((currentWorkTime <= TIME_CAPACITY));
+        return currentWorkTime <= TIME_CAPACITY;
     }
 
     public void DeleteStop(int index)
