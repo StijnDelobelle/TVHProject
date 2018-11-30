@@ -19,7 +19,8 @@ public class Solution   {
     //private HashMap<Integer, Request> requests;
     private static final Random random = new Random(RANDOM_SEED);
 
-    public void zetStartStops(ArrayList<Truck> initialTrucks) {
+    public void zetStartStops(ArrayList<Truck> initialTrucks)
+    {
         for(Truck truck: initialTrucks)
         {
             Stop stopStart = new Stop(truck.getStartLocation(),null,Request.Type.START, 1);
@@ -509,6 +510,7 @@ public class Solution   {
                 counterCurrentRequest++;
 
 
+                /*
                 System.out.println("LOADS BEFORE LAST STOP");
                 for(Truck truck : route.getTrucks()){
                     int load = 0;
@@ -528,7 +530,7 @@ public class Solution   {
 
                         System.out.println("Truck [" + truck.getId() + "] load => " + load + " time  => " + measureTimeTruck(truck) + " ritten => " + truck.getAantal_ritten());
                     }
-                }
+                }*/
             }
 
             // stop?
@@ -1083,6 +1085,7 @@ public class Solution   {
         //nul retunen => wil zeggen past niet in de truck
         return null;
     }
+
 
     // De laatste stop van die specifieke rit
     public int GetLastStopFromRide(int ritID, List<Stop> stops) {

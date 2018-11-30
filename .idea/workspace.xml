@@ -2,23 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="48a7c1a9-bf4d-49dd-8305-3a7c1d043c9c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/Problem_7.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/Problem_8.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/Validator_7.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/Validator_8.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tvh-3.0-student.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tvh_problem_7.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tvh_problem_8.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Validator_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Validator_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Validator_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Validator_4.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Validator_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Validator_5.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Validator_6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Validator_6.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Heuristiek/Problem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TVHproject/Heuristiek/Problem.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Heuristiek/Solution.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TVHproject/Heuristiek/Solution.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Heuristiek/Problem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Heuristiek/Problem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Heuristiek/Solution.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Heuristiek/Solution.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tvh_solution_3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tvh_solution_3.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tvh_solution_5.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tvh_solution_5.txt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -73,14 +61,15 @@
     <session id="230661949">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="10" />
+          <entry key="project.closed" value="11" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.6" value="2" />
           <entry key="project.open.time.7" value="4" />
           <entry key="project.open.time.8" value="2" />
-          <entry key="project.opened" value="11" />
+          <entry key="project.open.time.9" value="1" />
+          <entry key="project.opened" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -88,7 +77,7 @@
           <entry key="bat" value="3" />
           <entry key="iml" value="1" />
           <entry key="java" value="63" />
-          <entry key="txt" value="37" />
+          <entry key="txt" value="39" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -96,19 +85,19 @@
           <entry key="Bat" value="3" />
           <entry key="IDEA_MODULE" value="1" />
           <entry key="JAVA" value="63" />
-          <entry key="PLAIN_TEXT" value="37" />
+          <entry key="PLAIN_TEXT" value="39" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="11924" />
-          <entry key="txt" value="314" />
+          <entry key="java" value="11977" />
+          <entry key="txt" value="327" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="11924" />
-          <entry key="PLAIN_TEXT" value="314" />
+          <entry key="JAVA" value="11977" />
+          <entry key="PLAIN_TEXT" value="327" />
         </counts>
       </usages-collector>
     </session>
@@ -118,8 +107,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Heuristiek/Solution.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="1130" column="58" selection-start-line="1130" selection-start-column="58" selection-end-line="1130" selection-end-column="58" />
+            <state relative-caret-position="488">
+              <caret line="532" column="19" selection-start-line="532" selection-start-column="19" selection-end-line="532" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#zetStartStops#0;class#Solution#0" />
@@ -131,9 +120,10 @@
                 <element signature="method#measureTimeTruck#0;class#Solution#0" />
                 <element signature="method#SendTrucksToHome#0;class#Solution#0" />
                 <element signature="method#measureTotalDistance#0;class#Solution#0" />
+                <element signature="method#meta#0;class#Solution#0" />
                 <element signature="method#SimulatedAnnealing#0;class#Solution#0" />
-                <element signature="method#acceptanceProbability#0;class#Solution#0" />
                 <element signature="method#VolgordeChecken#0;class#Solution#0" />
+                <element signature="method#WriteFileNieuw#0;class#Solution#0" />
                 <element signature="method#deepClone#0;class#Solution#0" />
               </folding>
             </state>
@@ -149,7 +139,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main/Main.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="210">
@@ -158,11 +148,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Heuristiek/Problem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="38" column="8" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="8" />
+            <state relative-caret-position="245">
+              <caret line="33" column="8" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -240,9 +230,9 @@
         <option value="$PROJECT_DIR$/tvh_solution_7.txt" />
         <option value="$PROJECT_DIR$/tvh_solution_5.txt" />
         <option value="$PROJECT_DIR$/tvh_solution_3.txt" />
+        <option value="$PROJECT_DIR$/src/Main/Main.java" />
         <option value="$PROJECT_DIR$/src/Heuristiek/Solution.java" />
         <option value="$PROJECT_DIR$/src/Heuristiek/Problem.java" />
-        <option value="$PROJECT_DIR$/src/Main/Main.java" />
       </list>
     </option>
   </component>
@@ -253,10 +243,165 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-482" />
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="821" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State />
+          <State>
+            <id>Abstraction issuesJava</id>
+          </State>
+          <State>
+            <id>AccessibilityLintAndroid</id>
+          </State>
+          <State>
+            <id>Android</id>
+          </State>
+          <State>
+            <id>Buildout</id>
+          </State>
+          <State>
+            <id>Class structureJava</id>
+          </State>
+          <State>
+            <id>Cloning issuesJava</id>
+          </State>
+          <State>
+            <id>Code maturityJava</id>
+          </State>
+          <State>
+            <id>Code style issuesJava</id>
+          </State>
+          <State>
+            <id>Compiler issuesJava</id>
+          </State>
+          <State>
+            <id>Control flow issuesJava</id>
+          </State>
+          <State>
+            <id>CorrectnessLintAndroid</id>
+          </State>
+          <State>
+            <id>Data flowJava</id>
+          </State>
+          <State>
+            <id>Declaration redundancyJava</id>
+          </State>
+          <State>
+            <id>Error handlingJava</id>
+          </State>
+          <State>
+            <id>General</id>
+          </State>
+          <State>
+            <id>Groovy</id>
+          </State>
+          <State>
+            <id>HTML</id>
+          </State>
+          <State>
+            <id>IconsUsabilityLintAndroid</id>
+          </State>
+          <State>
+            <id>Inheritance issuesJava</id>
+          </State>
+          <State>
+            <id>InitializationJava</id>
+          </State>
+          <State>
+            <id>Internationalization</id>
+          </State>
+          <State>
+            <id>JUnitJava</id>
+          </State>
+          <State>
+            <id>Java</id>
+          </State>
+          <State>
+            <id>Java 5Java language level migration aidsJava</id>
+          </State>
+          <State>
+            <id>Java 7Java language level migration aidsJava</id>
+          </State>
+          <State>
+            <id>Java 8Java language level migration aidsJava</id>
+          </State>
+          <State>
+            <id>Java 9Java language level migration aidsJava</id>
+          </State>
+          <State>
+            <id>Java language level migration aidsJava</id>
+          </State>
+          <State>
+            <id>JavaBeans issuesJava</id>
+          </State>
+          <State>
+            <id>JavadocJava</id>
+          </State>
+          <State>
+            <id>LintAndroid</id>
+          </State>
+          <State>
+            <id>LintLintAndroid</id>
+          </State>
+          <State>
+            <id>LoggingJava</id>
+          </State>
+          <State>
+            <id>MessagesCorrectnessLintAndroid</id>
+          </State>
+          <State>
+            <id>Numeric issuesJava</id>
+          </State>
+          <State>
+            <id>PerformanceJava</id>
+          </State>
+          <State>
+            <id>PerformanceLintAndroid</id>
+          </State>
+          <State>
+            <id>Probable bugsJava</id>
+          </State>
+          <State>
+            <id>Python</id>
+          </State>
+          <State>
+            <id>RELAX NG</id>
+          </State>
+          <State>
+            <id>RegExp</id>
+          </State>
+          <State>
+            <id>Resource managementJava</id>
+          </State>
+          <State>
+            <id>SecurityLintAndroid</id>
+          </State>
+          <State>
+            <id>StyleGroovy</id>
+          </State>
+          <State>
+            <id>Threading issuesJava</id>
+          </State>
+          <State>
+            <id>UsabilityLintAndroid</id>
+          </State>
+          <State>
+            <id>Verbose or redundant code constructsJava</id>
+          </State>
+          <State>
+            <id>XML</id>
+          </State>
+          <State>
+            <id>YAML</id>
+          </State>
+        </expanded-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -292,6 +437,12 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Main" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="TVHProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TVHProject" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Objects" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -299,9 +450,12 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543610338512" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543613208225" />
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/Nieuwe map/java" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="debugger.hotswap" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -327,7 +481,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JAR Application.Validator 8">
+  <component name="RunManager" selected="JAR Application.Validator 6">
     <list>
       <item itemvalue="Application.Problem 3" />
       <item itemvalue="Application.Problem 4" />
@@ -494,7 +648,14 @@
       <option name="project" value="LOCAL" />
       <updated>1543572825627</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="New validator">
+      <created>1543610377832</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1543610377832</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TodoView">
@@ -510,7 +671,7 @@
     <frame x="0" y="23" width="1440" height="821" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15879828" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16094421" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -556,12 +717,12 @@
     <MESSAGE value="trucks verwijderen juist" />
     <MESSAGE value="Almost" />
     <MESSAGE value="Load not correct" />
-    <MESSAGE value="New validator" />
     <MESSAGE value="Meerdere ritten toevoegen werkt nog niet helemaal" />
     <MESSAGE value="WORKS!" />
     <MESSAGE value="Feasible" />
     <MESSAGE value="Feasible 5" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feasible 5" />
+    <MESSAGE value="New validator" />
+    <option name="LAST_COMMIT_MESSAGE" value="New validator" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -579,29 +740,10 @@
           <option name="timeStamp" value="431" />
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <condition expression="truckToAddRequest.getId() == 38 &amp;&amp; request.getMachine().getId() == 91" language="JAVA" />
           <url>file://$PROJECT_DIR$/src/Heuristiek/Solution.java</url>
-          <line>716</line>
-          <properties />
-          <option name="timeStamp" value="538" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Heuristiek/Solution.java</url>
-          <line>996</line>
-          <properties />
-          <option name="timeStamp" value="550" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Heuristiek/Solution.java</url>
-          <line>1035</line>
+          <line>1080</line>
           <properties />
           <option name="timeStamp" value="551" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Heuristiek/Solution.java</url>
-          <line>1138</line>
-          <properties />
-          <option name="timeStamp" value="554" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -795,20 +937,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
           <caret line="32" selection-start-line="32" selection-end-line="32" />
-          <folding>
-            <element signature="e#810#811#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Downloads/TVHProject-master/src/Main/Main.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/TVHProject-master/src/Heuristiek/Problem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-170" />
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/Downloads/TVHProject-master/src/Main/Main.java" />
+    <entry file="file://$USER_HOME$/Downloads/TVHProject-master/src/Heuristiek/Problem.java" />
     <entry file="file://$PROJECT_DIR$/src/Objects/Route.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
@@ -877,10 +1010,9 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/tvh_problem_7.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tvh_problem_3.txt">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5574" />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tvh_solution_3.txt">
       <provider selected="true" editor-type-id="text-editor">
@@ -889,10 +1021,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tvh_problem_3.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Heuristiek/Solution.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="1130" column="58" selection-start-line="1130" selection-start-column="58" selection-end-line="1130" selection-end-column="58" />
+        <state relative-caret-position="488">
+          <caret line="532" column="19" selection-start-line="532" selection-start-column="19" selection-end-line="532" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#zetStartStops#0;class#Solution#0" />
@@ -904,18 +1039,12 @@
             <element signature="method#measureTimeTruck#0;class#Solution#0" />
             <element signature="method#SendTrucksToHome#0;class#Solution#0" />
             <element signature="method#measureTotalDistance#0;class#Solution#0" />
+            <element signature="method#meta#0;class#Solution#0" />
             <element signature="method#SimulatedAnnealing#0;class#Solution#0" />
-            <element signature="method#acceptanceProbability#0;class#Solution#0" />
             <element signature="method#VolgordeChecken#0;class#Solution#0" />
+            <element signature="method#WriteFileNieuw#0;class#Solution#0" />
             <element signature="method#deepClone#0;class#Solution#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Heuristiek/Problem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="38" column="8" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -926,6 +1055,88 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Heuristiek/Problem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="33" column="8" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>TVHproject</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
   <component name="simpleUML.UMLToolWindowPlugin">
     <General>

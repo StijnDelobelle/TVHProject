@@ -29,23 +29,13 @@ public class Problem {
         /** InitialSolution **/
         solution.InitialSolution(requests, trucks);
 
-        //Timestamp time1 = new Timestamp(System.currentTimeMillis());
-        //System.out.println("Starting with meta => " + time1);
-        //solution.meta();
-
-        Timestamp time3 = new Timestamp(System.currentTimeMillis());
-        System.out.println("Starting with making feasible => " + time3);
-        //solution.MakeFeasible();
-        //solution.meta();
+        Timestamp time1 = new Timestamp(System.currentTimeMillis());
+        System.out.println("Starting with optimalisation => " + time1);
+        solution.meta();
 
         Timestamp time2 = new Timestamp(System.currentTimeMillis());
-        System.out.println("Starting with simulatedAnnealing => " + time2);
-        //solution.SimulatedAnnealing();
-
-
-
-        //Timestamp time4 = new Timestamp(System.currentTimeMillis());
-        //System.out.println("Starting with making feasible => " + time4);
+        System.out.println("Starting with making feasible => " + time2);
+        solution.MakeFeasible();
         //solution.meta();
 
         solution.WriteFileNieuw();
