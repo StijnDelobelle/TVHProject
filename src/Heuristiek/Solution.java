@@ -240,7 +240,7 @@ public class Solution   {
                 /** Controleren of die er nog bij kan **/
                 //int rideTime = timeMatrix[truck.getCurrentLocation().getId()][pickupLocation.getId()] + timeMatrix[pickupLocation.getId()][currentRide.getToLocation().getId()];
                 int time = measureTimeTruck(testTruck) + testTruck.getTijdLaden();
-                if(checkLoadTruck(testTruck, true) && truck.CheckIfTimeFitsStop(time, serviceTime) ) {
+                if(checkLoadTruck(testTruck, true) && truck.CheckIfTimeFitsStop(time, serviceTime)) {
                     minDistance = distance;
                     //startLocation = truck.getCurrentLocation();
                     candidateTruck = truck;
@@ -292,21 +292,28 @@ public class Solution   {
             } else {
                 //Bij collect geen to destination, dus deze functie wordt enkel gelopen bij drop
                 if (rit.getType() != Request.Type.COLLECT) {
-                    for (Stop stop : initialTrucks.get(candidateTruck.getId()).getStops()) {
-                        if (stop.getLocation().getId() == rit.getToLocation().getId()) {
-                            if (rit.getFromLocation().getId() != rit.getToLocation().getId()) {
-                                stop.addDrop(rit.getMachine(), false);
-                            } else {
-                                //Hier weten we dat er een drop en collect op dezelfde plek zijn dus speciaal geval op true (in en uitladen na elkaar van machine)
-                                stop.addDrop(rit.getMachine(), true);
+                    if(VolgordeChecken(initialTrucks.get(candidateTruck.getId()).getStops(), rit.getMachine())) {
+                        for (Stop stop : initialTrucks.get(candidateTruck.getId()).getStops()) {
+
+                            if (stop.getLocation().getId() == rit.getToLocation().getId()) {
+                                if (rit.getFromLocation().getId() != rit.getToLocation().getId()) {
+                                    stop.addDrop(rit.getMachine(), false);
+                                } else {
+                                    //Hier weten we dat er een drop en collect op dezelfde plek zijn dus speciaal geval op true (in en uitladen na elkaar van machine)
+                                    stop.addDrop(rit.getMachine(), true);
+                                }
+
+                                initialTrucks.get(candidateTruck.getId()).getLoadedMachines().remove(rit.getMachine());
+
+                                //Load adden & servicetime to truck!
+                                initialTrucks.get(candidateTruck.getId()).addLoad(rit.getMachine().getMachineType().getVolume());
+                                initialTrucks.get(candidateTruck.getId()).addTijdLaden(rit.getMachine().getMachineType().getServiceTime());
                             }
-
-                            initialTrucks.get(candidateTruck.getId()).getLoadedMachines().remove(rit.getMachine());
-
-                            //Load adden & servicetime to truck!
-                            initialTrucks.get(candidateTruck.getId()).addLoad(rit.getMachine().getMachineType().getVolume());
-                            initialTrucks.get(candidateTruck.getId()).addTijdLaden(rit.getMachine().getMachineType().getServiceTime());
                         }
+                    }
+                    else {
+                        Stop s3 = new Stop(rit.getToLocation(), rit.getMachine(), Request.Type.DROP, 1);
+                        initialTrucks.get(candidateTruck.getId()).addStopToRoute(s3);
                     }
                 }
             }
@@ -464,26 +471,7 @@ public class Solution   {
 
     public void MakeFeasible() {
         //DEBUG LOAD
-      /*System.out.println("LOADS BEFORE LAST STOP");
-        for(Truck truck : route.getTrucks()){
-            int load = 0;
-            if(truck.getStops().size() >= 1)
-            {
-                for(int index = 0; index< (truck.getStops().size()-1); index++) {
-                    for (Machine m : truck.getStops().get(index).getcollect()) {
-                        load = load + m.getMachineType().getVolume();
-                    }
 
-                    if (truck.getStops().get(index).getLocation().getId() != truck.getEndLocation().getId()) {
-                        for (Machine m : truck.getStops().get(index).getdrop()) {
-                            load = load - m.getMachineType().getVolume();
-                        }
-                    }
-                }
-
-                System.out.println("Truck [" + truck.getId() + "] load => " + load);
-            }
-        }*/
 
         Route bestRoute = new Route(route);
         measureTotalDistance(bestRoute);
@@ -539,6 +527,27 @@ public class Solution   {
 
                 System.out.println("Request " + counterCurrentRequest + " of " + totalRequest + " done");
                 counterCurrentRequest++;
+
+                System.out.println("LOADS BEFORE LAST STOP");
+                for(Truck truck : route.getTrucks()){
+                    int load = 0;
+                    if(truck.getStops().size() >= 1)
+                    {
+                        for(int index = 0; index< (truck.getStops().size()-1); index++) {
+                            for (Machine m : truck.getStops().get(index).getcollect()) {
+                                load = load + m.getMachineType().getVolume();
+                            }
+
+                            if (truck.getStops().get(index).getLocation().getId() != truck.getEndLocation().getId()) {
+                                for (Machine m : truck.getStops().get(index).getdrop()) {
+                                    load = load - m.getMachineType().getVolume();
+                                }
+                            }
+                        }
+
+                        System.out.println("Truck [" + truck.getId() + "] load => " + load + " time  => " + measureTimeTruck(truck) + " ritten => " + truck.getAantal_ritten());
+                    }
+                }
             }
 
             // stop?
