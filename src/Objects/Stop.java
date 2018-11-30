@@ -9,12 +9,14 @@ public class Stop implements Serializable {
     private LinkedList<Machine> collect;
     private LinkedList<Machine> drop;
     public boolean depo = false;
+    private int ritID;
 
-    public Stop(Location location, Machine collectOrDrop, Request.Type type )
+    public Stop(Location location, Machine collectOrDrop, Request.Type type, int ritID)
     {
         this.location = location;
         this.drop = new LinkedList<>();
         this.collect = new LinkedList<>();
+        this.ritID = ritID;
 
         if(location.getId() == 19)
         {
@@ -100,4 +102,7 @@ public class Stop implements Serializable {
     {
         return drop;
     }
+
+    public int getRitID() { return ritID; }
+    public void setRitID(int ritID) { this.ritID = ritID; }
 }
