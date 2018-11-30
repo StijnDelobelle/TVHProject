@@ -634,8 +634,6 @@ public class Solution   {
         /* finished ---------------------------------------- */
 
         route = bestRoute;
-
-        boolean temp = checkLoadTruck(route.getTrucks().get(0), false);
     }
 
     private Route DoMove(Route r, Request request, int toTruckId) {
@@ -767,14 +765,14 @@ public class Solution   {
 
                             // TODO toevoegen aan de vorige rit? Misschien beter
                             // Truck start toevoegen
-                            //Stop startStop = new Stop(truckToAddRequest.getStartLocation(), null, Request.Type.START, ritID);
-                            //truckToAddRequest.addStopToRoute(lastStop+1, startStop);
+                            Stop startStop = new Stop(truckToAddRequest.getStartLocation(), null, Request.Type.START, ritID);
+                            truckToAddRequest.addStopToRoute(lastStop+1, startStop);
 
-                            truckToAddRequest.addStopToRoute(lastStop+1,stop1);
+                            truckToAddRequest.addStopToRoute(lastStop+2,stop1);
 
                             // Truck stop toevoegen naar huis
                             Stop endStop = new Stop(truckToAddRequest.getEndLocation(), null, Request.Type.END, ritID);
-                            truckToAddRequest.addStopToRoute(lastStop+2, endStop);
+                            truckToAddRequest.addStopToRoute(lastStop+3, endStop);
 
                             newRideStarted = true;
                         }
@@ -980,14 +978,14 @@ public class Solution   {
                             int lastStop = truckToAddRequest.getStops().size()-1;
 
                             // Truck start toevoegen
-                            //Stop startStop = new Stop(truckToAddRequest.getStartLocation(), null, Request.Type.START, ritID);
-                            //truckToAddRequest.addStopToRoute(lastStop+1, startStop);
+                            Stop startStop = new Stop(truckToAddRequest.getStartLocation(), null, Request.Type.START, ritID);
+                            truckToAddRequest.addStopToRoute(lastStop+1, startStop);
 
-                            truckToAddRequest.addStopToRoute(lastStop+1,stop1);
+                            truckToAddRequest.addStopToRoute(lastStop+2,stop1);
 
                             // Truck stop toevoegen naar huis
                             Stop endStop = new Stop(truckToAddRequest.getEndLocation(), null, Request.Type.END, ritID);
-                            truckToAddRequest.addStopToRoute(lastStop+2, endStop);
+                            truckToAddRequest.addStopToRoute(lastStop+3, endStop);
 
                             newRideStarted = true;
                         }

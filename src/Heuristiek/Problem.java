@@ -36,7 +36,7 @@ public class Problem {
         Timestamp time2 = new Timestamp(System.currentTimeMillis());
         System.out.println("Starting with making feasible => " + time2);
         solution.MakeFeasible();
-        //solution.meta();
+        solution.meta();
 
         solution.WriteFileNieuw();
     }
