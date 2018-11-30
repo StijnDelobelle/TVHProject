@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Problem 8" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="Main.Main" />
+    <module name="TVHproject" />
+    <option name="PROGRAM_PARAMETERS" value="tvh_problem_8.txt tvh_solution_8.txt" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

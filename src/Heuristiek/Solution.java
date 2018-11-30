@@ -19,8 +19,7 @@ public class Solution   {
     //private HashMap<Integer, Request> requests;
     private static final Random random = new Random(RANDOM_SEED);
 
-    public void zetStartStops(ArrayList<Truck> initialTrucks)
-    {
+    public void zetStartStops(ArrayList<Truck> initialTrucks) {
         for(Truck truck: initialTrucks)
         {
             Stop stopStart = new Stop(truck.getStartLocation(),null,Request.Type.START, 1);
@@ -470,25 +469,8 @@ public class Solution   {
     }
 
     public void MakeFeasible() {
-        //DEBUG LOAD
-
-
         Route bestRoute = new Route(route);
         measureTotalDistance(bestRoute);
-
-      /*  HashMap<Integer, List<Request>> requestsByTruck = new HashMap<>();
-        for(Request request : requests.values()){
-            if(requestsByTruck.containsKey(request.getInTruckId())){
-                List<Request> temp = requestsByTruck.get(request.getInTruckId());
-                temp.add(request);
-                //requestsByTruck.get(request.getInTruckId()).
-            }
-            else {
-                List<Request> temp = new ArrayList<>();
-                temp.add(request);
-                requestsByTruck.put(request.getInTruckId(), temp);
-            }
-        }*/
 
         List<Request> requestsNotFeasible = new ArrayList<>();
         for(Request request : initialRequests){
@@ -509,8 +491,6 @@ public class Solution   {
             int randomRequest = random.nextInt(requestsNotFeasible.size());
             Request req = requestsNotFeasible.get(randomRequest);
 
-            //   Truck truckToDeleteRequest = rou.getTrucks().get(request.getInTruckId());
-
             //Hier bereken je naar welke truck we de move doen
             int toTruckId = random.nextInt(trucks.size());
 
@@ -527,6 +507,7 @@ public class Solution   {
 
                 System.out.println("Request " + counterCurrentRequest + " of " + totalRequest + " done");
                 counterCurrentRequest++;
+
 
                 System.out.println("LOADS BEFORE LAST STOP");
                 for(Truck truck : route.getTrucks()){
@@ -572,7 +553,6 @@ public class Solution   {
         int L = 1000;
 
         /* create initial solution ------------------------- */
-
         Route bestRoute = new Route(route);
         measureTotalDistance(bestRoute);
 
@@ -643,6 +623,82 @@ public class Solution   {
         /* finished ---------------------------------------- */
 
         route = bestRoute;
+    }
+
+    public void SimulatedAnnealing() {
+        // Set initial temp
+        double temp = 10;
+
+        // Cooling rate
+        double coolingRate = 0.02;
+
+        // Initialize intial solution
+        Route currentSolution = new Route(route);
+
+        // Set as current best
+        Route best = new Route(currentSolution);
+
+        //System.out.println("Best route: " + measureTotalDistance(best));
+
+        int counter = 1;
+
+        // Loop until system has cooled
+        while (counter == 10000) {
+
+            // Create new neighbour tour
+            Route newSolution = (Route) deepClone(currentSolution);
+
+            // SWAP
+            int requestId = random.nextInt(initialRequests.size() - 1);
+            Request req = initialRequests.get(requestId);
+
+            //Hier bereken je naar welke truck we de move doen
+            int toTruckId = random.nextInt(trucks.size()-1);
+
+            //De move uitvoeren
+            Route returnRoute = DoMove(newSolution, req, toTruckId);
+
+            if(returnRoute != null) {
+                // Get energy of solutions
+                int currentEnergy = measureTotalDistance(currentSolution);
+                int neighbourEnergy = measureTotalDistance(returnRoute);
+
+                // Decide if we should accept the neighbour
+                if (acceptanceProbability(currentEnergy, neighbourEnergy, temp) > Math.random()) {
+                    req.setInTruckId(toTruckId);
+                    currentSolution = (Route) deepClone(returnRoute);
+                }
+
+                // Keep track of the best solution found
+                int bestTotalDistance = measureTotalDistance(best);
+                int currentSolutionDistance = measureTotalDistance(currentSolution);
+               // System.out.println("currentSolution => " + currentSolutionDistance);
+
+                if (currentSolutionDistance < bestTotalDistance) {
+                    //req.setInTruckId(toTruckId);
+                    best = (Route) deepClone(currentSolution);
+                    System.out.println("Totale afstand => " + bestTotalDistance);
+                }
+            }
+           // System.out.println("Poging => " + counter++);
+
+            counter++;
+            // Cool system
+           // temp = temp - coolingRate;
+        }
+
+        // UPDATE BEST ROUTE
+        route = best;
+    }
+
+    // Calculate the acceptance probability
+    public static double acceptanceProbability(int energy, int newEnergy, double temperature) {
+        // If the new solution is better, accept it
+        if (newEnergy < energy) {
+            return 1.0;
+        }
+        // If the new solution is worse, calculate an acceptance probability
+        return Math.exp((energy - newEnergy) / temperature);
     }
 
     private Route DoMove(Route r, Request request, int toTruckId) {
@@ -786,17 +842,8 @@ public class Solution   {
                             newRideStarted = true;
                         }
                         else {
-                            // Nog in dezelfde rit steken
-                            //Nieuwe stop steken net voor de laatste stop van deze rit
-                            int indexLastStopThisRide = 0;
-                            for(Stop stop : truckToAddRequest.getStops()){
-                                if(stop.getRitID() == ritID + 1) {
-                                    break;
-                                }
-                                else {
-                                    indexLastStopThisRide++;
-                                }
-                            }
+                            // Nog in dezelfde rit steken && Nieuwe stop steken net voor de laatste stop van deze rit
+                            int indexLastStopThisRide = GetLastStopFromRide(ritID, truckToAddRequest.getStops());
                             truckToAddRequest.addStopToRoute(indexLastStopThisRide-1,stop1);
                         }
                     }
@@ -819,32 +866,16 @@ public class Solution   {
                             truckToAddRequest.addStopToRoute(lastStop,stop2);
                         }
                         else {
-                            // Nog in dezelfde rit steken
-                            //Nieuwe stop steken net voor de laatste stop van deze rit
-                            int indexLastStopThisRide = 0;
-                            for(Stop stop : truckToAddRequest.getStops()){
-                                if(stop.getRitID() == ritID + 1) {
-                                    break;
-                                }
-                                else {
-                                    indexLastStopThisRide++;
-                                }
-                            }
+                            // Nog in dezelfde rit steken && Nieuwe stop steken net voor de laatste stop van deze rit
+                            int indexLastStopThisRide = GetLastStopFromRide(ritID, truckToAddRequest.getStops());
                             truckToAddRequest.addStopToRoute(indexLastStopThisRide-1,stop2);
                         }
                     }
-
-                    //De drop toevoegen aan de trucks op de laatste stop (dus altijd op een depo)
-                    //TODO veranderen dat dit gelijk welke positie kan zijn
-                    //truckToAddRequest.getStops().get(truckToAddRequest.getStops().size()-1).addDrop(request.getMachine(),false);
-
-                    //truckToAddRequest.getLoadedMachines().add(request.getMachine());
 
                     //load toevoegen aan truck
                     truckToAddRequest.addLoad(request.getMachine().getMachineType().getVolume());
                     //2* omdat laden & lossen eruit gehaald wordt
                     truckToAddRequest.addTijdLaden((2*request.getMachine().getMachineType().getServiceTime()));
-
 
                     distance = measureDistanceTruck(truckToAddRequest);
                     time = measureTimeTruck(truckToAddRequest) + truckToAddRequest.getTijdLaden();
@@ -876,7 +907,6 @@ public class Solution   {
                 int indexRemoveLocatieCollect = 0;
                 int indexRemoveLocatieDrop = 0;
 
-                // TODO beter alle for lussen vervangen door hashmappen (zal sneller werken maar niet dringend beter de rest eerst)
                 for(Stop stop : truckToDeleteRequest.getStops()) {
                     //Deel 1 van de drop
                     for (Machine machine : stop.getcollect()) {
@@ -942,12 +972,9 @@ public class Solution   {
                 if(locatieCollectMachine == null || locatieDropMachine == null)
                     continue;
 
-                //truckToDeleteRequest.getLoadedMachines().remove(request.getMachine());
-
                 truckToDeleteRequest.lessLoad(request.getMachine().getMachineType().getVolume());
                 //2* omdat laden & lossen eruit gehaald wordt
                 truckToDeleteRequest.lessTijdLaden((2*request.getMachine().getMachineType().getServiceTime()));
-
 
                 int distance = measureDistanceTruck(truckToDeleteRequest);
                 int time = measureTimeTruck(truckToDeleteRequest) + truckToDeleteRequest.getTijdLaden();
@@ -999,17 +1026,8 @@ public class Solution   {
                             newRideStarted = true;
                         }
                         else {
-                            // Nog in dezelfde rit steken
-                            //Nieuwe stop steken net voor de laatste stop van deze rit
-                            int indexLastStopThisRide = 0;
-                            for(Stop stop : truckToAddRequest.getStops()){
-                                if(stop.getRitID() == ritID + 1) {
-                                    break;
-                                }
-                                else {
-                                    indexLastStopThisRide++;
-                                }
-                            }
+                            // Nog in dezelfde rit steken && Nieuwe stop steken net voor de laatste stop van deze rit
+                            int indexLastStopThisRide = GetLastStopFromRide(ritID, truckToAddRequest.getStops());
                             truckToAddRequest.addStopToRoute(indexLastStopThisRide-1,stop1);
                         }
                     }
@@ -1033,32 +1051,16 @@ public class Solution   {
                             truckToAddRequest.addStopToRoute(lastStop,stop2);
                         }
                         else {
-                            // Nog in dezelfde rit steken
-                            //Nieuwe stop steken net voor de laatste stop van deze rit
-                            int indexLastStopThisRide = 0;
-                            for(Stop stop : truckToAddRequest.getStops()){
-                                if(stop.getRitID() == ritID + 1) {
-                                    break;
-                                }
-                                else {
-                                    indexLastStopThisRide++;
-                                }
-                            }
+                            // Nog in dezelfde rit steken && Nieuwe stop steken net voor de laatste stop van deze rit
+                            int indexLastStopThisRide = GetLastStopFromRide(ritID, truckToAddRequest.getStops());
                             truckToAddRequest.addStopToRoute(indexLastStopThisRide-1,stop2);
                         }
                     }
-
-                    //De drop toevoegen aan de trucks op de laatste stop (dus altijd op een depo)
-                    //TODO veranderen dat dit gelijk welke positie kan zijn
-                    //truckToAddRequest.getStops().get(truckToAddRequest.getStops().size()-1).addDrop(request.getMachine(),false);
-
-                    //truckToAddRequest.getLoadedMachines().add(request.getMachine());
 
                     //load toevoegen aan truck
                     truckToAddRequest.addLoad(request.getMachine().getMachineType().getVolume());
                     //2* omdat laden & lossen eruit gehaald wordt
                     truckToAddRequest.addTijdLaden((2*request.getMachine().getMachineType().getServiceTime()));
-
 
                     distance = measureDistanceTruck(truckToAddRequest);
                     time = measureTimeTruck(truckToAddRequest) + truckToAddRequest.getTijdLaden();
@@ -1075,12 +1077,26 @@ public class Solution   {
                         return rou;
                     }
                 }
-
                 //endregion
             }
         }
         //nul retunen => wil zeggen past niet in de truck
         return null;
+    }
+
+    // De laatste stop van die specifieke rit
+    public int GetLastStopFromRide(int ritID, List<Stop> stops) {
+        int indexLastStopThisRide = 0;
+        for(Stop stop : stops){
+            if(stop.getRitID() == ritID + 1) {
+                break;
+            }
+            else {
+                indexLastStopThisRide++;
+            }
+        }
+
+        return indexLastStopThisRide;
     }
 
     // Kijken dat het toestel eerst opgehaald wordt en daarna pas gedropt wordt!
@@ -1101,7 +1117,7 @@ public class Solution   {
         // Berekenen hoeveel newTrucks er effectief in dienst zijn
         int numberOfUsedTrucks = 0;
         for (Truck truck : route.getTrucks()) {
-            if(truck.getStops().size() > 1){
+            if(truck.getStops().size() > 2){
                 numberOfUsedTrucks++;
             }
         }
@@ -1114,10 +1130,19 @@ public class Solution   {
         writer.write("DISTANCE: " + totalDistance + "\n");
         writer.write("TRUCKS: " + numberOfUsedTrucks + "\n");
 
+        boolean firstLine = true;
+
         for (Truck truck : route.getTrucks()) {
             // Enkel trucks die rijden uitprinten
             if(truck.getStops().size() > 2)
             {
+                if(!firstLine) {
+                    writer.write("\n");
+                    System.out.print("\n");
+                }
+
+                firstLine = false;
+
                 int distance = measureDistanceTruck(truck);
                 int time = measureTimeTruck(truck) + truck.getTijdLaden();
 
@@ -1165,8 +1190,6 @@ public class Solution   {
                         }
                     index++;
                 }
-                writer.write("\n");
-                System.out.print("\n");
             }
         }
         writer.close();
