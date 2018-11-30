@@ -240,7 +240,7 @@ public class Solution   {
                 /** Controleren of die er nog bij kan **/
                 //int rideTime = timeMatrix[truck.getCurrentLocation().getId()][pickupLocation.getId()] + timeMatrix[pickupLocation.getId()][currentRide.getToLocation().getId()];
                 int time = measureTimeTruck(testTruck) + testTruck.getTijdLaden();
-                if(checkLoadTruck(testTruck) && truck.CheckIfTimeFitsStop(time, serviceTime) ) {
+                if(checkLoadTruck(testTruck, true) && truck.CheckIfTimeFitsStop(time, serviceTime) ) {
                     minDistance = distance;
                     //startLocation = truck.getCurrentLocation();
                     candidateTruck = truck;
@@ -335,8 +335,8 @@ public class Solution   {
     }
 
     //De totale load berekenen van de truck geeft terug als hij over zijn max load gaat
-    public boolean checkLoadTruck(Truck t) {
-        int ridID = 0;
+    public boolean checkLoadTruck(Truck t, boolean initieel) {
+        int ridID = 1;
         int load = 0;
         if(t.getStops().size() > 1)
         {
@@ -345,7 +345,6 @@ public class Solution   {
                 for(int index = 0 ; index <= t.getStops().size()-1; index++)
                 {
                     if(t.getStops().get(index).getRitID() != ridID) {
-                       // load = 0;
                         ridID++;
                     }
 
@@ -354,19 +353,25 @@ public class Solution   {
                         load = load + m.getMachineType().getVolume();
                     }
 
-                   // if (t.getStops().get(index).getLocation().getId() != t.getEndLocation().getId()) {
+                    if(initieel) {
+                        if (t.getStops().get(index).getLocation().getId() != t.getEndLocation().getId()) {
+                            for (Machine m : t.getStops().get(index).getdrop()) {
+                                load = load - m.getMachineType().getVolume();
+                            }
+                        }
+                    }
+                    else {
                         for (Machine m : t.getStops().get(index).getdrop()) {
                             load = load - m.getMachineType().getVolume();
                         }
-                   // }
+                    }
+
                     if(load > TRUCK_CAPACITY)
                     {
                         return false;
                     }
                     //currentStopIndex++;
                 }
-
-
         }
         return true;
     }
@@ -630,7 +635,7 @@ public class Solution   {
 
         route = bestRoute;
 
-        boolean temp = checkLoadTruck(route.getTrucks().get(0));
+        boolean temp = checkLoadTruck(route.getTrucks().get(0), false);
     }
 
     private Route DoMove(Route r, Request request, int toTruckId) {
@@ -840,7 +845,7 @@ public class Solution   {
                     truckToAddRequest.setCurrentDistance(distance);
                     truckToAddRequest.setCurrentWorkTime(time);
 
-                    if(checkLoadTruck(truckToAddRequest) && truckToAddRequest.CheckIfTimeFitsStop() ) {
+                    if(checkLoadTruck(truckToAddRequest, false) && truckToAddRequest.CheckIfTimeFitsStop() ) {
                         //Als het past binnen de load en tijd van de truck geef instantie terug
                         //anders returned hij nul
                         if(rou.getTrucks().get(truckToAddRequest.getId()).getAantal_ritten() < ritID)
@@ -1054,7 +1059,7 @@ public class Solution   {
                     truckToAddRequest.setCurrentDistance(distance);
                     truckToAddRequest.setCurrentWorkTime(time);
 
-                    if(checkLoadTruck(truckToAddRequest) && truckToAddRequest.CheckIfTimeFitsStop() ) {
+                    if(checkLoadTruck(truckToAddRequest, false) && truckToAddRequest.CheckIfTimeFitsStop() ) {
                         //Als het past binnen de load en tijd van de truck geef instantie terug
                         //anders returned hij nul
                         if(rou.getTrucks().get(truckToAddRequest.getId()).getAantal_ritten() < ritID)
