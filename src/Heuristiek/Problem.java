@@ -28,13 +28,13 @@ public class Problem {
 
         Solution solution = new Solution();
 
-        solution.InitialSolution(requests, trucks);
+        solution.InitialSolution(requests, trucks, depots);
 
-        solution.meta();
+        //solution.meta();
 
-        solution.MakeFeasible();
+        //solution.MakeFeasible();
 
-        solution.meta();
+        //solution.meta();
 
         solution.WriteFileNieuw();
     }
