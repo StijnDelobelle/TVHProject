@@ -24,7 +24,7 @@ public class Problem {
 
     public static void solve() throws Exception{
 
-        Timestamp time = new Timestamp(System.currentTimeMillis());
+        Timestamp startTime = new Timestamp(System.currentTimeMillis());
 
         Solution solution = new Solution();
 

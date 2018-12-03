@@ -16,7 +16,6 @@ public class Solution   {
     private ArrayList<Truck> initialTrucks;
     private ArrayList<Location> depots;
 
-    //private ArrayList<Request> initialRequests;
     private static final Random random = new Random(RANDOM_SEED);
 
     public void zetStartStops(ArrayList<Truck> initialTrucks) {

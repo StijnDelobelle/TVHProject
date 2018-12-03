@@ -2,6 +2,8 @@ package Main;
 
 import Heuristiek.*;
 
+import java.sql.Timestamp;
+
 public class Main {
 
     /** Validator **/
