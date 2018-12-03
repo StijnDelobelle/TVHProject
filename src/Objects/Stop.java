@@ -9,19 +9,12 @@ public class Stop implements Serializable {
     private LinkedList<Machine> collect;
     private LinkedList<Machine> drop;
     public boolean depo = false;
-    private int ritID;
 
-    public Stop(Location location, Machine collectOrDrop, Request.Type type, int ritID)
+    public Stop(Location location, Machine collectOrDrop, Request.Type type)
     {
         this.location = location;
         this.drop = new LinkedList<>();
         this.collect = new LinkedList<>();
-        this.ritID = ritID;
-
-        if(location.getId() == 19)
-        {
-            String test = "";
-        }
 
         if(type == Request.Type.TEMPORARYCOLLECT || type == Request.Type.COLLECT)
         {
@@ -50,7 +43,7 @@ public class Stop implements Serializable {
         boolean zitReedsInDrop = false;
         for(Machine ma : drop)
         {
-            if(ma.getMachineType().getId() == m.getMachineType().getId())
+            if(ma.getId() == m.getId())
             {
                 zitReedsInDrop = true;
             }
@@ -77,7 +70,7 @@ public class Stop implements Serializable {
         boolean zitReedsInCollect = false;
         for(Machine ma : collect)
         {
-            if(ma.getMachineType().getId() == m.getMachineType().getId())
+            if(ma.getId() == m.getId())
             {
                 zitReedsInCollect = true;
             }
@@ -102,7 +95,4 @@ public class Stop implements Serializable {
     {
         return drop;
     }
-
-    public int getRitID() { return ritID; }
-    public void setRitID(int ritID) { this.ritID = ritID; }
 }
