@@ -9,7 +9,7 @@ public class Main {
     public static String INPUT_FILE;
     public static String SOLUTION_FILE;
 
-    public static final int MAX_IDLE = 10000;
+    public static final int MAX_IDLE = 100000;
     public static final int RANDOM_SEED = 0;
     public static final int TIME_LIMIT = 1800 ; // In minuten 30 min => 1800
 

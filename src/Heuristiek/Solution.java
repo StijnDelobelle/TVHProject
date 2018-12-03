@@ -509,43 +509,6 @@ public class Solution   {
         int count = 0;
         double bound = bestRoute.getTotalDistance();
 
-        Timestamp time1 = new Timestamp(System.currentTimeMillis());
-
-        deepClone(bestRoute);
-
-        Timestamp time2 = new Timestamp(System.currentTimeMillis());
-        long dif1 = time2.getTime()-time1.getTime();
-        System.out.println("ROUTE 1 clone => "+dif1);
-
-        Timestamp time3 = new Timestamp(System.currentTimeMillis());
-
-        deepClone(bestRoute.getTrucks().get(0));
-
-        Timestamp time4 = new Timestamp(System.currentTimeMillis());
-        long dif2 = time4.getTime()-time3.getTime();
-        System.out.println("Truck 1 clone => "+dif2);
-
-
-        Timestamp time5 = new Timestamp(System.currentTimeMillis());
-
-        for(int i = 0; i < 1000; i++)
-            deepClone(bestRoute);
-
-        Timestamp time6 = new Timestamp(System.currentTimeMillis());
-        long dif3 = time6.getTime()-time5.getTime();
-        System.out.println("ROUTE 1000 clones => "+dif3);
-
-        Timestamp time7 = new Timestamp(System.currentTimeMillis());
-
-        for(int i = 0; i < 1000; i++)
-            deepClone(bestRoute.getTrucks().get(0));
-
-        Timestamp time8 = new Timestamp(System.currentTimeMillis());
-        long dif4 = time8.getTime()-time7.getTime();
-        System.out.println("Truck 1000 clones => "+dif4);
-
-
-
         /* loop -------------------------------------------- */
         while (true) {
 
@@ -1071,6 +1034,20 @@ public class Solution   {
             }
         }
         return indexLastStopThisRide;
+    }
+
+    public Location SearchClosestPointFromHere(ArrayList<Location> potentialLocations, Location currentLocation) {
+        Location newLocation = null;
+        int minDistance = Integer.MAX_VALUE;
+        for(Location potentialNewLocation : potentialLocations){
+            int distance = distanceMatrix[potentialNewLocation.getId()][currentLocation.getId()];
+            if(minDistance > distance){
+                minDistance = distance;
+                newLocation = potentialNewLocation;
+            }
+        }
+
+        return newLocation;
     }
 
     // Kijken dat het toestel eerst opgehaald wordt en daarna pas gedropt wordt!
