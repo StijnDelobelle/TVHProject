@@ -3,7 +3,7 @@
     <option name="ALTERNATIVE_JRE_PATH" value="10" />
     <option name="MAIN_CLASS_NAME" value="Main.Main" />
     <module name="TVHproject" />
-    <option name="PROGRAM_PARAMETERS" value="tvh_problem_3.txt tvh_solution_3.txt" />
+    <option name="PROGRAM_PARAMETERS" value="java -jar algorithm.jar --problem=tvh_problem_3.txt --solution=tvh_solution_3.txt --seed=0 --time=1800" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

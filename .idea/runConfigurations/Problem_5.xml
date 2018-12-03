@@ -2,7 +2,7 @@
   <configuration default="false" name="Problem 5" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="Main.Main" />
     <module name="TVHproject" />
-    <option name="PROGRAM_PARAMETERS" value="tvh_problem_5.txt tvh_solution_5.txt" />
+    <option name="PROGRAM_PARAMETERS" value="java -jar algorithm.jar --problem=tvh_problem_5.txt --solution=tvh_solution_5.txt --seed=0 --time=1800" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
