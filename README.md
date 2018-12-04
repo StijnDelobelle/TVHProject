@@ -10,15 +10,19 @@ Intellij
 Java 10
 ```
 
-java -jar algorithm.jar --problem=<input_file> --solution=<solution_file> --seed=<random_seed> --time=<time_limit>
+###Validator
+    java -jar tvh-3.0-student.jar --problem=<input_file> --solution=<solution_file> --gui (optional)
 
-<input_file>: pad naar het inputbestand
+###Application
+    java -jar algorithm.jar --problem=<input_file> --solution=<solution_file> --seed=<random_seed> --time=<time_limit>
 
-<solution_file>: pad naar de plaats waar je algoritme de oplossing wegschrijft
+ - <input_file>: pad naar het inputbestand
 
-<random_seed>: random seed waarde. Zelfs als je algoritme geen seed gebruikt, moet er toch een waarde opgegeven worden
+ - <solution_file>: pad naar de plaats waar je algoritme de oplossing wegschrijft
 
-<time_limit>: tijd waarna je algoritme moet stoppen, uitgedrukt in seconden
+ - <random_seed>: random seed waarde. Zelfs als je algoritme geen seed gebruikt, moet er toch een waarde opgegeven worden
+
+ - <time_limit>: tijd waarna je algoritme moet stoppen, uitgedrukt in seconden
 
 ## Authors
 

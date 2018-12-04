@@ -9,8 +9,7 @@ import java.util.*;
 import static Heuristiek.Problem.*;
 import static Main.Main.MAX_IDLE;
 import static Main.Main.RANDOM_SEED;
-import static Objects.Swap.truckToAddBackup;
-import static Objects.Swap.truckToDeleteBackup;
+import static Objects.Swap.*;
 
 public class Solution   {
 

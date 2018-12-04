@@ -1,6 +1,5 @@
 package Objects;
 
-import java.io.*;
 import java.util.ArrayList;
 import static Heuristiek.Problem.*;
 import java.io.Serializable;
@@ -76,40 +75,35 @@ public class Truck  implements Serializable {
 
     public void addStopToRoute(Stop stop) {
 
-            if(stop.getLocation().getId() == 19)
+        int load = 0;
+
+        this.stops.add(stop);
+
+        for(Machine m : stop.getcollect())
+        {
+            this.loadedMachines.add(m);
+            tijdLaden += m.getMachineType().getServiceTime();
+            load += m.getMachineType().getVolume();
+        }
+
+        for(Machine m : stop.getdrop())
+        {
+            if(stop.depo == false)
             {
-                String i = "";
+                this.loadedMachines.remove(m);
             }
+            tijdLaden += m.getMachineType().getServiceTime();
+            load -= m.getMachineType().getVolume();
+        }
 
-            int load = 0;
+        this.currentLoad += load;
+        //this.currentDistance = distance;
+        //this.currentWorkTime += (time + tijdLaden);
 
-            this.stops.add(stop);
-
-            for(Machine m : stop.getcollect())
-            {
-                this.loadedMachines.add(m);
-                tijdLaden += m.getMachineType().getServiceTime();
-                load += m.getMachineType().getVolume();
-            }
-
-            for(Machine m : stop.getdrop())
-            {
-                if(stop.depo == false)
-                {
-                    this.loadedMachines.remove(m);
-                }
-                tijdLaden += m.getMachineType().getServiceTime();
-                load -= m.getMachineType().getVolume();
-            }
-
-            this.currentLoad += load;
-            //this.currentDistance = distance;
-            //this.currentWorkTime += (time + tijdLaden);
-
-            /** Update machine locations **/
-            for(Machine machine : loadedMachines){
-                machines.get(machine.getId()).setLocation(currentLocation);
-            }
+        /** Update machine locations **/
+        for(Machine machine : loadedMachines){
+            machines.get(machine.getId()).setLocation(currentLocation);
+        }
     }
 
     public void addStopToRoute(int index, Stop stop) {
@@ -121,50 +115,6 @@ public class Truck  implements Serializable {
     public void removeStop(int index)
     {
         this.stops.remove(index);
-    }
-
-//    /** Add customer to truck route **/
-//    public void addPointToRoute(Ride ride) {
-//        int distance = distanceMatrix[ride.getFromLocation().getId()][ride.getToLocation().getId()];
-//        int time = timeMatrix[ride.getFromLocation().getId()][ride.getToLocation().getId()];
-//        int load = (ride.getMachine() != null)? ride.getMachine().getMachineType().getVolume() : 0;
-//        int serviceTime = (ride.getMachine() != null)? ride.getMachine().getMachineType().getServiceTime() : 0;
-//        Request.Type type = ride.getType();
-//
-//        this.route.add(ride);
-//
-//        this.currentDistance += distance;
-//        this.currentLoad += load;
-//        this.currentLocation = ride.getToLocation();
-//
-//        if(type == Request.Type.COLLECT || type == Request.Type.TEMPORARYCOLLECT )
-//            this.loadedMachines.add(ride.getMachine());
-//        else if(type == Request.Type.DROP )
-//            this.loadedMachines.remove(ride.getMachine());
-//
-//        // Tijd om alles nog af te laden
-//        int tijdAfladen = 0;
-//        if(type == Request.Type.END){
-//            for(Machine machine : this.loadedMachines){
-//                tijdAfladen += machine.getMachineType().getServiceTime();
-//            }
-//        }
-//
-//        this.currentWorkTime += (time + serviceTime + tijdAfladen);
-//
-//        /** Update machine locations **/
-//        for(Machine machine : loadedMachines){
-//            machines.get(machine.getId()).setLocation(currentLocation);
-//        }
-//    }
-
-    public boolean CheckIfLoadFits(int load) {
-        return ((getCurrentLoad() + load <= TRUCK_CAPACITY));
-    }
-
-    public boolean CheckIfTimeFits(int rideTime, int serviceTime, Location fromLocation) {
-        int homeTime = timeMatrix[fromLocation.getId()][this.endLocation.getId()];
-        return ((getCurrentWorkTime() + serviceTime +  rideTime + serviceTime + homeTime <= TIME_CAPACITY));
     }
 
     public boolean CheckIfTimeFitsStop(int time, int serviceTime) {
