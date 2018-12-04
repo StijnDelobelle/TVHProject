@@ -9,6 +9,8 @@ import java.util.*;
 import static Heuristiek.Problem.*;
 import static Main.Main.MAX_IDLE;
 import static Main.Main.RANDOM_SEED;
+import static Objects.Swap.truckToAddBackup;
+import static Objects.Swap.truckToDeleteBackup;
 
 public class Solution   {
 
@@ -561,6 +563,13 @@ public class Solution   {
                         req.setInTruckId(toTruckId);
                         System.out.println("Totale afstand: " + newDist);
                     }
+                    else {
+                        // TODO SwapBack(returnRoute);
+                    }
+                }
+                else {
+                    idle++;
+                    // TODO SwapBack(returnRoute);
                 }
             }
             else{
@@ -675,6 +684,9 @@ public class Solution   {
     }
 
     private Route SwapCollectRequest(Route r, Request request, int toTruckId) {
+
+        truckToDeleteBackup = r.getTrucks().get(request.getInTruckId());
+        truckToAddBackup = r.getTrucks().get(toTruckId);
 
         Route rou = (Route) deepClone(r);
 
@@ -803,12 +815,18 @@ public class Solution   {
             if(checkLoadTruck(truckToAddRequest, false) && truckToAddRequest.CheckIfTimeFitsStop() ) {
                 return rou;
             }
+            else {
+                //SwapBack(rou); TODO
+            }
         }
 
         return null;
     }
 
     private Route SwapDropRequest(Route r, Request request, int toTruckId) {
+
+        truckToDeleteBackup = r.getTrucks().get(request.getInTruckId());
+        truckToAddBackup = r.getTrucks().get(toTruckId);
 
         Route rou = (Route) deepClone(r);
 
@@ -940,9 +958,21 @@ public class Solution   {
             if(checkLoadTruck(truckToAddRequest, false) && truckToAddRequest.CheckIfTimeFitsStop() ) {
                 return rou;
             }
+            else {
+                //SwapBack(rou); TODO
+            }
         }
 
         return null;
+    }
+
+    public void SwapBack(Route r) {
+
+        int indexTruckToDelete = truckToDeleteBackup.getId();
+        int indexTruckToAdd = truckToAddBackup.getId();
+
+        r.setTruck(indexTruckToDelete, truckToDeleteBackup);
+        r.setTruck(indexTruckToAdd, truckToAddBackup);
     }
 
     // Dichtste bestaande stop zoeken, 1 index verder gaan

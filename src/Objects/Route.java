@@ -20,13 +20,15 @@ public class Route implements Serializable {
 
     public ArrayList<Truck> getTrucks() {return trucks;}
     public void setTrucks(ArrayList<Truck> trucks) {this.trucks = trucks;}
-
+    public void setTruck(int index, Truck truck) {
+        this.trucks.remove(index);
+        this.trucks.add(index, truck);
+    }
 
     public int getTotalDistance()
     {
         return totalDistance;
     }
-
     public void setTotalDistance(int distance)
     {
         totalDistance = distance;
