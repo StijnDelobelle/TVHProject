@@ -10,11 +10,15 @@ Intellij
 Java 10
 ```
 
-###Validator
-    java -jar tvh-3.0-student.jar --problem=<input_file> --solution=<solution_file> --gui (optional)
+### Validator
+```
+java -jar tvh-3.0-student.jar --problem=<input_file> --solution=<solution_file> --gui (optional)
+```
 
-###Application
-    java -jar algorithm.jar --problem=<input_file> --solution=<solution_file> --seed=<random_seed> --time=<time_limit>
+### Application
+```
+java -jar algorithm.jar --problem=<input_file> --solution=<solution_file> --seed=<random_seed> --time=<time_limit>
+```
 
  - <input_file>: pad naar het inputbestand
 
