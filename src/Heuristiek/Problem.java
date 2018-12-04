@@ -30,11 +30,11 @@ public class Problem {
 
         solution.InitialSolution(requests, trucks, depots);
 
-        solution.meta();
+        //solution.meta(10000);
 
         solution.MakeFeasible();
 
-        solution.meta();
+        solution.meta(10000);
 
         solution.WriteFileNieuw();
     }

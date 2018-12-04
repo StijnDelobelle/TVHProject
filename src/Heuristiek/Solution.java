@@ -5,17 +5,22 @@ import Main.*;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Logger;
 
 import static Heuristiek.Problem.*;
-import static Main.Main.MAX_IDLE;
 import static Main.Main.RANDOM_SEED;
 import static Objects.Swap.*;
 
 public class Solution   {
 
     private Route route;
-    private ArrayList<Truck> initialTrucks;
     private ArrayList<Location> depots;
+    private ArrayList<Truck> initialTrucks;
+    private static final Logger logger = Logger.getLogger(Solution.class.getName());
+
+    ConsoleHandler handler = new ConsoleHandler();
+
 
     private static final Random random = new Random(RANDOM_SEED);
 
@@ -466,6 +471,13 @@ public class Solution   {
 
     // Dummy trucks in de gewenste hoeveelheid krijgen
     public void MakeFeasible() {
+
+        // Instellingen logger
+        logger.setUseParentHandlers(false);
+        Log formatter = new Log("MakeFeasible");
+        handler.setFormatter(formatter);
+        logger.addHandler(handler);
+
         Route bestRoute = new Route(route);
         measureTotalDistance(bestRoute);
 
@@ -501,7 +513,8 @@ public class Solution   {
                 requestsNotFeasible.remove(randomRequest);
                 req.setInTruckId(toTruckId);
 
-                System.out.println("Request " + counterCurrentRequest + " of " + totalRequest + " done");
+                //System.out.println("Request " + counterCurrentRequest + " of " + totalRequest + " done");
+                logger.info("Request " + counterCurrentRequest + " of " + totalRequest + " done");
                 counterCurrentRequest++;
             }
 
@@ -518,7 +531,14 @@ public class Solution   {
         route = bestRoute;
     }
 
-    public void meta() {
+    public void meta(int MAX_IDLE) {
+
+        // Instellingen logger
+        logger.setUseParentHandlers(false);
+        Log formatter = new Log("Meta");
+        handler.setFormatter(formatter);
+        logger.addHandler(handler);
+
         /* meta settings ----------------------------------- */
 
         int L = 1000;
@@ -558,7 +578,8 @@ public class Solution   {
 
                         //De truck waar de request aan toegekent is updaten
                         req.setInTruckId(toTruckId);
-                        System.out.println("Totale afstand: " + newDist);
+                        //System.out.println("Totale afstand: " + newDist);
+                        logger.info("Totale afstand: " + newDist);
                     }
                     else {
                         // TODO SwapBack(returnRoute);
@@ -588,11 +609,17 @@ public class Solution   {
         }
 
         /* finished ---------------------------------------- */
-
         route = bestRoute;
     }
 
     public void SimulatedAnnealing() {
+
+        // Instellingen logger
+        logger.setUseParentHandlers(false);
+        Log formatter = new Log("Simulated Annealing");
+        handler.setFormatter(formatter);
+        logger.addHandler(handler);
+
         // Set initial temp
         double temp = 10;
 
@@ -644,7 +671,8 @@ public class Solution   {
                 if (currentSolutionDistance < bestTotalDistance) {
                     //req.setInTruckId(toTruckId);
                     best = (Route) deepClone(currentSolution);
-                    System.out.println("Totale afstand => " + bestTotalDistance);
+                    //System.out.println("Totale afstand: " + bestTotalDistance);
+                    logger.info("Totale afstand: " + bestTotalDistance);
                 }
             }
             // System.out.println("Poging => " + counter++);

@@ -2,6 +2,8 @@ package Main;
 
 import Heuristiek.*;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.sql.Timestamp;
 
 public class Main {
@@ -12,9 +14,6 @@ public class Main {
     /** Application **/
     // java -jar algorithm.jar --problem=<input_file> --solution=<solution_file> --seed=<random_seed> --time=<time_limit>
 
-    public static int MAX_IDLE = 10000;
-
-    // INPUT VALUES
     public static String INPUT_FILE;
     public static String SOLUTION_FILE;
     public static int RANDOM_SEED;
