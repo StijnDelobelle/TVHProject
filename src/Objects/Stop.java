@@ -1,6 +1,5 @@
 package Objects;
 
-import javax.crypto.Mac;
 import java.io.Serializable;
 import java.util.LinkedList;
 
@@ -19,12 +18,10 @@ public class Stop implements Serializable {
         if(type == Request.Type.TEMPORARYCOLLECT || type == Request.Type.COLLECT)
         {
             addCollect(collectOrDrop);
-            //collect.add(collectOrDrop);
         }
         else if(type == Request.Type.DROP )
         {
             addDrop(collectOrDrop,false);
-            //drop.add(collectOrDrop);
         }
 
     }

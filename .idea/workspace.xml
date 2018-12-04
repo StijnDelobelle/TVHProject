@@ -3,19 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="48a7c1a9-bf4d-49dd-8305-3a7c1d043c9c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Heuristiek/Problem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TVHproject/Heuristiek/Problem.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Heuristiek/Solution.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TVHproject/Heuristiek/Solution.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TVHproject/Main/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Objects/Route.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TVHproject/Objects/Route.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Objects/Truck.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TVHproject/Objects/Truck.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Heuristiek/Problem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Heuristiek/Problem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Heuristiek/Solution.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Heuristiek/Solution.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Objects/Truck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/Truck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tvh_solution_4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tvh_solution_4.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tvh_solution_5.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tvh_solution_5.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tvh_solution_6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tvh_solution_6.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/Stop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/Stop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tvh_solution_7.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tvh_solution_7.txt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -84,9 +77,9 @@
         <counts>
           <entry key="bat" value="4" />
           <entry key="iml" value="1" />
-          <entry key="java" value="88" />
-          <entry key="md" value="3" />
-          <entry key="txt" value="55" />
+          <entry key="java" value="95" />
+          <entry key="md" value="4" />
+          <entry key="txt" value="59" />
           <entry key="xml" value="1" />
         </counts>
       </usages-collector>
@@ -94,26 +87,26 @@
         <counts>
           <entry key="Bat" value="4" />
           <entry key="IDEA_MODULE" value="1" />
-          <entry key="JAVA" value="88" />
-          <entry key="Markdown" value="3" />
-          <entry key="PLAIN_TEXT" value="55" />
+          <entry key="JAVA" value="95" />
+          <entry key="Markdown" value="4" />
+          <entry key="PLAIN_TEXT" value="59" />
           <entry key="XML" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="bat" value="1" />
-          <entry key="java" value="15522" />
+          <entry key="java" value="16672" />
           <entry key="md" value="45" />
-          <entry key="txt" value="559" />
+          <entry key="txt" value="581" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Bat" value="1" />
-          <entry key="JAVA" value="15522" />
+          <entry key="JAVA" value="16672" />
           <entry key="Markdown" value="45" />
-          <entry key="PLAIN_TEXT" value="559" />
+          <entry key="PLAIN_TEXT" value="581" />
         </counts>
       </usages-collector>
     </session>
@@ -138,11 +131,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Heuristiek/Solution.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-221">
-              <caret line="933" column="8" lean-forward="true" selection-start-line="933" selection-start-column="8" selection-end-line="933" selection-end-column="8" />
+            <state relative-caret-position="362">
+              <caret line="1159" column="1" lean-forward="true" selection-start-line="1159" selection-start-column="1" selection-end-line="1159" selection-end-column="1" />
               <folding>
                 <element signature="method#zetStartStops#0;class#Solution#0" />
                 <element signature="method#InitialSolution#0;class#Solution#0" />
@@ -153,9 +146,13 @@
                 <element signature="method#measureTimeTruck#0;class#Solution#0" />
                 <element signature="method#SendTrucksToHome#0;class#Solution#0" />
                 <element signature="method#measureTotalDistance#0;class#Solution#0" />
+                <element signature="method#MakeFeasible#0;class#Solution#0" />
+                <element signature="method#meta#0;class#Solution#0" />
                 <element signature="method#SimulatedAnnealing#0;class#Solution#0" />
                 <element signature="method#acceptanceProbability#0;class#Solution#0" />
                 <element signature="method#DoMove#0;class#Solution#0" />
+                <element signature="method#SwapCollectRequest#0;class#Solution#0" />
+                <element signature="method#SwapDropRequest#0;class#Solution#0" />
                 <element signature="method#SwapBack#0;class#Solution#0" />
                 <element signature="method#SearchClosestCollectPointFromHere#0;class#Solution#0" />
                 <element signature="method#SearchClosestDropPointFromHere#0;class#Solution#0" />
@@ -168,10 +165,49 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Objects/Route.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="29" selection-start-line="29" selection-end-line="29" />
+              <folding>
+                <element signature="e#772#773#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Objects/Rit.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="12" column="31" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Objects/Swap.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Objects/Stop.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Objects/Truck.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+            <state relative-caret-position="720">
+              <caret line="50" column="38" selection-start-line="50" selection-start-column="38" selection-end-line="50" selection-end-column="38" />
               <folding>
                 <element signature="e#2898#4008#0" />
                 <element signature="e#4014#4108#0" />
@@ -181,20 +217,34 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Heuristiek/Problem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="36" column="10" selection-start-line="36" selection-start-column="10" selection-end-line="36" selection-end-column="10" />
+            <state relative-caret-position="302">
+              <caret line="36" column="8" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tvh_solution_7.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tvh_solution_8.txt">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="14" column="34" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
+            <state relative-caret-position="210">
+              <caret line="14" column="35" lean-forward="true" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -213,9 +263,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>volgor</find>
-      <find>measureTotalDistance</find>
-      <find>178</find>
       <find>meas</find>
       <find>setTotalDistance</find>
       <find>getcurrentwor</find>
@@ -243,6 +290,9 @@
       <find>readonlyNamedParams</find>
       <find>getNamed</find>
       <find>SwapBack</find>
+      <find>261</find>
+      <find>175</find>
+      <find>SearchClosestPickupLocation</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -271,11 +321,9 @@
         <option value="$PROJECT_DIR$/src/Main/FileIO.java" />
         <option value="$PROJECT_DIR$/tvh_solution_5.txt" />
         <option value="$PROJECT_DIR$/tvh_solution_3.txt" />
-        <option value="$PROJECT_DIR$/tvh_solution_7.txt" />
         <option value="$PROJECT_DIR$/tvh_solution_8.txt" />
         <option value="$PROJECT_DIR$/tvh_solution_4.txt" />
         <option value="$PROJECT_DIR$/tvh_solution_6.txt" />
-        <option value="$PROJECT_DIR$/src/Objects/Stop.java" />
         <option value="$PROJECT_DIR$/src/Main/Parameters.java" />
         <option value="$PROJECT_DIR$/src/Main/Param.java" />
         <option value="$PROJECT_DIR$/val.bat" />
@@ -283,9 +331,11 @@
         <option value="$PROJECT_DIR$/src/Objects/Route.java" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/Objects/Truck.java" />
-        <option value="$PROJECT_DIR$/src/Heuristiek/Solution.java" />
+        <option value="$PROJECT_DIR$/tvh_solution_7.txt" />
         <option value="$PROJECT_DIR$/src/Heuristiek/Problem.java" />
         <option value="$PROJECT_DIR$/src/Main/Main.java" />
+        <option value="$PROJECT_DIR$/src/Heuristiek/Solution.java" />
+        <option value="$PROJECT_DIR$/src/Objects/Stop.java" />
       </list>
     </option>
   </component>
@@ -398,6 +448,12 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Main" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="TVHProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TVHProject" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Objects" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -406,7 +462,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543921588603" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543927822887" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -437,7 +493,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JAR Application.Validator 6">
+  <component name="RunManager" selected="JAR Application.Validator 8">
     <list>
       <item itemvalue="Application.Problem 3" />
       <item itemvalue="Application.Problem 4" />
@@ -667,7 +723,14 @@
       <option name="project" value="LOCAL" />
       <updated>1543918016225</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Probleem 6 8896km">
+      <created>1543921622085</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1543921622085</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TodoView">
@@ -693,14 +756,14 @@
       <window_info id="simpleUML" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32098764" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49570817" visible="true" weight="0.31550068" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49499285" visible="true" weight="0.31550068" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49785408" weight="0.29492456" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32921812" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32921812" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32921812" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50429183" side_tool="true" weight="0.31550068" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50500715" side_tool="true" weight="0.31550068" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.2798354" />
       <window_info anchor="bottom" id="Run with VisualVM" order="11" weight="0.32921812" />
       <window_info anchor="bottom" id="Debug with VisualVM" order="12" />
@@ -742,7 +805,8 @@
     <MESSAGE value="Clean code" />
     <MESSAGE value="SwapBack added" />
     <MESSAGE value="update readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="update readme" />
+    <MESSAGE value="Probleem 6 8896km" />
+    <option name="LAST_COMMIT_MESSAGE" value="Probleem 6 8896km" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -764,56 +828,61 @@
         <breakpoints-dialog />
       </breakpoints-dialog>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="COUNTER" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
       <expression>
+        <expression-string>COUNTER == 517</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>truckToAddRequest.getId() == 22 &amp;&amp; request.getMachine().getId() == 175</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>COUNTER == 1302</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>truckToAddRequest.getId() == 12 &amp;&amp; request.getMachine().getId() == 207</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>truckToAddRequest.getId() == 10 &amp;&amp; truckToAddRequest.getStops().get(0).getLocation().getId() != 3</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>truckToAddRequest.getId() == 12 &amp;&amp; request.getMachine().getId() == 201</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>COUNTER == 161</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>truckToAddRequest.getId() == 10</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>request.getMachine().getId() == 261</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>truckToAddRequest.getId() == 33 &amp;&amp; request.getMachine().getId()== 25</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>machine.getId() == 10</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>request.getMachine().getId() == 20</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>truckToAddRequest.getId() == 26 &amp;&amp; request.getMachine().getId() == 11</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>truckToDeleteRequest.getStops().get(0).getLocation().getId() == 3 &amp;&amp; truckToDeleteRequest.getId() == 29</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>truckToAddRequest.getStops().get(0).getLocation().getId() == 3 &amp;&amp; truckToAddRequest.getId() == 29</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>truckToAddRequest.getStops().get(0).getLocation().getId() == 3</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>truckToAddRequest.getId() == 6 &amp;&amp; request.getMachine().getId() == 337</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>request.getMachine().getId() == 337 &amp;&amp; truckToAddRequest.getId() == 6</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>req.getMachine()</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -884,24 +953,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/Location.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-10.0.2.jdk/Contents/Home/lib/src.zip!/java.base/java/util/Random.java" />
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-10.0.2.jdk/Contents/Home/lib/src.zip!/java.base/java/lang/Thread.java" />
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-10.0.2.jdk/Contents/Home/lib/src.zip!/java.base/jdk/internal/util/Preconditions.java" />
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-10.0.2.jdk/Contents/Home/lib/src.zip!/java.base/java/util/ArrayList.java" />
-    <entry file="file://$PROJECT_DIR$/src/Objects/Rit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="31" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-10.0.2.jdk/Contents/Home/lib/src.zip!/javafx.base/com/sun/javafx/runtime/SystemProperties.java" />
     <entry file="file://$USER_HOME$/Downloads/TVHProject-master/src/Main/Main.java" />
     <entry file="file://$USER_HOME$/Downloads/TVHProject-master/src/Heuristiek/Problem.java" />
@@ -918,25 +973,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tvh_solution_7.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tvh_solution_8.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/tvh_problem_6.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/tvh_problem_8.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-6006" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tvh_problem_7.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="389" column="4" lean-forward="true" selection-start-line="389" selection-start-column="4" selection-end-line="389" selection-end-column="4" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tvh_problem_5.txt">
@@ -957,24 +999,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="469">
           <caret line="565" column="53" selection-start-line="565" selection-start-column="32" selection-end-line="565" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/Request.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="35" column="33" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
-          <folding>
-            <element signature="e#778#779#0" expanded="true" />
-            <element signature="e#810#811#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/Stop.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
-          <caret line="72" column="30" selection-start-line="72" selection-start-column="30" selection-end-line="72" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -1002,33 +1026,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/Swap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="165">
-            <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/Route.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-          <folding>
-            <element signature="e#642#643#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tvh_problem_4.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9375">
@@ -1046,39 +1043,65 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/Truck.java">
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="165">
+            <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tvh_problem_7.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+        <state relative-caret-position="308">
+          <caret line="389" column="4" lean-forward="true" selection-start-line="389" selection-start-column="4" selection-end-line="389" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Objects/Request.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="35" column="33" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
           <folding>
-            <element signature="e#2898#4008#0" />
-            <element signature="e#4014#4108#0" />
-            <element signature="e#6122#6262#0" />
+            <element signature="e#778#779#0" expanded="true" />
+            <element signature="e#810#811#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Heuristiek/Problem.java">
+    <entry file="file://$PROJECT_DIR$/src/Objects/Location.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="36" column="10" selection-start-line="36" selection-start-column="10" selection-end-line="36" selection-end-column="10" />
+        <state relative-caret-position="332">
+          <caret line="31" column="30" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="14" column="34" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
+        <state relative-caret-position="210">
+          <caret line="14" column="35" lean-forward="true" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tvh_solution_8.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tvh_solution_7.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Heuristiek/Solution.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-221">
-          <caret line="933" column="8" lean-forward="true" selection-start-line="933" selection-start-column="8" selection-end-line="933" selection-end-column="8" />
+        <state relative-caret-position="362">
+          <caret line="1159" column="1" lean-forward="true" selection-start-line="1159" selection-start-column="1" selection-end-line="1159" selection-end-column="1" />
           <folding>
             <element signature="method#zetStartStops#0;class#Solution#0" />
             <element signature="method#InitialSolution#0;class#Solution#0" />
@@ -1089,9 +1112,13 @@
             <element signature="method#measureTimeTruck#0;class#Solution#0" />
             <element signature="method#SendTrucksToHome#0;class#Solution#0" />
             <element signature="method#measureTotalDistance#0;class#Solution#0" />
+            <element signature="method#MakeFeasible#0;class#Solution#0" />
+            <element signature="method#meta#0;class#Solution#0" />
             <element signature="method#SimulatedAnnealing#0;class#Solution#0" />
             <element signature="method#acceptanceProbability#0;class#Solution#0" />
             <element signature="method#DoMove#0;class#Solution#0" />
+            <element signature="method#SwapCollectRequest#0;class#Solution#0" />
+            <element signature="method#SwapDropRequest#0;class#Solution#0" />
             <element signature="method#SwapBack#0;class#Solution#0" />
             <element signature="method#SearchClosestCollectPointFromHere#0;class#Solution#0" />
             <element signature="method#SearchClosestDropPointFromHere#0;class#Solution#0" />
@@ -1099,6 +1126,56 @@
             <element signature="method#WriteFileNieuw#0;class#Solution#0" />
             <element signature="method#deepClone#0;class#Solution#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Objects/Route.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+          <folding>
+            <element signature="e#772#773#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Objects/Rit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="31" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Objects/Truck.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="50" column="38" selection-start-line="50" selection-start-column="38" selection-end-line="50" selection-end-column="38" />
+          <folding>
+            <element signature="e#2898#4008#0" />
+            <element signature="e#4014#4108#0" />
+            <element signature="e#6122#6262#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Objects/Swap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Objects/Stop.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Heuristiek/Problem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="36" column="8" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
         </state>
       </provider>
     </entry>

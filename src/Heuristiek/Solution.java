@@ -120,7 +120,6 @@ public class Solution   {
         Stop s1 = null;
         Stop s2 = null;
 
-
         /** Per truck & tussen elke tussenlocatie **/
         for(Truck truck : initialTrucks)
         {
@@ -184,7 +183,6 @@ public class Solution   {
                 //De drop op de eindlocatie van de truck zetten (niet echt goed)
                 if(drop == false)
                 {
-                    //TODO truck.getCurrentLocation() parameter veranderen !!
                     stop2 = new Stop(truck.getEndLocation(),rit.getMachine(),Request.Type.DROP);
                     stop2.depo = true;
                 }
@@ -772,38 +770,50 @@ public class Solution   {
         // Dichtste depo zoeken om te droppen
         Location locatieDropMachine  = SearchClosestPickupLocation(depots, locatieCollectMachine);
 
-        boolean huidigeStopBestaatNogNietCollect = false;
-        boolean huidigeStopBestaatNogNietDrop = false;
+        boolean stopCollectModified = false;
+        boolean stopDropModified = false;
 
         // Kijken als er al een stop bestaat van met de locatie van de collect
         if(locatieCollectMachine != null)
         {
-            // Deel 1
-            for (Stop stop : truckToAddRequest.getStops()) {
-                if (stop.getLocation().getId() == locatieCollectMachine.getId()) {
-                    stop.addCollect(request.getMachine());
-                    huidigeStopBestaatNogNietCollect = true;
+            // Deel 1: Collect machine
+            // Kan de machine opgehaald worden vanuit een bestaande locatie?
+            for(int index = 0; index < truckToAddRequest.getStops().size() - 1; index++){
+                if (truckToAddRequest.getStops().get(index).getLocation().getId() == locatieCollectMachine.getId()) {
+                    truckToAddRequest.getStops().get(index).addCollect(request.getMachine());
+                    stopCollectModified = true;
                     break;
                 }
             }
-            if (!huidigeStopBestaatNogNietCollect) {
-
+            // Geen bestaande stop gevonden, nieuwe stop toevoegen
+            if (!stopCollectModified) {
                 int index = SearchClosestCollectPointFromHere(truckToAddRequest.getStops(), locatieCollectMachine);
+                index = index == truckToAddRequest.getStops().size()? index - 1 : index;
+
                 Stop newStop = new Stop(locatieCollectMachine, request.getMachine(), Request.Type.COLLECT);
                 truckToAddRequest.addStopToRoute(index, newStop);
 
             }
-            // Deel 2
-            for(int index = 0; index < truckToAddRequest.getStops().size(); index++) {
+
+            // Deel 2: Drop machine
+            // Wanneer de eindlocatie geen depo is, droppen we maar tot de voorlaatste stop wat een depo is
+            int aantalStops = 0;
+            if(truckToAddRequest.getEndLocation().isDepot() == true)
+                aantalStops = truckToAddRequest.getStops().size();
+            else
+                aantalStops = truckToAddRequest.getStops().size() - 1;
+
+            // Kan de machine gedropt worden in een bestaande locatie?
+            for(int index = 0; index < aantalStops; index++) {
                 if (truckToAddRequest.getStops().get(index).getLocation().getId() == locatieDropMachine.getId() && VolgordeChecken(truckToAddRequest.getStops(), request.getMachine(), index)) {
                     truckToAddRequest.getStops().get(index).addDrop(request.getMachine(), false);
-                    huidigeStopBestaatNogNietDrop = true;
+                    stopDropModified = true;
                     break;
                 }
             }
-            if (!huidigeStopBestaatNogNietDrop) {
-
-                int index = SearchClosestDropPointFromHere(truckToAddRequest.getStops(), locatieDropMachine, request.getMachine());
+            // Geen bestaande stop gevonden, nieuwe stop toevoegen
+            if (!stopDropModified) {
+                int index = SearchClosestDropPointFromHere(truckToAddRequest.getStops(), locatieDropMachine, request.getMachine(), truckToAddRequest.getEndLocation().isDepot());
                 Stop newStop = new Stop(locatieDropMachine, request.getMachine(), Request.Type.DROP);
                 truckToAddRequest.addStopToRoute(index, newStop);
             }
@@ -924,35 +934,47 @@ public class Solution   {
 
         /** Toevoegen aan nieuwe truck **/
 
-        boolean huidigeStopBestaatNogNietCollect = false;
-        boolean huidigeStopBestaatNogNietDrop = false;
+        boolean stopCollectModified = false;
+        boolean stopDropModified = false;
 
         if(locatieCollectMachine != null && locatieDropMachine != null) {
 
             // Deel 1
-            for (Stop stop : truckToAddRequest.getStops()) {
-                if (stop.getLocation().getId() == locatieCollectMachine.getId()) {
-                    stop.addCollect(request.getMachine());
-                    huidigeStopBestaatNogNietCollect = true;
+            for(int index = 0; index < truckToAddRequest.getStops().size() - 1; index++){
+            //for (Stop stop : truckToAddRequest.getStops()) {
+                if (truckToAddRequest.getStops().get(index).getLocation().getId() == locatieCollectMachine.getId()) {
+                    truckToAddRequest.getStops().get(index).addCollect(request.getMachine());
+                    stopCollectModified = true;
                     break;
                 }
             }
-            if (!huidigeStopBestaatNogNietCollect) {
+            if (!stopCollectModified) {
                 int index = SearchClosestCollectPointFromHere(truckToAddRequest.getStops(), locatieCollectMachine);
+
+                // Index - 1 anders komt hij na de eindlocatie van de truck, we plaatsen hem net ervoor
+                index = index == truckToAddRequest.getStops().size()? index - 1 : index;
+
                 Stop newStop = new Stop(locatieCollectMachine, request.getMachine(), Request.Type.TEMPORARYCOLLECT);
                 truckToAddRequest.addStopToRoute(index, newStop);
             }
 
             // Deel 2
-            for(int index = 0; index < truckToAddRequest.getStops().size(); index++) {
+
+            int aantalStops = 0;
+            if(truckToAddRequest.getEndLocation().isDepot() == true)
+                aantalStops = truckToAddRequest.getStops().size();
+            else
+                aantalStops = truckToAddRequest.getStops().size() - 1;
+
+            for(int index = 0; index < aantalStops; index++) {
                 if (truckToAddRequest.getStops().get(index).getLocation().getId() == locatieDropMachine.getId() && VolgordeChecken(truckToAddRequest.getStops(), request.getMachine(), index)) {
                     truckToAddRequest.getStops().get(index).addDrop(request.getMachine(), false);
-                    huidigeStopBestaatNogNietDrop = true;
+                    stopDropModified = true;
                     break;
                 }
             }
-            if (!huidigeStopBestaatNogNietDrop) {
-                int index = SearchClosestDropPointFromHere(truckToAddRequest.getStops(), locatieDropMachine, request.getMachine());
+            if (!stopDropModified) {
+                int index = SearchClosestDropPointFromHere(truckToAddRequest.getStops(), locatieDropMachine, request.getMachine(), truckToAddRequest.getEndLocation().isDepot());
                 Stop newStop = new Stop(locatieDropMachine, request.getMachine(), Request.Type.DROP);
                 truckToAddRequest.addStopToRoute(index, newStop);
             }
@@ -1001,7 +1023,7 @@ public class Solution   {
         return indexNewLocation + 1;
     }
 
-    public int SearchClosestDropPointFromHere(ArrayList<Stop> stops, Location dropLocation, Machine machine) {
+    public int SearchClosestDropPointFromHere(ArrayList<Stop> stops, Location dropLocation, Machine machine, boolean isDepo) {
         int indexNewLocation = 0;
         int minDistance = Integer.MAX_VALUE;
         for(int index = 0; index < stops.size(); index++) {
