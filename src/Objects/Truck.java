@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import static Heuristiek.Problem.*;
 import java.io.Serializable;
 
-
 public class Truck  implements Serializable {
     private int id;
     private int currentLoad;
@@ -16,7 +15,6 @@ public class Truck  implements Serializable {
     private ArrayList<Stop> stops = new ArrayList<>();
     private int serviceTime;
     private int tijdLaden;
-    private int aantal_ritten;
 
     //Enkel gebruikt voor initiele oplossing!!
     private ArrayList<Machine> loadedMachines = new ArrayList<>();
@@ -31,7 +29,6 @@ public class Truck  implements Serializable {
         this.currentLocation = startLocation;
         this.loadedMachines.clear();
         this.tijdLaden=0;
-        this.aantal_ritten = 1;
     }
 
     public int getId() {return id;}
@@ -63,12 +60,8 @@ public class Truck  implements Serializable {
     public void setLoadedMachines(ArrayList<Machine> loadedMachines) {this.loadedMachines = loadedMachines;}
     public void AddLoadedMachines(Machine machine) {this.loadedMachines.add(machine);}
 
-    public int getAantal_ritten() { return aantal_ritten; }
-    public void setAantal_ritten(int aantal_ritten) { this.aantal_ritten = aantal_ritten; }
-
     public void addTijdLaden(int tijd) {this.tijdLaden += tijd;}
     public void lessTijdLaden(int tijd) {this.tijdLaden -= tijd;}
-
 
     public void addLoad(int load) {this.currentLoad += load;}
     public void lessLoad(int load) {this.currentLoad -= load;}

@@ -692,6 +692,9 @@ public class Solution   {
         Truck truckToDeleteRequest = rou.getTrucks().get(request.getInTruckId());
         Truck truckToAddRequest = rou.getTrucks().get(toTruckId);
 
+        // TODO Truck truckToDeleteRequest = (Truck) deepClone(r.getTrucks().get(request.getInTruckId()));
+        // TODO Truck truckToAddRequest = (Truck) deepClone(r.getTrucks().get(toTruckId));
+
         /** Verwijderen uit oude truck **/
 
         int indexfor = 0;
@@ -772,7 +775,7 @@ public class Solution   {
         boolean huidigeStopBestaatNogNietCollect = false;
         boolean huidigeStopBestaatNogNietDrop = false;
 
-        //kijken als er al een stop bestaat van met de locatie van de collect
+        // Kijken als er al een stop bestaat van met de locatie van de collect
         if(locatieCollectMachine != null)
         {
             // Deel 1
@@ -812,10 +815,14 @@ public class Solution   {
             truckToAddRequest.setCurrentWorkTime(time);
 
             if(checkLoadTruck(truckToAddRequest, false) && truckToAddRequest.CheckIfTimeFitsStop() ) {
+
+                // TODO int indexTruckToDelete = truckToDeleteRequest.getId();
+                // TODO int indexTruckToAdd = truckToAddRequest.getId();
+
+                // TODO r.setTruck(indexTruckToDelete, truckToDeleteRequest);
+                // TODO r.setTruck(indexTruckToAdd, truckToAddRequest);
+
                 return rou;
-            }
-            else {
-                //SwapBack(rou); TODO
             }
         }
 
@@ -831,6 +838,9 @@ public class Solution   {
 
         Truck truckToDeleteRequest = rou.getTrucks().get(request.getInTruckId());
         Truck truckToAddRequest = rou.getTrucks().get(toTruckId);
+
+        // TODO Truck truckToDeleteRequest = (Truck) deepClone(r.getTrucks().get(request.getInTruckId()));
+        // TODO Truck truckToAddRequest = (Truck) deepClone(r.getTrucks().get(toTruckId));
 
         /** Verwijderen uit oude truck **/
 
@@ -854,7 +864,7 @@ public class Solution   {
                     locatieCollectMachine = stop.getLocation();
                     stop.removeCollect(machine);
 
-                    //Als in de oude truck na het verwijderen van de collect de stop niet meer gebruikt wordt deze verwijderen
+                    // Als in de oude truck na het verwijderen van de collect de stop niet meer gebruikt wordt deze verwijderen
                     if (stop.getcollect().size() == 0 && stop.getdrop().size() == 0) {
                         deleteCollect = true;
                         indexRemoveLocatieCollect = indexfor;
@@ -917,7 +927,6 @@ public class Solution   {
         boolean huidigeStopBestaatNogNietCollect = false;
         boolean huidigeStopBestaatNogNietDrop = false;
 
-        //kijken als er al een stop bestaat van met de locatie van de collect
         if(locatieCollectMachine != null && locatieDropMachine != null) {
 
             // Deel 1
@@ -955,10 +964,14 @@ public class Solution   {
             truckToAddRequest.setCurrentWorkTime(time);
 
             if(checkLoadTruck(truckToAddRequest, false) && truckToAddRequest.CheckIfTimeFitsStop() ) {
+
+                // TODO int indexTruckToDelete = truckToDeleteRequest.getId();
+                // TODO int indexTruckToAdd = truckToAddRequest.getId();
+
+                // TODO r.setTruck(indexTruckToDelete, truckToDeleteRequest);
+                // TODO r.setTruck(indexTruckToAdd, truckToAddRequest);
+
                 return rou;
-            }
-            else {
-                //SwapBack(rou); TODO
             }
         }
 
