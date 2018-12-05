@@ -26,11 +26,12 @@ public class Stop implements Serializable {
 
     }
 
-    public Stop(Location location)
-    {
+    // For clone
+    public Stop(Location location, LinkedList<Machine> collect, LinkedList<Machine> drop, boolean depo) {
         this.location = location;
-        this.drop = new LinkedList<>();
-        this.collect = new LinkedList<>();
+        this.collect = collect;
+        this.drop = drop;
+        this.depo = depo;
     }
 
     public void addCollect(Machine m)

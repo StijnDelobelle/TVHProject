@@ -4,13 +4,14 @@ import Objects.*;
 import Main.*;
 
 import java.io.*;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 
 import static Heuristiek.Problem.*;
 import static Main.Main.RANDOM_SEED;
-import static Objects.Swap.*;
+import static Main.Main.TIME_LIMIT;
 
 public class Solution   {
 
@@ -20,7 +21,6 @@ public class Solution   {
     private static final Logger logger = Logger.getLogger(Solution.class.getName());
 
     ConsoleHandler handler = new ConsoleHandler();
-
 
     private static final Random random = new Random(RANDOM_SEED);
 
@@ -500,7 +500,7 @@ public class Solution   {
             int randomRequest = random.nextInt(requestsNotFeasible.size());
             Request req = requestsNotFeasible.get(randomRequest);
 
-            //Hier bereken je naar welke truck we de move doen
+            // Hier bereken je naar welke truck we de move doen
             int toTruckId = random.nextInt(trucks.size());
 
             Route returnRoute = DoMove(bestRoute, req, toTruckId);
@@ -529,17 +529,18 @@ public class Solution   {
         }
 
         route = bestRoute;
+        logger.removeHandler(handler);
     }
 
-    public void meta(int MAX_IDLE) {
+    public void LocalSearch(int MAX_IDLE) {
 
         // Instellingen logger
         logger.setUseParentHandlers(false);
-        Log formatter = new Log("Meta");
+        Log formatter = new Log("LocalSearch");
         handler.setFormatter(formatter);
         logger.addHandler(handler);
 
-        /* meta settings ----------------------------------- */
+        /* LocalSearch settings ----------------------------------- */
 
         int L = 1000;
 
@@ -547,7 +548,7 @@ public class Solution   {
         Route bestRoute = new Route(route);
         measureTotalDistance(bestRoute);
 
-        /* [meta] init ------------------------------------- */
+        /* [LocalSearch] init ------------------------------------- */
         int idle = 0;
         int count = 0;
         double bound = bestRoute.getTotalDistance();
@@ -570,7 +571,7 @@ public class Solution   {
             {
                 int newDist = measureTotalDistance(returnRoute);
 
-                // [meta] accept?
+                // [LocalSearch] accept?
                 if (newDist < oldDist || newDist < bound) {
                     idle = 0;
                     if(newDist<bestRoute.getTotalDistance()){
@@ -581,13 +582,9 @@ public class Solution   {
                         //System.out.println("Totale afstand: " + newDist);
                         logger.info("Totale afstand: " + newDist);
                     }
-                    else {
-                        // TODO SwapBack(returnRoute);
-                    }
                 }
                 else {
                     idle++;
-                    // TODO SwapBack(returnRoute);
                 }
             }
             else{
@@ -595,7 +592,7 @@ public class Solution   {
                 measureTotalDistance(bestRoute);
             }
 
-            // [meta] update
+            // [LocalSearch] update
             count++;
             if(count==L){
                 count = 0;
@@ -603,13 +600,17 @@ public class Solution   {
             }
 
             // stop?
-            if (idle >= MAX_IDLE) {
+             if (idle >= MAX_IDLE) {
+                 break;
+             }
+            /*if((System.currentTimeMillis() - startTime) / 1000 > TIME_LIMIT) {
                 break;
-            }
+            }*/
         }
 
         /* finished ---------------------------------------- */
         route = bestRoute;
+        logger.removeHandler(handler);
     }
 
     public void SimulatedAnnealing() {
@@ -624,66 +625,66 @@ public class Solution   {
         double temp = 10;
 
         // Cooling rate
-        double coolingRate = 0.02;
+        double coolingRate = 0.995;
 
         // Initialize intial solution
-        Route currentSolution = new Route(route);
+        Route bestSolution = new Route(route);
+        List<Request> bestRequests = new ArrayList<Request>(requests);
 
         // Set as current best
-        Route best = new Route(currentSolution);
+        Route currentSolution = new Route(bestSolution);
+        List<Request> currentRequests = new ArrayList<Request>(bestRequests);
 
-        //System.out.println("Best route: " + measureTotalDistance(best));
 
-        int counter = 1;
+        while((System.currentTimeMillis() - startTime) / 1000 < TIME_LIMIT && coolingRate > 0.1) {
+            // Loop until system has cooled
+            while (temp > 1 && (System.currentTimeMillis() - startTime) / 1000 < TIME_LIMIT) {
 
-        // Loop until system has cooled
-        while (counter == 10000) {
+                // Create new neighbour tour
+                Route newSolution = new Route(currentSolution);
+                List<Request> newRequests = new ArrayList<Request>(currentRequests);
 
-            // Create new neighbour tour
-            Route newSolution = (Route) deepClone(currentSolution);
+                // SWAP
+                int requestId = random.nextInt(requests.size() - 1);
+                Request req = newRequests.get(requestId);
 
-            // SWAP
-            int requestId = random.nextInt(requests.size() - 1);
-            Request req = requests.get(requestId);
+                //Hier bereken je naar welke truck we de move doen
+                int toTruckId = random.nextInt(trucks.size() - 1);
 
-            //Hier bereken je naar welke truck we de move doen
-            int toTruckId = random.nextInt(trucks.size()-1);
+                //De move uitvoeren
+                Route returnRoute = DoMove(newSolution, req, toTruckId);
 
-            //De move uitvoeren
-            Route returnRoute = DoMove(newSolution, req, toTruckId);
+                if (returnRoute != null) {
+                    // Get energy of solutions
+                    int currentEnergy = measureTotalDistance(currentSolution);
+                    int neighbourEnergy = measureTotalDistance(returnRoute);
 
-            if(returnRoute != null) {
-                // Get energy of solutions
-                int currentEnergy = measureTotalDistance(currentSolution);
-                int neighbourEnergy = measureTotalDistance(returnRoute);
+                    // Decide if we should accept the neighbour
+                    if (acceptanceProbability(currentEnergy, neighbourEnergy, temp) > Math.random()) {
+                        req.setInTruckId(toTruckId);
+                        currentSolution = new Route(returnRoute);
+                    }
 
-                // Decide if we should accept the neighbour
-                if (acceptanceProbability(currentEnergy, neighbourEnergy, temp) > Math.random()) {
-                    req.setInTruckId(toTruckId);
-                    currentSolution = (Route) deepClone(returnRoute);
+                    // Keep track of the best solution found
+                    int bestTotalDistance = measureTotalDistance(bestSolution);
+                    int currentSolutionDistance = measureTotalDistance(currentSolution);
+
+                    if (currentSolutionDistance < bestTotalDistance) {
+                        bestSolution = new Route(currentSolution);
+                        logger.info("Totale afstand: " + bestTotalDistance);
+                        temp = 30;
+                    }
                 }
 
-                // Keep track of the best solution found
-                int bestTotalDistance = measureTotalDistance(best);
-                int currentSolutionDistance = measureTotalDistance(currentSolution);
-                // System.out.println("currentSolution => " + currentSolutionDistance);
-
-                if (currentSolutionDistance < bestTotalDistance) {
-                    //req.setInTruckId(toTruckId);
-                    best = (Route) deepClone(currentSolution);
-                    //System.out.println("Totale afstand: " + bestTotalDistance);
-                    logger.info("Totale afstand: " + bestTotalDistance);
-                }
+                // Cool system
+                temp *= 1 - coolingRate;
             }
-            // System.out.println("Poging => " + counter++);
-
-            counter++;
-            // Cool system
-            // temp = temp - coolingRate;
+            temp = 10;
         }
 
         // UPDATE BEST ROUTE
-        route = best;
+        route = bestSolution;
+        logger.removeHandler(handler);
     }
 
     // Calculate the acceptance probability
@@ -710,16 +711,10 @@ public class Solution   {
 
     private Route SwapCollectRequest(Route r, Request request, int toTruckId) {
 
-        truckToDeleteBackup = r.getTrucks().get(request.getInTruckId());
-        truckToAddBackup = r.getTrucks().get(toTruckId);
-
-        Route rou = (Route) deepClone(r);
+        Route rou = new Route(r);
 
         Truck truckToDeleteRequest = rou.getTrucks().get(request.getInTruckId());
         Truck truckToAddRequest = rou.getTrucks().get(toTruckId);
-
-        // TODO Truck truckToDeleteRequest = (Truck) deepClone(r.getTrucks().get(request.getInTruckId()));
-        // TODO Truck truckToAddRequest = (Truck) deepClone(r.getTrucks().get(toTruckId));
 
         /** Verwijderen uit oude truck **/
 
@@ -854,12 +849,6 @@ public class Solution   {
 
             if(checkLoadTruck(truckToAddRequest, false) && truckToAddRequest.CheckIfTimeFitsStop() ) {
 
-                // TODO int indexTruckToDelete = truckToDeleteRequest.getId();
-                // TODO int indexTruckToAdd = truckToAddRequest.getId();
-
-                // TODO r.setTruck(indexTruckToDelete, truckToDeleteRequest);
-                // TODO r.setTruck(indexTruckToAdd, truckToAddRequest);
-
                 return rou;
             }
         }
@@ -869,16 +858,10 @@ public class Solution   {
 
     private Route SwapDropRequest(Route r, Request request, int toTruckId) {
 
-        truckToDeleteBackup = r.getTrucks().get(request.getInTruckId());
-        truckToAddBackup = r.getTrucks().get(toTruckId);
-
-        Route rou = (Route) deepClone(r);
+        Route rou = new Route(r);
 
         Truck truckToDeleteRequest = rou.getTrucks().get(request.getInTruckId());
         Truck truckToAddRequest = rou.getTrucks().get(toTruckId);
-
-        // TODO Truck truckToDeleteRequest = (Truck) deepClone(r.getTrucks().get(request.getInTruckId()));
-        // TODO Truck truckToAddRequest = (Truck) deepClone(r.getTrucks().get(toTruckId));
 
         /** Verwijderen uit oude truck **/
 
@@ -1015,26 +998,11 @@ public class Solution   {
 
             if(checkLoadTruck(truckToAddRequest, false) && truckToAddRequest.CheckIfTimeFitsStop() ) {
 
-                // TODO int indexTruckToDelete = truckToDeleteRequest.getId();
-                // TODO int indexTruckToAdd = truckToAddRequest.getId();
-
-                // TODO r.setTruck(indexTruckToDelete, truckToDeleteRequest);
-                // TODO r.setTruck(indexTruckToAdd, truckToAddRequest);
-
                 return rou;
             }
         }
 
         return null;
-    }
-
-    public void SwapBack(Route r) {
-
-        int indexTruckToDelete = truckToDeleteBackup.getId();
-        int indexTruckToAdd = truckToAddBackup.getId();
-
-        r.setTruck(indexTruckToDelete, truckToDeleteBackup);
-        r.setTruck(indexTruckToAdd, truckToAddBackup);
     }
 
     // Dichtste bestaande stop zoeken, 1 index verder gaan

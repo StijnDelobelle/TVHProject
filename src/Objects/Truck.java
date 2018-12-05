@@ -31,6 +31,15 @@ public class Truck  implements Serializable {
         this.tijdLaden=0;
     }
 
+    // For clone
+    public Truck(int id, Location startLocation, Location eindLocation, ArrayList<Stop> stops, int tijdLaden) {
+        this.id = id;
+        this.startLocation = startLocation;
+        this.endLocation = eindLocation;
+        this.stops = stops;
+        this.tijdLaden = tijdLaden;
+    }
+
     public int getId() {return id;}
     public void setId(int id) {this.id = id;}
 

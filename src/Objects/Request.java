@@ -20,6 +20,17 @@ public class Request implements Serializable {
         this.isDone = false;
     }
 
+    // For clone
+    public Request(Request request) {
+        this.id = request.id;
+        this.machine = request.machine;
+        this.machineType = request.machineType;
+        this.location = request.location;
+        this.type = request.type;
+        this.isDone = request.isDone;
+        this.inTruckId = request.inTruckId;
+    }
+
     public int getId() {return id;}
     public void setId(int id) {this.id = id;}
 

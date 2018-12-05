@@ -9,6 +9,8 @@ public class Problem {
 
     /** Globale variabelen **/
 
+    public static long startTime;
+
     public static int[][] timeMatrix;
     public static int[][] distanceMatrix;
 
@@ -24,17 +26,19 @@ public class Problem {
 
     public static void solve() throws Exception{
 
-        Timestamp startTime = new Timestamp(System.currentTimeMillis());
+        startTime = System.currentTimeMillis();
 
         Solution solution = new Solution();
 
         solution.InitialSolution(requests, trucks, depots);
 
-        //solution.meta(10000);
+        //solution.LocalSearch(10000);
 
         solution.MakeFeasible();
 
-        solution.meta(10000);
+        solution.SimulatedAnnealing();
+
+        //solution.LocalSearch(10000);
 
         solution.WriteFileNieuw();
     }

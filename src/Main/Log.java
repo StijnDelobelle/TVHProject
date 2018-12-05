@@ -29,14 +29,14 @@ public class Log extends Formatter
         this.type = type;
 
         switch (type){
-            case "Meta":
+            case "LocalSearch":
                 COLOR = ANSI_YELLOW;
                 break;
             case "MakeFeasible" :
                 COLOR = ANSI_PURPLE;
                 break;
             case "Simulated Annealing" :
-                COLOR = ANSI_PURPLE;
+                COLOR = ANSI_CYAN;
                 break;
         }
     }
