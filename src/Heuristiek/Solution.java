@@ -672,7 +672,7 @@ public class Solution   {
                     if (currentSolutionDistance < bestTotalDistance) {
                         bestSolution = new Route(currentSolution);
                         logger.info("Totale afstand: " + bestTotalDistance);
-                        temp = 30;
+                        temp = 20;
                     }
                 }
 

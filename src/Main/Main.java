@@ -34,7 +34,7 @@ public class Main {
             TIME_LIMIT = Integer.parseInt(param.getNamed().get("time"));
 
             // Temporary setup
-            TIME_LIMIT = 100; // In seconden
+            TIME_LIMIT = 1800; // In seconden
 
             FileIO.readInput(INPUT_FILE);
             Problem.solve();
