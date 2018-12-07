@@ -477,6 +477,8 @@ public class Solution   {
         Log formatter = new Log("MakeFeasible");
         handler.setFormatter(formatter);
         logger.addHandler(handler);
+        logger.info("Starting make feasible...");
+
 
         Route bestRoute = new Route(route);
         measureTotalDistance(bestRoute);
@@ -539,6 +541,7 @@ public class Solution   {
         Log formatter = new Log("LocalSearch");
         handler.setFormatter(formatter);
         logger.addHandler(handler);
+        logger.info("Starting LocalSearch...");
 
         /* LocalSearch settings ----------------------------------- */
 
@@ -557,67 +560,72 @@ public class Solution   {
         while (true) {
 
             int oldDist = bestRoute.getTotalDistance();
-            // hier kiezen we welke request we gaan behandelen
-            int requestId1 = random.nextInt(requests.size() - 1);
-            Request req1 = requests.get(requestId1);
 
-            //Hier bereken je naar welke truck we de move doen
-            int toTruckId1 = random.nextInt(trucks.size()-1);
+            int toTruckId1 = -1, toTruckId2 = -1, toTruckId3 = -1, toTruckId4 = -1;
+            int requestId1 = -1, requestId2 = -1, requestId3 = -1, requestId4 = -1;
 
-            Route returnRoute1 = DoMove(bestRoute, req1, toTruckId1);
+            Request req1 = null, req2 = null, req3 = null, req4 = null;
+            Route returnRoute1 = null, returnRoute2 = null, returnRoute3 = null, returnRoute4 = null;
 
-            // Wanneer returnRoute niet gelijk is aan null, dit wil zeggen dat de move toegelaten is dus de tijd en load van de truck is niet overschreden
-            if(returnRoute1 != null)
-            {
-                int requestId2 = random.nextInt(requests.size() - 1);
+            while(returnRoute1 == null) {
+                toTruckId1 = random.nextInt(trucks.size() - 1);
+                requestId1 = random.nextInt(requests.size() - 1);
+
+                req1 = requests.get(requestId1);
+                returnRoute1 = DoMove(bestRoute, req1, toTruckId1);
+            }
+
+            while(returnRoute2 == null) {
+                toTruckId2 = random.nextInt(trucks.size()-1);
+                requestId2 = random.nextInt(requests.size() - 1);
+
                 while(requestId1 == requestId2){
                     requestId2 = random.nextInt(requests.size() - 1);
                 }
-                Request req2 = requests.get(requestId2);
 
-                //Hier bereken je naar welke truck we de move doen
-                int toTruckId2 = random.nextInt(trucks.size()-1);
+                req2 = requests.get(requestId2);
+                returnRoute2 = DoMove(returnRoute1, req2, toTruckId2);
+            }
 
-                Route returnRoute2 = DoMove(returnRoute1, req2, toTruckId2);
+            while(returnRoute3 == null) {
+                toTruckId3 = random.nextInt(trucks.size() - 1);
+                requestId3 = random.nextInt(requests.size() - 1);
 
-                if(returnRoute2 != null) {
-                    int requestId3 = random.nextInt(requests.size() - 1);
-                    while(requestId1 == requestId3 || requestId2 == requestId3){
-                        requestId3 = random.nextInt(requests.size() - 1);
-                    }
-                    Request req3 = requests.get(requestId3);
-
-                    //Hier bereken je naar welke truck we de move doen
-                    int toTruckId3 = random.nextInt(trucks.size()-1);
-
-                    Route returnRoute3 = DoMove(returnRoute2, req3, toTruckId3);
-
-                    if(returnRoute3 != null) {
-                        int newDist = measureTotalDistance(returnRoute3);
-                        // [LocalSearch] accept?
-                        if (newDist < oldDist || newDist < bound) {
-                            idle = 0;
-                            if(newDist<bestRoute.getTotalDistance()){
-                                bestRoute = new Route(returnRoute3);
-
-                                //De truck waar de request aan toegekent is updaten
-                                req1.setInTruckId(toTruckId1);
-                                req2.setInTruckId(toTruckId2);
-                                req3.setInTruckId(toTruckId3);
-                                //System.out.println("Totale afstand: " + newDist);
-                                logger.info("Totale afstand: " + newDist + "\t na " + (System.currentTimeMillis()-startTime)/1000 + " seconden");
-                            }
-                        }
-                        else {
-                            idle++;
-                        }
-                    }
-                    else {
-                        idle++;
-                    }
+                while (requestId1 == requestId3 || requestId2 == requestId3) {
+                    requestId3 = random.nextInt(requests.size() - 1);
                 }
-                else {
-                    idle++;
+
+                req3 = requests.get(requestId3);
+                returnRoute3 = DoMove(returnRoute2, req3, toTruckId3);
+            }
+
+            while(returnRoute4 == null) {
+                toTruckId4 = random.nextInt(trucks.size() - 1);
+                requestId4 = random.nextInt(requests.size() - 1);
+
+                while (requestId1 == requestId4 || requestId2 == requestId4 || requestId3 == requestId4) {
+                    requestId4 = random.nextInt(requests.size() - 1);
+                }
+
+                req4 = requests.get(requestId4);
+                returnRoute4 = DoMove(returnRoute3, req4, toTruckId4);
+            }
+
+            int newDist = measureTotalDistance(returnRoute4);
+
+            // [LocalSearch] accept?
+            if (newDist < oldDist || newDist < bound) {
+                idle = 0;
+                if(newDist<bestRoute.getTotalDistance()){
+                    bestRoute = new Route(returnRoute4);
+
+                    //De truck waar de request aan toegekent is updaten
+                    req1.setInTruckId(toTruckId1);
+                    req2.setInTruckId(toTruckId2);
+                    req3.setInTruckId(toTruckId3);
+                    req4.setInTruckId(toTruckId4);
+
+                    logger.info("Totale afstand: " + newDist + " na " + (System.currentTimeMillis()-startTime)/1000 + " seconden");
                 }
             }
             else{
@@ -632,13 +640,10 @@ public class Solution   {
                 bound = bestRoute.getTotalDistance();
             }
 
-            // stop?
-             if (idle >= MAX_IDLE) {
+             // stop?
+             if (idle >= MAX_IDLE || (System.currentTimeMillis() - startTime) / 1000 > TIME_LIMIT) {
                  break;
              }
-            /*if((System.currentTimeMillis() - startTime) / 1000 > TIME_LIMIT) {
-                break;
-            }*/
         }
 
         /* finished ---------------------------------------- */
@@ -653,6 +658,7 @@ public class Solution   {
         Log formatter = new Log("Simulated Annealing");
         handler.setFormatter(formatter);
         logger.addHandler(handler);
+        logger.info("Starting SimulatedAnnealing...");
 
         // Set initial temp
         double temp = 10;
@@ -669,7 +675,7 @@ public class Solution   {
         List<Request> currentRequests = new ArrayList<Request>(bestRequests);
 
 
-        while((System.currentTimeMillis() - startTime) / 1000 < TIME_LIMIT && coolingRate > 0.1) {
+        while((System.currentTimeMillis() - startTime) / 1000 < TIME_LIMIT) {
             // Loop until system has cooled
             while (temp > 1 && (System.currentTimeMillis() - startTime) / 1000 < TIME_LIMIT) {
 
@@ -677,51 +683,75 @@ public class Solution   {
                 Route newSolution = new Route(currentSolution);
                 List<Request> newRequests = new ArrayList<Request>(currentRequests);
 
-                // Van welke truck we de move starten
-                int requestId1 = random.nextInt(requests.size() - 1);
-                Request req1 = newRequests.get(requestId1);
-                //Hier bereken je naar welke truck we de move doen
-                int toTruckId1 = random.nextInt(trucks.size() - 1);
-                //De move uitvoeren
-                Route returnRoute1 = DoMove(newSolution, req1, toTruckId1);
+                int toTruckId1 = -1;
+                int toTruckId2 = -1;
+                int toTruckId3 = -1;
 
-                if (returnRoute1 != null) {
+                int requestId1 = -1;
+                int requestId2 = -1;
+                int requestId3 = -1;
 
-                    // Van welke truck we de move starten
-                    int requestId2 = random.nextInt(requests.size() - 1);
-                    while(requestId1 == requestId2)
+                Request req1 = null;
+                Request req2 = null;
+                Request req3 = null;
+
+                Route returnRoute1 = null;
+                Route returnRoute2 = null;
+                Route returnRoute3 = null;
+
+                while(returnRoute1 == null) {
+                    toTruckId1 = random.nextInt(trucks.size() - 1);
+                    requestId1 = random.nextInt(requests.size() - 1);
+
+                    req1 = newRequests.get(requestId1);
+                    returnRoute1 = DoMove(newSolution, req1, toTruckId1);
+                }
+
+                /*while(returnRoute2 == null) {
+                    toTruckId2 = random.nextInt(trucks.size() - 1);
+                    requestId2 = random.nextInt(requests.size() - 1);
+
+                    while(requestId1 == requestId2) {
                         requestId2 = random.nextInt(requests.size() - 1);
-
-                    Request req2 = newRequests.get(requestId2);
-                    //Hier bereken je naar welke truck we de move doen
-                    int toTruckId2 = random.nextInt(trucks.size() - 1);
-                    //De move uitvoeren
-                    Route returnRoute2 = DoMove(returnRoute1, req2, toTruckId2);
-
-                    if(returnRoute2 != null) {
-                        // Get energy of solutions
-                        int currentEnergy = measureTotalDistance(currentSolution);
-                        int neighbourEnergy = measureTotalDistance(returnRoute2);
-
-                        // Decide if we should accept the neighbour
-                        if (acceptanceProbability(currentEnergy, neighbourEnergy, temp) > Math.random()) {
-                            req1.setInTruckId(toTruckId1);
-                            req2.setInTruckId(toTruckId2);
-                            currentSolution = new Route(returnRoute2);
-                            currentRequests = new ArrayList<Request>(newRequests);
-                        }
-
-                        // Keep track of the best solution found
-                        int bestTotalDistance = measureTotalDistance(bestSolution);
-                        int currentSolutionDistance = measureTotalDistance(currentSolution);
-
-                        if (currentSolutionDistance < bestTotalDistance) {
-                            bestSolution = new Route(currentSolution);
-                            bestRequests = new ArrayList<Request>(currentRequests);
-                            logger.info("Totale afstand: " + currentSolutionDistance + "\t na " + (System.currentTimeMillis()-startTime)/1000 + " seconden");
-                            temp = 20;
-                        }
                     }
+
+                    req2 = newRequests.get(requestId2);
+                    returnRoute2 = DoMove(returnRoute1, req2, toTruckId2);
+                }
+
+                while(returnRoute3 == null) {
+                    toTruckId3 = random.nextInt(trucks.size() - 1);
+                    requestId3 = random.nextInt(requests.size() - 1);
+
+                    while(requestId1 == requestId3 || requestId2 == requestId3) {
+                        requestId3 = random.nextInt(requests.size() - 1);
+                    }
+
+                    req3 = newRequests.get(requestId3);
+                    returnRoute3 = DoMove(returnRoute2, req3, toTruckId3);
+                }*/
+
+                // Get energy of solutions
+                int currentEnergy = measureTotalDistance(currentSolution);
+                int neighbourEnergy = measureTotalDistance(returnRoute1);
+
+                // Decide if we should accept the neighbour
+                if (acceptanceProbability(currentEnergy, neighbourEnergy, temp) > Math.random()) {
+                    req1.setInTruckId(toTruckId1);
+                    //req2.setInTruckId(toTruckId2);
+                    //req3.setInTruckId(toTruckId3);
+                    currentSolution = new Route(returnRoute1);
+                    currentRequests = new ArrayList<Request>(newRequests);
+                }
+
+                // Keep track of the best solution found
+                int bestTotalDistance = measureTotalDistance(bestSolution);
+                int currentSolutionDistance = measureTotalDistance(currentSolution);
+
+                if (currentSolutionDistance < bestTotalDistance) {
+                    bestSolution = new Route(currentSolution);
+                    bestRequests = new ArrayList<Request>(currentRequests);
+                    logger.info("Totale afstand: " + currentSolutionDistance + " na " + (System.currentTimeMillis()-startTime)/1000 + " seconden");
                 }
 
                 // Cool system
