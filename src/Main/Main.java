@@ -32,8 +32,7 @@ public class Main {
             RANDOM_SEED = Integer.parseInt(param.getNamed().get("seed"));
             TIME_LIMIT = Integer.parseInt(param.getNamed().get("time"));
 
-            // Temporary setup
-            TIME_LIMIT = 5; // In seconden
+            //TIME_LIMIT = 60;
 
             FileIO.readInput(INPUT_FILE);
             Problem.solve();
