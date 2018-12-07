@@ -2,7 +2,6 @@ package Heuristiek;
 
 import Objects.*;
 
-import java.sql.Timestamp;
 import java.util.*;
 
 public class Problem {

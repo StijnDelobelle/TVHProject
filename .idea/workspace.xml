@@ -1,19 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="algoritm:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="48a7c1a9-bf4d-49dd-8305-3a7c1d043c9c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/algoritm_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tvh_solution_3.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tvh_solution_4.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tvh_solution_5.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tvh_solution_6.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tvh_solution_7.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tvh_solution_8.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Problem_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Problem_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Problem_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Problem_4.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Problem_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Problem_5.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Problem_6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Problem_6.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Problem_7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Problem_7.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Problem_8.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Problem_8.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Heuristiek/Problem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TVHproject/Heuristiek/Problem.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Heuristiek/Solution.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TVHproject/Heuristiek/Solution.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Objects/Request$Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TVHproject/Objects/Request$Type.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Objects/Request.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TVHproject/Objects/Request.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TVHproject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/algoritm.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Heuristiek/Problem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Heuristiek/Solution.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Main/FileIO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Main/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Objects/Location.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Objects/Machine.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Objects/MachineType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Objects/Request$Type.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Objects/Request.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Objects/Rit.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Objects/Route.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Objects/Stop.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TVHproject/Objects/Truck.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Heuristiek/Problem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Heuristiek/Problem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Heuristiek/Solution.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Heuristiek/Solution.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/FileIO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Data/FileIO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/Log.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Data/Log.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tvh_solution_3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tvh_solution_3.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tvh_solution_4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tvh_solution_4.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tvh_solution_5.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tvh_solution_5.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tvh_solution_7.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tvh_solution_7.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/Param.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Data/Param.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Objects/Route.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects/Route.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tvh_problem_3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tvh_problem_3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tvh_problem_4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tvh_problem_4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tvh_problem_5.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tvh_problem_5.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tvh_problem_6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tvh_problem_6.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tvh_problem_7.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tvh_problem_7.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tvh_problem_8.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tvh_problem_8.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tvh_solution_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tvh_solution_4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tvh_solution_5.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tvh_solution_6.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tvh_solution_7.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tvh_solution_8.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/val.bat" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -67,35 +110,37 @@
     <session id="230661949">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="23" />
+          <entry key="project.closed" value="24" />
           <entry key="project.open.time.1" value="7" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.6" value="6" />
-          <entry key="project.open.time.7" value="6" />
+          <entry key="project.open.time.7" value="7" />
           <entry key="project.open.time.8" value="3" />
           <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="27" />
+          <entry key="project.opened" value="28" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="bat" value="4" />
+          <entry key="class" value="1" />
           <entry key="iml" value="1" />
-          <entry key="java" value="111" />
-          <entry key="md" value="4" />
-          <entry key="txt" value="61" />
+          <entry key="java" value="124" />
+          <entry key="md" value="5" />
+          <entry key="txt" value="71" />
           <entry key="xml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Bat" value="4" />
+          <entry key="CLASS" value="1" />
           <entry key="IDEA_MODULE" value="1" />
-          <entry key="JAVA" value="111" />
-          <entry key="Markdown" value="4" />
-          <entry key="PLAIN_TEXT" value="61" />
+          <entry key="JAVA" value="124" />
+          <entry key="Markdown" value="5" />
+          <entry key="PLAIN_TEXT" value="71" />
           <entry key="XML" value="1" />
         </counts>
       </usages-collector>
@@ -103,17 +148,17 @@
         <counts>
           <entry key="bat" value="1" />
           <entry key="dummy" value="5" />
-          <entry key="java" value="19148" />
+          <entry key="java" value="19669" />
           <entry key="md" value="45" />
-          <entry key="txt" value="665" />
+          <entry key="txt" value="679" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Bat" value="1" />
-          <entry key="JAVA" value="19148" />
+          <entry key="JAVA" value="19669" />
           <entry key="Markdown" value="45" />
-          <entry key="PLAIN_TEXT" value="670" />
+          <entry key="PLAIN_TEXT" value="684" />
         </counts>
       </usages-collector>
     </session>
@@ -138,11 +183,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Heuristiek/Solution.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="32">
-              <caret line="624" column="23" selection-start-line="624" selection-start-column="23" selection-end-line="624" selection-end-column="23" />
+            <state relative-caret-position="156">
+              <caret line="1056" selection-start-line="1056" selection-end-line="1056" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#zetStartStops#0;class#Solution#0" />
@@ -156,6 +201,7 @@
                 <element signature="method#measureTotalDistance#0;class#Solution#0" />
                 <element signature="method#MakeFeasible#0;class#Solution#0" />
                 <element signature="method#LocalSearch#0;class#Solution#0" />
+                <element signature="method#SimulatedAnnealing#0;class#Solution#0" />
                 <element signature="method#acceptanceProbability#0;class#Solution#0" />
                 <element signature="method#DoMove#0;class#Solution#0" />
                 <element signature="method#SwapCollectRequest#0;class#Solution#0" />
@@ -163,87 +209,17 @@
                 <element signature="method#SearchClosestCollectPointFromHere#0;class#Solution#0" />
                 <element signature="method#SearchClosestDropPointFromHere#0;class#Solution#0" />
                 <element signature="method#VolgordeChecken#0;class#Solution#0" />
-                <element signature="method#WriteFileNieuw#0;class#Solution#0" />
                 <element signature="method#deepClone#0;class#Solution#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Objects/Route.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Data/FileIO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="21" column="54" selection-start-line="21" selection-start-column="54" selection-end-line="21" selection-end-column="54" />
-              <folding>
-                <element signature="method#setTruck#0;class#Route#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-10.0.2.jdk/Contents/Home/lib/src.zip!/java.base/java/lang/Class.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="35160">
-              <caret line="2433" selection-start-line="2433" selection-end-line="2433" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Objects/Rit.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="31" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Objects/Request.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="27" column="39" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Objects/Stop.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="33" column="24" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Objects/Truck.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="38" column="27" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Heuristiek/Problem.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="36" column="32" lean-forward="true" selection-start-line="36" selection-start-column="32" selection-end-line="36" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Main/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="359">
-              <caret line="36" column="27" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="-67">
+              <caret line="17" column="46" selection-start-line="17" selection-start-column="46" selection-end-line="17" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -301,10 +277,10 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/Heuristiek/Solution.java" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/Main/Log.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/Data/Log.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/Main/Main.java" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/Main/FileIO.java" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/Main/Param.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/Data/FileIO.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/Data/Param.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/Heuristiek/Problem.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="IdeDocumentHistory">
@@ -314,7 +290,6 @@
         <option value="$PROJECT_DIR$/tvh_problem_4.txt" />
         <option value="$PROJECT_DIR$/Solutions/tvh_solution_3.txt" />
         <option value="$PROJECT_DIR$/Data/tvh_solution_3.txt" />
-        <option value="$PROJECT_DIR$/src/Main/FileIO.java" />
         <option value="$PROJECT_DIR$/tvh_solution_5.txt" />
         <option value="$PROJECT_DIR$/tvh_solution_3.txt" />
         <option value="$PROJECT_DIR$/tvh_solution_8.txt" />
@@ -330,10 +305,13 @@
         <option value="$PROJECT_DIR$/src/Main/Log.java" />
         <option value="$PROJECT_DIR$/src/Objects/Stop.java" />
         <option value="$PROJECT_DIR$/src/Objects/Truck.java" />
-        <option value="$PROJECT_DIR$/src/Objects/Route.java" />
         <option value="$PROJECT_DIR$/src/Objects/Request.java" />
-        <option value="$PROJECT_DIR$/src/Heuristiek/Problem.java" />
+        <option value="$PROJECT_DIR$/src/Main/FileIO.java" />
         <option value="$PROJECT_DIR$/src/Main/Main.java" />
+        <option value="$PROJECT_DIR$/src/Objects/Route.java" />
+        <option value="$PROJECT_DIR$/src/Heuristiek/Problem.java" />
+        <option value="$PROJECT_DIR$/src/Data/Log.java" />
+        <option value="$PROJECT_DIR$/src/Data/FileIO.java" />
         <option value="$PROJECT_DIR$/src/Heuristiek/Solution.java" />
       </list>
     </option>
@@ -423,61 +401,79 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="ProjectPane">
-        <subPane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Production'; set:Production; class com.intellij.psi.search.scope.ProjectProductionScope">
           <expand>
             <path>
-              <item name="TVHProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TVHProject" type="462c0819:PsiDirectoryNode" />
+              <item name="algoritm" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="algoritm" type="2674bda8:ScopeViewTreeModel$GroupNode" />
             </path>
             <path>
-              <item name="TVHProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TVHProject" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TVHProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TVHProject" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Heuristiek" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TVHProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TVHProject" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TVHProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TVHProject" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Objects" type="462c0819:PsiDirectoryNode" />
+              <item name="algoritm" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="algoritm" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="algoritm" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TVHProject" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="algoritm" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TVHProject" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="algoritm" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TVHProject" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="algoritm" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TVHProject" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Heuristiek" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="algoritm" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TVHProject" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Main" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544122581141" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544173697967" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/src/Heuristiek" />
+      <recent name="$PROJECT_DIR$/src/Data" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/Data" />
-      <recent name="$PROJECT_DIR$/Problems" />
-      <recent name="$PROJECT_DIR$/Solutions" />
-      <recent name="$PROJECT_DIR$/src" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Heuristiek" />
+      <recent name="$PROJECT_DIR$/src/Main" />
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -492,7 +488,162 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JAR Application.Validator 4">
+  <component name="RunManager" selected="JAR Application.Validator 3">
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <module name="algoritm" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script">
+      <module name="algoritm" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="algoritm" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <module name="algoritm" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <module name="algoritm" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Nosetests">
+      <module name="algoritm" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_regexPattern" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Twisted Trial">
+      <module name="algoritm" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <module name="algoritm" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="py.test">
+      <module name="algoritm" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Application.Problem 3" />
       <item itemvalue="Application.Problem 4" />
@@ -750,7 +901,14 @@
       <option name="project" value="LOCAL" />
       <updated>1544024738308</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Simulated annealing aangepast">
+      <created>1544122672991</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1544122672991</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TodoView">
@@ -764,9 +922,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="821" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18955651" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19170243" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -774,8 +931,9 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="UI Designer" order="6" />
       <window_info id="simpleUML" order="7" />
+      <window_info anchor="bottom" id="Inspection Results" weight="0.32921812" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.31824416" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.31687242" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49427754" visible="true" weight="0.28532237" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49785408" weight="0.29492456" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -802,7 +960,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Beginsel drops moves" />
     <MESSAGE value="Drops fix" />
     <MESSAGE value="Problem 5 &amp; 6 added" />
     <MESSAGE value="Problemen om in 40 trucks te krijgen" />
@@ -827,7 +984,8 @@
     <MESSAGE value="All problems feasible" />
     <MESSAGE value="Logging" />
     <MESSAGE value="Deepclone weg + simulated annealing klaar" />
-    <option name="LAST_COMMIT_MESSAGE" value="Deepclone weg + simulated annealing klaar" />
+    <MESSAGE value="Simulated annealing aangepast" />
+    <option name="LAST_COMMIT_MESSAGE" value="Simulated annealing aangepast" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -842,7 +1000,7 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Objects/Route.java</url>
-          <line>26</line>
+          <line>24</line>
           <properties />
           <option name="timeStamp" value="437" />
         </line-breakpoint>
@@ -978,33 +1136,19 @@
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-10.0.2.jdk/Contents/Home/lib/src.zip!/javafx.base/com/sun/javafx/runtime/SystemProperties.java" />
     <entry file="file://$USER_HOME$/Downloads/TVHProject-master/src/Main/Main.java" />
     <entry file="file://$USER_HOME$/Downloads/TVHProject-master/src/Heuristiek/Problem.java" />
-    <entry file="file://$PROJECT_DIR$/TVHproject.iml">
+    <entry file="file://$PROJECT_DIR$/algoritm.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/tvh_solution_5.txt">
+    <entry file="file://$PROJECT_DIR$/src/tvh_solution_5.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/tvh_solution_3.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="32" selection-start-line="13" selection-start-column="32" selection-end-line="13" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tvh_problem_6.txt">
+    <entry file="file://$PROJECT_DIR$/src/tvh_problem_6.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/tvh_problem_5.txt">
+    <entry file="file://$PROJECT_DIR$/src/tvh_problem_5.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tvh_solution_6.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="77" selection-start-line="15" selection-start-column="77" selection-end-line="15" selection-end-column="77" />
         </state>
       </provider>
     </entry>
@@ -1019,56 +1163,20 @@
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main/FileIO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="21" column="33" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tvh_problem_4.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9375">
-          <caret line="625" column="11" selection-start-line="625" selection-start-column="11" selection-end-line="625" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tvh_problem_3.txt">
+    <entry file="file://$PROJECT_DIR$/src/tvh_problem_3.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/tvh_solution_4.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="165">
-            <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tvh_solution_8.txt">
+    <entry file="file://$PROJECT_DIR$/src/tvh_solution_8.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/tvh_solution_7.txt">
+    <entry file="file://$PROJECT_DIR$/src/tvh_solution_7.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tvh_problem_8.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5834" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tvh_problem_7.txt">
+    <entry file="file://$PROJECT_DIR$/src/tvh_problem_7.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="358">
           <caret line="389" column="4" lean-forward="true" selection-start-line="389" selection-start-column="4" selection-end-line="389" selection-end-column="4" />
@@ -1076,13 +1184,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Objects/Swap.java" />
-    <entry file="file://$PROJECT_DIR$/src/Main/Param.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="9" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Objects/Location.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
@@ -1094,18 +1195,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="29670">
           <caret line="2047" selection-start-line="2047" selection-end-line="2047" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main/Log.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="27" column="27" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#Log#0;class#Log#0" />
-            <element signature="method#format#0;class#Log#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1123,16 +1212,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/Route.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="21" column="54" selection-start-line="21" selection-start-column="54" selection-end-line="21" selection-end-column="54" />
-          <folding>
-            <element signature="method#setTruck#0;class#Route#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-10.0.2.jdk/Contents/Home/lib/src.zip!/java.base/java/lang/Class.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="35160">
@@ -1147,17 +1226,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/Request.java">
+    <entry file="file://$PROJECT_DIR$/src/tvh_solution_4.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="39" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
+        <state relative-caret-position="45">
+          <caret line="3" column="31" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Objects/Stop.java">
+    <entry file="file://$PROJECT_DIR$/src/tvh_problem_4.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="33" column="24" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
+        <state relative-caret-position="4425">
+          <caret line="295" column="13" selection-start-line="295" selection-start-column="4" selection-end-line="295" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tvh_problem_8.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tvh_solution_6.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="77" selection-start-line="15" selection-start-column="77" selection-end-line="15" selection-end-column="77" />
         </state>
       </provider>
     </entry>
@@ -1168,27 +1257,113 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Heuristiek/Problem.java">
+    <entry file="file://$PROJECT_DIR$/src/Main/tvh_problem_3.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Data/Param.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="36" column="32" lean-forward="true" selection-start-line="36" selection-start-column="32" selection-end-line="36" selection-end-column="32" />
+        <state relative-caret-position="60">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Data/tvh_solution_3.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tvh_solution_3.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Main/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="36" column="27" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
+        <state relative-caret-position="295">
+          <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/out/production/algoritm/Data/tvh_solution_3.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Heuristiek/Problem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Objects/Request.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="58" column="19" selection-start-line="58" selection-start-column="19" selection-end-line="58" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Data/Log.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="12" column="10" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Log#0;class#Log#0" />
+            <element signature="method#format#0;class#Log#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Objects/Stop.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="434">
+          <caret line="48" column="11" selection-start-line="48" selection-start-column="11" selection-end-line="48" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Objects/Route.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="38" selection-start-line="7" selection-start-column="38" selection-end-line="7" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#setTruck#0;class#Route#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor>
+            <caret column="2" selection-start-column="2" selection-end-column="2" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/production/algoritm/Data/Param.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#2317#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tvh_solution_3.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Heuristiek/Solution.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="624" column="23" selection-start-line="624" selection-start-column="23" selection-end-line="624" selection-end-column="23" />
+        <state relative-caret-position="156">
+          <caret line="1056" selection-start-line="1056" selection-end-line="1056" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#zetStartStops#0;class#Solution#0" />
@@ -1202,6 +1377,7 @@
             <element signature="method#measureTotalDistance#0;class#Solution#0" />
             <element signature="method#MakeFeasible#0;class#Solution#0" />
             <element signature="method#LocalSearch#0;class#Solution#0" />
+            <element signature="method#SimulatedAnnealing#0;class#Solution#0" />
             <element signature="method#acceptanceProbability#0;class#Solution#0" />
             <element signature="method#DoMove#0;class#Solution#0" />
             <element signature="method#SwapCollectRequest#0;class#Solution#0" />
@@ -1209,9 +1385,15 @@
             <element signature="method#SearchClosestCollectPointFromHere#0;class#Solution#0" />
             <element signature="method#SearchClosestDropPointFromHere#0;class#Solution#0" />
             <element signature="method#VolgordeChecken#0;class#Solution#0" />
-            <element signature="method#WriteFileNieuw#0;class#Solution#0" />
             <element signature="method#deepClone#0;class#Solution#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Data/FileIO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-67">
+          <caret line="17" column="46" selection-start-line="17" selection-start-column="46" selection-end-line="17" selection-end-column="46" />
         </state>
       </provider>
     </entry>
@@ -1221,10 +1403,12 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
+          <last-edited>algoritm:jar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
@@ -1267,12 +1451,11 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>TVHproject</last-edited>
+          <last-edited>algoritm</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>

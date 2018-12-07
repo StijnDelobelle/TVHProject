@@ -1,10 +1,8 @@
 package Main;
 
+import Data.FileIO;
+import Data.Param;
 import Heuristiek.*;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.sql.Timestamp;
 
 public class Main {
 
@@ -13,6 +11,7 @@ public class Main {
 
     /** Application **/
     // java -jar algorithm.jar --problem=<input_file> --solution=<solution_file> --seed=<random_seed> --time=<time_limit>
+    // java -jar algorithm.jar --problem=tvh_problem_3.txt --solution=tvh_solution_3.txt --seed=0 --time=10
 
     public static String INPUT_FILE;
     public static String SOLUTION_FILE;
@@ -34,7 +33,7 @@ public class Main {
             TIME_LIMIT = Integer.parseInt(param.getNamed().get("time"));
 
             // Temporary setup
-            TIME_LIMIT = 1800; // In seconden
+            TIME_LIMIT = 5; // In seconden
 
             FileIO.readInput(INPUT_FILE);
             Problem.solve();

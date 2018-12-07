@@ -1,4 +1,4 @@
-package Main;
+package Data;
 
 import Objects.*;
 import java.util.*;
@@ -8,14 +8,14 @@ import static Heuristiek.Problem.*;
 
 public class FileIO {
 
-    public static void readInput(String filename){
-        Scanner s = null;
+    public static void readInput(String filename) throws FileNotFoundException {
 
-        try {
-            s = new Scanner(new File(filename));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        //InputStream is = FileIO.class.getResourceAsStream(filename);
+        //InputStreamReader isr = new InputStreamReader(is);
+        //BufferedReader br = new BufferedReader(isr);
+
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
+        Scanner s = new Scanner(bufferedReader);
 
         int requestId = 0;
 

@@ -1,10 +1,11 @@
 package Heuristiek;
 
+import Data.FileIO;
+import Data.Log;
 import Objects.*;
 import Main.*;
 
 import java.io.*;
-import java.sql.Timestamp;
 import java.util.*;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
@@ -36,7 +37,6 @@ public class Solution   {
     public void InitialSolution(ArrayList<Request> argRequests, ArrayList<Truck> argTrucks, ArrayList<Location> depots) {
 
         this.depots = depots;
-        //initialRequests = (ArrayList<Request>) deepClone(argRequests);
         initialTrucks = (ArrayList<Truck>) deepClone(argTrucks);
 
         zetStartStops(initialTrucks);
@@ -671,7 +671,7 @@ public class Solution   {
 
                     if (currentSolutionDistance < bestTotalDistance) {
                         bestSolution = new Route(currentSolution);
-                        logger.info("Totale afstand: " + bestTotalDistance);
+                        logger.info("Totale afstand: " + currentSolutionDistance);
                         temp = 20;
                     }
                 }
@@ -810,6 +810,7 @@ public class Solution   {
             }
             // Geen bestaande stop gevonden, nieuwe stop toevoegen
             if (!stopCollectModified) {
+                // Index - 1 anders komt hij na de eindlocatie van de truck, we plaatsen hem net ervoor
                 int index = SearchClosestCollectPointFromHere(truckToAddRequest.getStops(), locatieCollectMachine);
                 index = index == truckToAddRequest.getStops().size()? index - 1 : index;
 
@@ -885,7 +886,6 @@ public class Solution   {
                     locatieCollectMachine = stop.getLocation();
                     stop.removeCollect(machine);
 
-                    // Als in de oude truck na het verwijderen van de collect de stop niet meer gebruikt wordt deze verwijderen
                     if (stop.getcollect().size() == 0 && stop.getdrop().size() == 0) {
                         deleteCollect = true;
                         indexRemoveLocatieCollect = indexfor;
@@ -952,7 +952,6 @@ public class Solution   {
 
             // Deel 1
             for(int index = 0; index < truckToAddRequest.getStops().size() - 1; index++){
-            //for (Stop stop : truckToAddRequest.getStops()) {
                 if (truckToAddRequest.getStops().get(index).getLocation().getId() == locatieCollectMachine.getId()) {
                     truckToAddRequest.getStops().get(index).addCollect(request.getMachine());
                     stopCollectModified = true;
@@ -961,8 +960,6 @@ public class Solution   {
             }
             if (!stopCollectModified) {
                 int index = SearchClosestCollectPointFromHere(truckToAddRequest.getStops(), locatieCollectMachine);
-
-                // Index - 1 anders komt hij na de eindlocatie van de truck, we plaatsen hem net ervoor
                 index = index == truckToAddRequest.getStops().size()? index - 1 : index;
 
                 Stop newStop = new Stop(locatieCollectMachine, request.getMachine(), Request.Type.TEMPORARYCOLLECT);
@@ -970,7 +967,6 @@ public class Solution   {
             }
 
             // Deel 2
-
             int aantalStops = 0;
             if(truckToAddRequest.getEndLocation().isDepot() == true)
                 aantalStops = truckToAddRequest.getStops().size();
@@ -1058,7 +1054,6 @@ public class Solution   {
         }
 
         int totalDistance = measureTotalDistance(route);
-
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(Main.SOLUTION_FILE));
         writer.write("PROBLEM: " + Main.INPUT_FILE + "\n");

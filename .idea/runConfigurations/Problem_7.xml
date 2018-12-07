@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Problem 7" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="Main.Main" />
-    <module name="TVHproject" />
+    <module name="algoritm" />
     <option name="PROGRAM_PARAMETERS" value="java -jar algorithm.jar --problem=tvh_problem_7.txt --solution=tvh_solution_7.txt --seed=0 --time=1800" />
     <method v="2">
       <option name="Make" enabled="true" />

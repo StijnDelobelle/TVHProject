@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import static Heuristiek.Problem.distanceMatrix;
-
 public class Route implements Serializable {
     private ArrayList<Truck> trucks = new ArrayList<>();
     private int totalDistance;

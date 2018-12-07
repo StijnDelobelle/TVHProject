@@ -1,4 +1,4 @@
-package Main;
+package Data;
 
 import java.util.*;
 
