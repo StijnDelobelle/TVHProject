@@ -599,18 +599,6 @@ public class Solution   {
                 returnRoute3 = DoMove(returnRoute2, req3, toTruckId3);
             }
 
-            /*while(returnRoute4 == null) {
-                toTruckId4 = random.nextInt(trucks.size());
-                requestId4 = random.nextInt(requests.size());
-
-                while (requestId1 == requestId4 || requestId2 == requestId4|| requestId3 == requestId4) {
-                    requestId4 = random.nextInt(requests.size());
-                }
-
-                req4 = requests.get(requestId4);
-                returnRoute4 = DoMove(returnRoute3, req4, toTruckId4);
-            }*/
-
             int newDist = measureTotalDistance(returnRoute3);
 
             // [LocalSearch] accept?
@@ -624,7 +612,6 @@ public class Solution   {
                     req1.setInTruckId(toTruckId1);
                     req2.setInTruckId(toTruckId2);
                     req3.setInTruckId(toTruckId3);
-                    //req4.setInTruckId(toTruckId4);
 
                     logger.info("Totale afstand: " + newDist + " na " + (System.currentTimeMillis()-startTime)/1000 + " seconden");
                 }
@@ -686,19 +673,15 @@ public class Solution   {
 
                 int toTruckId1 = -1;
                 int toTruckId2 = -1;
-                int toTruckId3 = -1;
 
                 int requestId1 = -1;
                 int requestId2 = -1;
-                int requestId3 = -1;
 
                 Request req1 = null;
                 Request req2 = null;
-                Request req3 = null;
 
                 Route returnRoute1 = null;
                 Route returnRoute2 = null;
-                Route returnRoute3 = null;
 
                 while(returnRoute1 == null) {
                     toTruckId1 = random.nextInt(trucks.size());
@@ -720,29 +703,16 @@ public class Solution   {
                     returnRoute2 = DoMove(returnRoute1, req2, toTruckId2);
                 }
 
-                while(returnRoute3 == null) {
-                    toTruckId3 = random.nextInt(trucks.size());
-                    requestId3 = random.nextInt(requests.size());
-
-                    while(requestId1 == requestId2 || requestId2 == requestId3) {
-                        requestId3 = random.nextInt(requests.size());
-                    }
-
-                    req3 = newRequests.get(requestId3);
-                    returnRoute3 = DoMove(returnRoute2, req3, toTruckId3);
-                }
-
                 // Get energy of solutions
                 int currentEnergy = measureTotalDistance(currentSolution);
-                int neighbourEnergy = measureTotalDistance(returnRoute3);
+                int neighbourEnergy = measureTotalDistance(returnRoute2);
 
                 // Decide if we should accept the neighbour
                 if (acceptanceProbability(currentEnergy, neighbourEnergy, temp) > Math.random()) {
                     req1.setInTruckId(toTruckId1);
                     req2.setInTruckId(toTruckId2);
-                    req3.setInTruckId(toTruckId3);
 
-                    currentSolution = new Route(returnRoute3);
+                    currentSolution = new Route(returnRoute2);
                     currentRequests = new ArrayList<Request>(newRequests);
                 }
 
@@ -900,15 +870,9 @@ public class Solution   {
             }
 
             // Deel 2: Drop machine
-            // Wanneer de eindlocatie geen depo is, droppen we maar tot de voorlaatste stop wat een depo is
-            int aantalStops = 0;
-            if(truckToAddRequest.getEndLocation().isDepot() == true)
-                aantalStops = truckToAddRequest.getStops().size();
-            else
-                aantalStops = truckToAddRequest.getStops().size() - 1;
 
             // Kan de machine gedropt worden in een bestaande locatie?
-            for(int index = 0; index < aantalStops; index++) {
+            for(int index = 0; index < truckToAddRequest.getStops().size(); index++) {
                 if (truckToAddRequest.getStops().get(index).getLocation().getId() == locatieDropMachine.getId() && VolgordeChecken(truckToAddRequest.getStops(), request.getMachine(), index)) {
                     truckToAddRequest.getStops().get(index).addDrop(request.getMachine(), false);
                     stopDropModified = true;
@@ -917,7 +881,7 @@ public class Solution   {
             }
             // Geen bestaande stop gevonden, nieuwe stop toevoegen
             if (!stopDropModified) {
-                int index = SearchClosestDropPointFromHere(truckToAddRequest.getStops(), locatieDropMachine, request.getMachine(), truckToAddRequest.getEndLocation().isDepot());
+                int index = SearchClosestDropPointFromHere(truckToAddRequest.getStops(), locatieDropMachine, request.getMachine());
                 Stop newStop = new Stop(locatieDropMachine, request.getMachine(), Request.Type.DROP);
                 truckToAddRequest.addStopToRoute(index, newStop);
             }
@@ -1047,13 +1011,7 @@ public class Solution   {
             }
 
             // Deel 2
-            int aantalStops = 0;
-            if(truckToAddRequest.getEndLocation().isDepot() == true)
-                aantalStops = truckToAddRequest.getStops().size();
-            else
-                aantalStops = truckToAddRequest.getStops().size() - 1;
-
-            for(int index = 0; index < aantalStops; index++) {
+            for(int index = 0; index < truckToAddRequest.getStops().size(); index++) {
                 if (truckToAddRequest.getStops().get(index).getLocation().getId() == locatieDropMachine.getId() && VolgordeChecken(truckToAddRequest.getStops(), request.getMachine(), index)) {
                     truckToAddRequest.getStops().get(index).addDrop(request.getMachine(), false);
                     stopDropModified = true;
@@ -1061,7 +1019,7 @@ public class Solution   {
                 }
             }
             if (!stopDropModified) {
-                int index = SearchClosestDropPointFromHere(truckToAddRequest.getStops(), locatieDropMachine, request.getMachine(), truckToAddRequest.getEndLocation().isDepot());
+                int index = SearchClosestDropPointFromHere(truckToAddRequest.getStops(), locatieDropMachine, request.getMachine());
                 Stop newStop = new Stop(locatieDropMachine, request.getMachine(), Request.Type.DROP);
                 truckToAddRequest.addStopToRoute(index, newStop);
             }
@@ -1095,7 +1053,7 @@ public class Solution   {
         return indexNewLocation + 1;
     }
 
-    public int SearchClosestDropPointFromHere(ArrayList<Stop> stops, Location dropLocation, Machine machine, boolean isDepo) {
+    public int SearchClosestDropPointFromHere(ArrayList<Stop> stops, Location dropLocation, Machine machine) {
         int indexNewLocation = 0;
         int minDistance = Integer.MAX_VALUE;
         for(int index = 0; index < stops.size(); index++) {
@@ -1121,7 +1079,7 @@ public class Solution   {
         return true;
     }
 
-    //output file schrijven
+    // Output file schrijven
     public void WriteFileNieuw() throws IOException {
         System.out.println("");
 
