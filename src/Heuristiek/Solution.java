@@ -561,11 +561,11 @@ public class Solution   {
 
             int oldDist = bestRoute.getTotalDistance();
 
-            int toTruckId1 = -1, toTruckId2 = -1, toTruckId3 = -1, toTruckId4 = -1;
-            int requestId1 = -1, requestId2 = -1, requestId3 = -1, requestId4 = -1;
+            int toTruckId1 = -1, toTruckId2 = -1, toTruckId3 = -1;
+            int requestId1 = -1, requestId2 = -1, requestId3 = -1;
 
-            Request req1 = null, req2 = null, req3 = null, req4 = null;
-            Route returnRoute1 = null, returnRoute2 = null, returnRoute3 = null, returnRoute4 = null;
+            Request req1 = null, req2 = null, req3 = null;
+            Route returnRoute1 = null, returnRoute2 = null, returnRoute3 = null;
 
             while(returnRoute1 == null) {
                 toTruckId1 = random.nextInt(trucks.size() - 1);
@@ -599,31 +599,18 @@ public class Solution   {
                 returnRoute3 = DoMove(returnRoute2, req3, toTruckId3);
             }
 
-            while(returnRoute4 == null) {
-                toTruckId4 = random.nextInt(trucks.size() - 1);
-                requestId4 = random.nextInt(requests.size() - 1);
-
-                while (requestId1 == requestId4 || requestId2 == requestId4 || requestId3 == requestId4) {
-                    requestId4 = random.nextInt(requests.size() - 1);
-                }
-
-                req4 = requests.get(requestId4);
-                returnRoute4 = DoMove(returnRoute3, req4, toTruckId4);
-            }
-
-            int newDist = measureTotalDistance(returnRoute4);
+            int newDist = measureTotalDistance(returnRoute3);
 
             // [LocalSearch] accept?
             if (newDist < oldDist || newDist < bound) {
                 idle = 0;
                 if(newDist<bestRoute.getTotalDistance()){
-                    bestRoute = new Route(returnRoute4);
+                    bestRoute = new Route(returnRoute3);
 
                     //De truck waar de request aan toegekent is updaten
                     req1.setInTruckId(toTruckId1);
                     req2.setInTruckId(toTruckId2);
                     req3.setInTruckId(toTruckId3);
-                    req4.setInTruckId(toTruckId4);
 
                     logger.info("Totale afstand: " + newDist + " na " + (System.currentTimeMillis()-startTime)/1000 + " seconden");
                 }
