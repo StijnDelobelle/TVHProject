@@ -561,26 +561,26 @@ public class Solution   {
 
             int oldDist = bestRoute.getTotalDistance();
 
-            int toTruckId1 = -1, toTruckId2 = -1, toTruckId3 = -1;
-            int requestId1 = -1, requestId2 = -1, requestId3 = -1;
+            int toTruckId1 = -1, toTruckId2 = -1, toTruckId3 = -1, toTruckId4 = -1;
+            int requestId1 = -1, requestId2 = -1, requestId3 = -1, requestId4 = -1;
 
-            Request req1 = null, req2 = null, req3 = null;
-            Route returnRoute1 = null, returnRoute2 = null, returnRoute3 = null;
+            Request req1 = null, req2 = null, req3 = null, req4 = null;
+            Route returnRoute1 = null, returnRoute2 = null, returnRoute3 = null, returnRoute4 = null;
 
             while(returnRoute1 == null) {
-                toTruckId1 = random.nextInt(trucks.size() - 1);
-                requestId1 = random.nextInt(requests.size() - 1);
+                toTruckId1 = random.nextInt(trucks.size());
+                requestId1 = random.nextInt(requests.size());
 
                 req1 = requests.get(requestId1);
                 returnRoute1 = DoMove(bestRoute, req1, toTruckId1);
             }
 
             while(returnRoute2 == null) {
-                toTruckId2 = random.nextInt(trucks.size()-1);
-                requestId2 = random.nextInt(requests.size() - 1);
+                toTruckId2 = random.nextInt(trucks.size());
+                requestId2 = random.nextInt(requests.size());
 
                 while(requestId1 == requestId2){
-                    requestId2 = random.nextInt(requests.size() - 1);
+                    requestId2 = random.nextInt(requests.size());
                 }
 
                 req2 = requests.get(requestId2);
@@ -588,29 +588,43 @@ public class Solution   {
             }
 
             while(returnRoute3 == null) {
-                toTruckId3 = random.nextInt(trucks.size() - 1);
-                requestId3 = random.nextInt(requests.size() - 1);
+                toTruckId3 = random.nextInt(trucks.size());
+                requestId3 = random.nextInt(requests.size());
 
                 while (requestId1 == requestId3 || requestId2 == requestId3) {
-                    requestId3 = random.nextInt(requests.size() - 1);
+                    requestId3 = random.nextInt(requests.size());
                 }
 
                 req3 = requests.get(requestId3);
                 returnRoute3 = DoMove(returnRoute2, req3, toTruckId3);
             }
 
+            /*while(returnRoute4 == null) {
+                toTruckId4 = random.nextInt(trucks.size());
+                requestId4 = random.nextInt(requests.size());
+
+                while (requestId1 == requestId4 || requestId2 == requestId4|| requestId3 == requestId4) {
+                    requestId4 = random.nextInt(requests.size());
+                }
+
+                req4 = requests.get(requestId4);
+                returnRoute4 = DoMove(returnRoute3, req4, toTruckId4);
+            }*/
+
             int newDist = measureTotalDistance(returnRoute3);
 
             // [LocalSearch] accept?
             if (newDist < oldDist || newDist < bound) {
                 idle = 0;
-                if(newDist<bestRoute.getTotalDistance()){
+                if(newDist < bestRoute.getTotalDistance()){
                     bestRoute = new Route(returnRoute3);
+                    measureTotalDistance(bestRoute);
 
                     //De truck waar de request aan toegekent is updaten
                     req1.setInTruckId(toTruckId1);
                     req2.setInTruckId(toTruckId2);
                     req3.setInTruckId(toTruckId3);
+                    //req4.setInTruckId(toTruckId4);
 
                     logger.info("Totale afstand: " + newDist + " na " + (System.currentTimeMillis()-startTime)/1000 + " seconden");
                 }
@@ -624,7 +638,7 @@ public class Solution   {
             count++;
             if(count==L){
                 count = 0;
-                bound = bestRoute.getTotalDistance();
+                bound = measureTotalDistance(bestRoute);
             }
 
              // stop?
@@ -648,7 +662,7 @@ public class Solution   {
         logger.info("Starting SimulatedAnnealing...");
 
         // Set initial temp
-        double temp = 10;
+        double temp = 30;
 
         // Cooling rate
         double coolingRate = 0.995;
@@ -672,62 +686,46 @@ public class Solution   {
 
                 int toTruckId1 = -1;
                 int toTruckId2 = -1;
-                int toTruckId3 = -1;
 
                 int requestId1 = -1;
                 int requestId2 = -1;
-                int requestId3 = -1;
 
                 Request req1 = null;
                 Request req2 = null;
-                Request req3 = null;
 
                 Route returnRoute1 = null;
                 Route returnRoute2 = null;
-                Route returnRoute3 = null;
 
                 while(returnRoute1 == null) {
-                    toTruckId1 = random.nextInt(trucks.size() - 1);
-                    requestId1 = random.nextInt(requests.size() - 1);
+                    toTruckId1 = random.nextInt(trucks.size());
+                    requestId1 = random.nextInt(requests.size());
 
                     req1 = newRequests.get(requestId1);
                     returnRoute1 = DoMove(newSolution, req1, toTruckId1);
                 }
 
-                /*while(returnRoute2 == null) {
-                    toTruckId2 = random.nextInt(trucks.size() - 1);
-                    requestId2 = random.nextInt(requests.size() - 1);
+                while(returnRoute2 == null) {
+                    toTruckId2 = random.nextInt(trucks.size());
+                    requestId2 = random.nextInt(requests.size());
 
                     while(requestId1 == requestId2) {
-                        requestId2 = random.nextInt(requests.size() - 1);
+                        requestId2 = random.nextInt(requests.size());
                     }
 
                     req2 = newRequests.get(requestId2);
                     returnRoute2 = DoMove(returnRoute1, req2, toTruckId2);
                 }
 
-                while(returnRoute3 == null) {
-                    toTruckId3 = random.nextInt(trucks.size() - 1);
-                    requestId3 = random.nextInt(requests.size() - 1);
-
-                    while(requestId1 == requestId3 || requestId2 == requestId3) {
-                        requestId3 = random.nextInt(requests.size() - 1);
-                    }
-
-                    req3 = newRequests.get(requestId3);
-                    returnRoute3 = DoMove(returnRoute2, req3, toTruckId3);
-                }*/
-
                 // Get energy of solutions
                 int currentEnergy = measureTotalDistance(currentSolution);
-                int neighbourEnergy = measureTotalDistance(returnRoute1);
+                int neighbourEnergy = measureTotalDistance(returnRoute2);
 
                 // Decide if we should accept the neighbour
                 if (acceptanceProbability(currentEnergy, neighbourEnergy, temp) > Math.random()) {
                     req1.setInTruckId(toTruckId1);
-                    //req2.setInTruckId(toTruckId2);
-                    //req3.setInTruckId(toTruckId3);
-                    currentSolution = new Route(returnRoute1);
+                    req2.setInTruckId(toTruckId2);
+
+                    currentSolution = new Route(returnRoute2);
                     currentRequests = new ArrayList<Request>(newRequests);
                 }
 
@@ -744,7 +742,7 @@ public class Solution   {
                 // Cool system
                 temp *= 1 - coolingRate;
             }
-            temp = 10;
+            temp = 30;
         }
 
         // UPDATE BEST ROUTE
@@ -1120,7 +1118,12 @@ public class Solution   {
 
         int totalDistance = measureTotalDistance(route);
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter(Main.SOLUTION_FILE));
+        /** Inteliji **/
+        //BufferedWriter writer = new BufferedWriter(new FileWriter(Main.SOLUTION_FILE));
+
+        /** Jar execution **/
+        BufferedWriter writer = new BufferedWriter(new FileWriter(new File(System.getProperty("java.class.path")).getAbsoluteFile().getParentFile() + "/" + Main.SOLUTION_FILE));
+
         writer.write("PROBLEM: " + Main.INPUT_FILE + "\n");
         writer.write("DISTANCE: " + totalDistance + "\n");
         writer.write("TRUCKS: " + numberOfUsedTrucks + "\n");

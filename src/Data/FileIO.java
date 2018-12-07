@@ -1,6 +1,8 @@
 package Data;
 
 import Objects.*;
+
+import java.net.URISyntaxException;
 import java.util.*;
 import java.io.*;
 
@@ -8,13 +10,14 @@ import static Heuristiek.Problem.*;
 
 public class FileIO {
 
-    public static void readInput(String filename) throws FileNotFoundException {
+    public static void readInput(String filename) throws IOException, URISyntaxException {
 
-        //InputStream is = FileIO.class.getResourceAsStream(filename);
-        //InputStreamReader isr = new InputStreamReader(is);
-        //BufferedReader br = new BufferedReader(isr);
+        /** Inteliji **/
+        //BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
+        /** Jar execution **/
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(System.getProperty("java.class.path")).getAbsoluteFile().getParentFile() + "/" + filename));
+
         Scanner s = new Scanner(bufferedReader);
 
         int requestId = 0;

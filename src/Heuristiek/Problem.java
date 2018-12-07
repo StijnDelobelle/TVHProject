@@ -35,7 +35,7 @@ public class Problem {
 
         solution.MakeFeasible();
 
-        solution.LocalSearch(100000);
+        solution.LocalSearch(300000);
 
         solution.SimulatedAnnealing();
 
