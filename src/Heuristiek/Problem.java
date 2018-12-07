@@ -31,11 +31,11 @@ public class Problem {
 
         solution.InitialSolution(requests, trucks, depots);
 
-        solution.LocalSearch(100000);
+        solution.LocalSearch(10000);
 
         solution.MakeFeasible();
 
-        solution.LocalSearch(300000);
+        //solution.LocalSearch(300000);
 
         solution.SimulatedAnnealing();
 

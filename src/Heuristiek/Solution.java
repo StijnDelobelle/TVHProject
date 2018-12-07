@@ -662,10 +662,10 @@ public class Solution   {
         logger.info("Starting SimulatedAnnealing...");
 
         // Set initial temp
-        double temp = 30;
+        double temp = 10;
 
         // Cooling rate
-        double coolingRate = 0.995;
+        double coolingRate = 0.003;
 
         // Initialize intial solution
         Route bestSolution = new Route(route);
@@ -678,7 +678,7 @@ public class Solution   {
 
         while((System.currentTimeMillis() - startTime) / 1000 < TIME_LIMIT) {
             // Loop until system has cooled
-            while (temp > 1 && (System.currentTimeMillis() - startTime) / 1000 < TIME_LIMIT) {
+            while (temp > 0.1 && (System.currentTimeMillis() - startTime) / 1000 < TIME_LIMIT) {
 
                 // Create new neighbour tour
                 Route newSolution = new Route(currentSolution);
@@ -686,15 +686,19 @@ public class Solution   {
 
                 int toTruckId1 = -1;
                 int toTruckId2 = -1;
+                int toTruckId3 = -1;
 
                 int requestId1 = -1;
                 int requestId2 = -1;
+                int requestId3 = -1;
 
                 Request req1 = null;
                 Request req2 = null;
+                Request req3 = null;
 
                 Route returnRoute1 = null;
                 Route returnRoute2 = null;
+                Route returnRoute3 = null;
 
                 while(returnRoute1 == null) {
                     toTruckId1 = random.nextInt(trucks.size());
@@ -716,16 +720,29 @@ public class Solution   {
                     returnRoute2 = DoMove(returnRoute1, req2, toTruckId2);
                 }
 
+                while(returnRoute3 == null) {
+                    toTruckId3 = random.nextInt(trucks.size());
+                    requestId3 = random.nextInt(requests.size());
+
+                    while(requestId1 == requestId2 || requestId2 == requestId3) {
+                        requestId3 = random.nextInt(requests.size());
+                    }
+
+                    req3 = newRequests.get(requestId3);
+                    returnRoute3 = DoMove(returnRoute2, req3, toTruckId3);
+                }
+
                 // Get energy of solutions
                 int currentEnergy = measureTotalDistance(currentSolution);
-                int neighbourEnergy = measureTotalDistance(returnRoute2);
+                int neighbourEnergy = measureTotalDistance(returnRoute3);
 
                 // Decide if we should accept the neighbour
                 if (acceptanceProbability(currentEnergy, neighbourEnergy, temp) > Math.random()) {
                     req1.setInTruckId(toTruckId1);
                     req2.setInTruckId(toTruckId2);
+                    req3.setInTruckId(toTruckId3);
 
-                    currentSolution = new Route(returnRoute2);
+                    currentSolution = new Route(returnRoute3);
                     currentRequests = new ArrayList<Request>(newRequests);
                 }
 
@@ -742,7 +759,7 @@ public class Solution   {
                 // Cool system
                 temp *= 1 - coolingRate;
             }
-            temp = 30;
+            temp = 10;
         }
 
         // UPDATE BEST ROUTE
@@ -1119,10 +1136,10 @@ public class Solution   {
         int totalDistance = measureTotalDistance(route);
 
         /** Inteliji **/
-        //BufferedWriter writer = new BufferedWriter(new FileWriter(Main.SOLUTION_FILE));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(Main.SOLUTION_FILE));
 
         /** Jar execution **/
-        BufferedWriter writer = new BufferedWriter(new FileWriter(new File(System.getProperty("java.class.path")).getAbsoluteFile().getParentFile() + "/" + Main.SOLUTION_FILE));
+        //BufferedWriter writer = new BufferedWriter(new FileWriter(new File(System.getProperty("java.class.path")).getAbsoluteFile().getParentFile() + "/" + Main.SOLUTION_FILE));
 
         writer.write("PROBLEM: " + Main.INPUT_FILE + "\n");
         writer.write("DISTANCE: " + totalDistance + "\n");
