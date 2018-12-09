@@ -11,8 +11,7 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 
 import static Heuristiek.Problem.*;
-import static Main.Main.RANDOM_SEED;
-import static Main.Main.TIME_LIMIT;
+import static Main.Main.*;
 
 public class Solution   {
 
@@ -561,8 +560,8 @@ public class Solution   {
 
             int oldDist = bestRoute.getTotalDistance();
 
-            int toTruckId1 = -1, toTruckId2 = -1, toTruckId3 = -1, toTruckId4 = -1;
-            int requestId1 = -1, requestId2 = -1, requestId3 = -1, requestId4 = -1;
+            int toTruckId1 = -1, toTruckId2 = -1, toTruckId3 = -1;
+            int requestId1 = -1, requestId2 = -1, requestId3 = -1;
 
             Request req1 = null, req2 = null, req3 = null, req4 = null;
             Route returnRoute1 = null, returnRoute2 = null, returnRoute3 = null, returnRoute4 = null;
@@ -1053,6 +1052,7 @@ public class Solution   {
         return indexNewLocation + 1;
     }
 
+    // Dichtste bestaande stop zoeken
     public int SearchClosestDropPointFromHere(ArrayList<Stop> stops, Location dropLocation, Machine machine) {
         int indexNewLocation = 0;
         int minDistance = Integer.MAX_VALUE;
@@ -1094,10 +1094,10 @@ public class Solution   {
         int totalDistance = measureTotalDistance(route);
 
         /** Inteliji **/
-        BufferedWriter writer = new BufferedWriter(new FileWriter(Main.SOLUTION_FILE));
+        //BufferedWriter writer = new BufferedWriter(new FileWriter(SOLUTION_FILE));
 
         /** Jar execution **/
-        //BufferedWriter writer = new BufferedWriter(new FileWriter(new File(System.getProperty("java.class.path")).getAbsoluteFile().getParentFile() + "/" + Main.SOLUTION_FILE));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(new File(System.getProperty("java.class.path")).getAbsoluteFile().getParentFile() + "/" + SOLUTION_FILE));
 
         writer.write("PROBLEM: " + Main.INPUT_FILE + "\n");
         writer.write("DISTANCE: " + totalDistance + "\n");

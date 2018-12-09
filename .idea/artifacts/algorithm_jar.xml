@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="algorithm:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/algorithm_jar</output-path>
+    <root id="archive" name="algorithm.jar">
+      <element id="module-output" name="TVHProject" />
+    </root>
+  </artifact>
+</component>

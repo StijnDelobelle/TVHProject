@@ -60,6 +60,6 @@ public class Request implements Serializable {
     public void setDone(boolean isDone) {this.isDone = isDone;}
 
     public enum Type {
-        DROP, COLLECT, TEMPORARYCOLLECT, END,NOTHING,START
+        DROP, COLLECT, TEMPORARYCOLLECT, END,START
     }
 }

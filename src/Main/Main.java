@@ -11,7 +11,9 @@ public class Main {
 
     /** Application **/
     // java -jar algorithm.jar --problem=<input_file> --solution=<solution_file> --seed=<random_seed> --time=<time_limit>
-    // java -jar algorithm.jar --problem=tvh_problem_3.txt --solution=tvh_solution_3.txt --seed=0 --time=10
+    // java -jar algorithm.jar --problem=tvh_problem_4.txt --solution=tvh_solution_4.txt --seed=0 --time=1800
+
+    public static long startTime;
 
     public static String INPUT_FILE;
     public static String SOLUTION_FILE;
@@ -19,6 +21,8 @@ public class Main {
     public static int TIME_LIMIT ;
 
     public static void main(String[] args) throws Exception{
+
+        startTime = System.currentTimeMillis();
 
         Param param = new Param(args);
 

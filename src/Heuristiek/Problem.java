@@ -8,8 +8,6 @@ public class Problem {
 
     /** Globale variabelen **/
 
-    public static long startTime;
-
     public static int[][] timeMatrix;
     public static int[][] distanceMatrix;
 
@@ -24,8 +22,6 @@ public class Problem {
     public static ArrayList<Request> requests = new ArrayList<>();
 
     public static void solve() throws Exception{
-
-        startTime = System.currentTimeMillis();
 
         Solution solution = new Solution();
 

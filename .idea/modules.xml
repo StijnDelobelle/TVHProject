@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/algoritm.iml" filepath="$PROJECT_DIR$/algoritm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TVHProject.iml" filepath="$PROJECT_DIR$/TVHProject.iml" />
     </modules>
   </component>
 </project>

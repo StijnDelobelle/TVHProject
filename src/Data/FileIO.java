@@ -13,10 +13,10 @@ public class FileIO {
     public static void readInput(String filename) throws IOException, URISyntaxException {
 
         /** Inteliji **/
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
+        //BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
 
         /** Jar execution **/
-        //BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(System.getProperty("java.class.path")).getAbsoluteFile().getParentFile() + "/" + filename));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(System.getProperty("java.class.path")).getAbsoluteFile().getParentFile() + "/" + filename));
 
         Scanner s = new Scanner(bufferedReader);
 
